@@ -21,12 +21,16 @@ import RestaurantSchedule, {
   type WeekSchedule,
 } from "./restaurant-schedule";
 import { type StockItem, defaultStock } from "./stock-management";
+import FloatingCartButton from "./floating-cart-button";
 
 // Types
 export type Extra = {
   id: string;
   name: string;
   price: number;
+  min?: number;
+  max?: number;
+  required?: boolean;
 };
 
 export type Product = {
@@ -37,7 +41,8 @@ export type Product = {
   image: string;
   categoryId: string;
   extras?: Extra[];
-  stockId?: string; // Reference to stock item
+  stockId?: string;
+  extraGroupIds?: string[];
 };
 
 export type Category = {
@@ -49,6 +54,7 @@ export type SelectedExtra = {
   extraId: string;
   name: string;
   price: number;
+  quantity?: number;
 };
 
 export type CartItem = {
@@ -81,8 +87,8 @@ const products: Product[] = [
     categoryId: "starters",
     stockId: "garlic-bread",
     extras: [
-      { id: "extra-cheese", name: "Extra Cheese", price: 1.5 },
-      { id: "herbs", name: "Italian Herbs", price: 0.75 },
+      { id: "extra-cheese", name: "Extra Cheese", price: 1.5, min: 0, max: 3 },
+      { id: "herbs", name: "Italian Herbs", price: 0.75, min: 0, max: 2 },
     ],
   },
   {
@@ -94,9 +100,9 @@ const products: Product[] = [
     categoryId: "starters",
     stockId: "caesar-salad",
     extras: [
-      { id: "chicken", name: "Grilled Chicken", price: 2.5 },
-      { id: "croutons", name: "Extra Croutons", price: 0.5 },
-      { id: "parmesan", name: "Parmesan Cheese", price: 1.0 },
+      { id: "chicken", name: "Grilled Chicken", price: 2.5, min: 0, max: 2 },
+      { id: "croutons", name: "Extra Croutons", price: 0.5, min: 0, max: 2 },
+      { id: "parmesan", name: "Parmesan Cheese", price: 1.0, min: 0, max: 2 },
     ],
   },
   {
@@ -108,10 +114,16 @@ const products: Product[] = [
     categoryId: "mains",
     stockId: "margherita-pizza",
     extras: [
-      { id: "extra-cheese-pizza", name: "Extra Cheese", price: 2.0 },
-      { id: "mushrooms", name: "Mushrooms", price: 1.5 },
-      { id: "pepperoni", name: "Pepperoni", price: 2.0 },
-      { id: "olives", name: "Olives", price: 1.0 },
+      {
+        id: "extra-cheese-pizza",
+        name: "Extra Cheese",
+        price: 2.0,
+        min: 0,
+        max: 3,
+      },
+      { id: "mushrooms", name: "Mushrooms", price: 1.5, min: 0, max: 2 },
+      { id: "pepperoni", name: "Pepperoni", price: 2.0, min: 0, max: 2 },
+      { id: "olives", name: "Olives", price: 1.0, min: 0, max: 2 },
     ],
   },
   {
@@ -123,9 +135,23 @@ const products: Product[] = [
     categoryId: "mains",
     stockId: "spaghetti-bolognese",
     extras: [
-      { id: "extra-sauce", name: "Extra Sauce", price: 1.5 },
-      { id: "parmesan-pasta", name: "Parmesan Cheese", price: 1.0 },
-      { id: "garlic-bread-side", name: "Side of Garlic Bread", price: 3.99 },
+      { id: "extra-sauce", name: "Extra Sauce", price: 1.5, min: 0, max: 2 },
+      {
+        id: "parmesan-pasta",
+        name: "Parmesan Cheese",
+        price: 1.0,
+        min: 0,
+        max: 2,
+        required: true,
+        min: 1,
+      },
+      {
+        id: "garlic-bread-side",
+        name: "Side of Garlic Bread",
+        price: 3.99,
+        min: 0,
+        max: 1,
+      },
     ],
   },
   {
@@ -137,9 +163,27 @@ const products: Product[] = [
     categoryId: "mains",
     stockId: "grilled-salmon",
     extras: [
-      { id: "extra-sauce-salmon", name: "Extra Lemon Butter", price: 1.0 },
-      { id: "asparagus", name: "Side of Asparagus", price: 3.5 },
-      { id: "mashed-potatoes", name: "Mashed Potatoes", price: 2.99 },
+      {
+        id: "extra-sauce-salmon",
+        name: "Extra Lemon Butter",
+        price: 1.0,
+        min: 0,
+        max: 2,
+      },
+      {
+        id: "asparagus",
+        name: "Side of Asparagus",
+        price: 3.5,
+        min: 0,
+        max: 1,
+      },
+      {
+        id: "mashed-potatoes",
+        name: "Mashed Potatoes",
+        price: 2.99,
+        min: 0,
+        max: 1,
+      },
     ],
   },
   {
@@ -151,9 +195,27 @@ const products: Product[] = [
     categoryId: "desserts",
     stockId: "chocolate-cake",
     extras: [
-      { id: "ice-cream", name: "Vanilla Ice Cream", price: 1.99 },
-      { id: "whipped-cream", name: "Whipped Cream", price: 0.75 },
-      { id: "chocolate-sauce", name: "Extra Chocolate Sauce", price: 0.5 },
+      {
+        id: "ice-cream",
+        name: "Vanilla Ice Cream",
+        price: 1.99,
+        min: 0,
+        max: 2,
+      },
+      {
+        id: "whipped-cream",
+        name: "Whipped Cream",
+        price: 0.75,
+        min: 0,
+        max: 1,
+      },
+      {
+        id: "chocolate-sauce",
+        name: "Extra Chocolate Sauce",
+        price: 0.5,
+        min: 0,
+        max: 3,
+      },
     ],
   },
   {
@@ -165,8 +227,14 @@ const products: Product[] = [
     categoryId: "desserts",
     stockId: "tiramisu",
     extras: [
-      { id: "cocoa-powder", name: "Extra Cocoa Powder", price: 0.25 },
-      { id: "coffee-shot", name: "Espresso Shot", price: 1.5 },
+      {
+        id: "cocoa-powder",
+        name: "Extra Cocoa Powder",
+        price: 0.25,
+        min: 0,
+        max: 2,
+      },
+      { id: "coffee-shot", name: "Espresso Shot", price: 1.5, min: 0, max: 2 },
     ],
   },
   {
@@ -176,10 +244,10 @@ const products: Product[] = [
     price: 2.99,
     image: "/placeholder.svg?height=100&width=100",
     categoryId: "drinks",
-    stockId: "soft-drink-cola",
+    stockId: "soft-drink",
     extras: [
-      { id: "ice", name: "Extra Ice", price: 0.0 },
-      { id: "lemon", name: "Lemon Slice", price: 0.25 },
+      { id: "ice", name: "Extra Ice", price: 0.0, min: 0, max: 1 },
+      { id: "lemon", name: "Lemon Slice", price: 0.25, min: 0, max: 2 },
     ],
   },
   {
@@ -191,8 +259,8 @@ const products: Product[] = [
     categoryId: "drinks",
     stockId: "fresh-juice",
     extras: [
-      { id: "ginger", name: "Ginger", price: 0.5 },
-      { id: "mint", name: "Fresh Mint", price: 0.5 },
+      { id: "ginger", name: "Ginger", price: 0.5, min: 0, max: 1 },
+      { id: "mint", name: "Fresh Mint", price: 0.5, min: 0, max: 1 },
     ],
   },
 ];
@@ -321,13 +389,15 @@ export default function RestaurantMenu() {
       const existingItemIndex = prevItems.findIndex((item) => {
         if (item.product.id !== product.id) return false;
 
-        // Check if extras match
+        // Check if extras match (including quantities)
         if (item.selectedExtras.length !== selectedExtras.length) return false;
 
-        // Check if all extras match
+        // Check if all extras match with same quantities
         return selectedExtras.every((selectedExtra) =>
           item.selectedExtras.some(
-            (itemExtra) => itemExtra.extraId === selectedExtra.extraId
+            (itemExtra) =>
+              itemExtra.extraId === selectedExtra.extraId &&
+              itemExtra.quantity === selectedExtra.quantity
           )
         );
       });
@@ -344,11 +414,6 @@ export default function RestaurantMenu() {
         return [...prevItems, { product, quantity, selectedExtras }];
       }
     });
-
-    // Open the cart drawer after adding item
-    setIsCartOpen(true);
-    // Close the product modal after adding to cart
-    closeProductModal();
   };
 
   const removeFromCart = (
@@ -404,7 +469,7 @@ export default function RestaurantMenu() {
 
   const cartTotal = cartItems.reduce((total, item) => {
     const extrasTotal = item.selectedExtras.reduce(
-      (sum, extra) => sum + extra.price,
+      (sum, extra) => sum + extra.price * (extra.quantity || 1),
       0
     );
     return total + (item.product.price + extrasTotal) * item.quantity;
@@ -421,6 +486,10 @@ export default function RestaurantMenu() {
 
   const closeProductModal = () => {
     setSelectedProduct(null);
+  };
+
+  const openCart = () => {
+    setIsCartOpen(true);
   };
 
   return (
@@ -527,6 +596,9 @@ export default function RestaurantMenu() {
         selectedBranch={branches.find((b) => b.id === selectedBranch)}
         isRestaurantOpen={isRestaurantOpen}
       />
+
+      {/* Add the floating cart button for mobile */}
+      <FloatingCartButton itemCount={cartItemCount} onClick={openCart} />
     </div>
   );
 }

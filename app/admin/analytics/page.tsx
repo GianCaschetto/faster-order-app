@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useEffect } from "react";
@@ -802,7 +801,7 @@ export default function AnalyticsPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {products.slice(0, 10).map((product) => (
+                    {products.slice(0, 10).map((product, index) => (
                       <tr key={product.id} className="border-b">
                         <td className="p-2">{product.name}</td>
                         <td className="p-2">{product.categoryId}</td>

@@ -12,8 +12,19 @@ import {
   ShoppingBag,
   Users,
   Database,
+  Utensils,
+  Tag,
+  Plus,
+  ChevronDown,
+  Camera,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export function AdminSidebar() {
   const router = useRouter();
@@ -61,6 +72,56 @@ export function AdminSidebar() {
               <ShoppingBag className="h-4 w-4" />
               Orders
             </Link>
+            {/* Products dropdown menu */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all w-full justify-between ${
+                    pathname === "/admin/products" ||
+                    pathname === "/admin/categories" ||
+                    pathname === "/admin/extras"
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:text-primary"
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <Package className="h-4 w-4" />
+                    <span>Customizar</span>
+                  </div>
+                  <ChevronDown className="h-4 w-4" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-56 ml-6">
+                <DropdownMenuItem asChild>
+                  <Link
+                    href="/admin/products"
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
+                    <Package className="h-4 w-4" />
+                    <span>Productos</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link
+                    href="/admin/categories"
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
+                    <Tag className="h-4 w-4" />
+                    <span>Categorías</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link
+                    href="/admin/extras"
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
+                    <Plus className="h-4 w-4" />
+                    <span>Extras</span>
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             <Link
               href="/admin/stock"
               className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
@@ -71,6 +132,17 @@ export function AdminSidebar() {
             >
               <Database className="h-4 w-4" />
               Inventory
+            </Link>
+            <Link
+              href="/admin/gallery"
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
+                pathname === "/admin/gallery"
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:text-primary"
+              }`}
+            >
+              <Camera className="h-4 w-4" />
+              Gallery
             </Link>
             <Link
               href="/admin/schedule"
@@ -105,6 +177,7 @@ export function AdminSidebar() {
               <BarChart3 className="h-4 w-4" />
               Analytics
             </Link>
+
             <Link
               href="/admin/settings"
               className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${

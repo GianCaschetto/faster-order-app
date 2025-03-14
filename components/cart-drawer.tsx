@@ -33,7 +33,6 @@ interface CartDrawerProps {
   onClose: () => void;
   cartItems: CartItem[];
   updateQuantity: (index: number, quantity: number) => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   removeFromCart: (productId: string, selectedExtras: any[]) => void;
   cartTotal: number;
   selectedBranch: Branch | undefined;
@@ -103,7 +102,7 @@ export default function CartDrawer({
 
   const calculateItemPrice = (item: CartItem) => {
     const extrasTotal = item.selectedExtras.reduce(
-      (sum, extra) => sum + extra.price,
+      (sum, extra) => sum + extra.price * (extra.quantity || 1),
       0
     );
     return (item.product.price + extrasTotal) * item.quantity;
@@ -248,9 +247,13 @@ export default function CartDrawer({
 
                         {item.selectedExtras.length > 0 && (
                           <div className="mt-1 text-xs text-muted-foreground">
-                            {item.selectedExtras.map((extra) => (
+                            {item.selectedExtras.map((extra, i) => (
                               <div key={extra.extraId}>
-                                + {extra.name} (${extra.price.toFixed(2)})
+                                + {extra.quantity || 1}x {extra.name} ($
+                                {(extra.price * (extra.quantity || 1)).toFixed(
+                                  2
+                                )}
+                                )
                               </div>
                             ))}
                           </div>

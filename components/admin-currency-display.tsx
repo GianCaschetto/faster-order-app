@@ -1,122 +1,105 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Badge } from "@/components/ui/badge"
+import { useState, useEffect } from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface AdminCurrencyDisplayProps {
-  amount: number
-  showAllRates?: boolean
-  className?: string
+  amount: number;
+  showAllRates?: boolean;
+  className?: string;
 }
 
 export default function AdminCurrencyDisplay({
   amount,
-  showAllRates = false,
+  showAllRates = true,
   className = "",
 }: AdminCurrencyDisplayProps) {
-  const [exchangeSettings, setExchangeSettings] = useState({
-    enableVenezuelanBs: false,
-    bcvRate: 35.5,
-    parallelRate: 38.2,
-    customRate: 36.0,
-    preferredRateSource: "bcv" as "bcv" | "parallel" | "custom",
-  })
+  const [currencySettings, setCurrencySettings] = useState({
+    showBs: false,
+    bcv: 0,
+    parallel: 0,
+    custom: 0,
+    preferredRate: "bcv",
+  });
 
   useEffect(() => {
-    // Load exchange rate settings from localStorage
-    const savedPaymentSettings = localStorage.getItem("restaurantPaymentSettings")
-    if (savedPaymentSettings) {
-      try {
-        const parsedSettings = JSON.parse(savedPaymentSettings)
-        setExchangeSettings({
-          enableVenezuelanBs: parsedSettings.enableVenezuelanBs || false,
-          bcvRate: parsedSettings.bcvRate || 35.5,
-          parallelRate: parsedSettings.parallelRate || 38.2,
-          customRate: parsedSettings.customRate || 36.0,
-          preferredRateSource: parsedSettings.preferredRateSource || "bcv",
-        })
-      } catch (error) {
-        console.error("Error parsing saved payment settings:", error)
-      }
+    // Load settings from localStorage
+    const settings = localStorage.getItem("currency-settings");
+    if (settings) {
+      setCurrencySettings(JSON.parse(settings));
     }
-  }, [])
+  }, []);
 
-  // If Venezuelan Bs is not enabled, just return USD
-  if (!exchangeSettings.enableVenezuelanBs) {
-    return <span className={className}>${amount.toFixed(2)}</span>
+  if (!currencySettings.showBs) {
+    return <span className={className}>${amount.toFixed(2)}</span>;
   }
 
-  // Calculate Bs amounts for each rate
-  const bcvAmount = amount * exchangeSettings.bcvRate
-  const parallelAmount = amount * exchangeSettings.parallelRate
-  const customAmount = amount * exchangeSettings.customRate
-
-  // Format the Bs amount with thousands separators
-  const formatBsAmount = (bsAmount: number) => {
-    return new Intl.NumberFormat("es-VE", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(bsAmount)
-  }
+  // Calculate amounts using different rates
+  const bcvAmount = amount * currencySettings.bcv;
+  const parallelAmount = amount * currencySettings.parallel;
+  const customAmount = amount * currencySettings.custom;
 
   // Get the preferred rate amount
-  const getPreferredAmount = () => {
-    switch (exchangeSettings.preferredRateSource) {
-      case "bcv":
-        return bcvAmount
-      case "parallel":
-        return parallelAmount
-      case "custom":
-        return customAmount
-      default:
-        return bcvAmount
-    }
-  }
+  const preferredAmount =
+    amount *
+    (currencySettings[
+      currencySettings.preferredRate as keyof typeof currencySettings
+    ] as number);
 
-  // If not showing all rates, just show the preferred rate
   if (!showAllRates) {
-    const preferredAmount = getPreferredAmount()
     return (
       <span className={className}>
-        ${amount.toFixed(2)} <span className="text-muted-foreground">({formatBsAmount(preferredAmount)} Bs)</span>
+        ${amount.toFixed(2)}
+        <span className="text-muted-foreground text-sm ml-1">
+          ({preferredAmount.toFixed(2)} Bs)
+        </span>
       </span>
-    )
+    );
   }
 
-  // Show all rates with badges
   return (
-    <div className={`space-y-1 ${className}`}>
-      <div>${amount.toFixed(2)}</div>
-      <div className="flex flex-col gap-1 text-xs">
-        <div className="flex items-center gap-1">
-          <Badge
-            variant={exchangeSettings.preferredRateSource === "bcv" ? "default" : "outline"}
-            className="text-xs px-1"
-          >
-            BCV
-          </Badge>
-          <span>{formatBsAmount(bcvAmount)} Bs</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <Badge
-            variant={exchangeSettings.preferredRateSource === "parallel" ? "default" : "outline"}
-            className="text-xs px-1"
-          >
-            Parallel
-          </Badge>
-          <span>{formatBsAmount(parallelAmount)} Bs</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <Badge
-            variant={exchangeSettings.preferredRateSource === "custom" ? "default" : "outline"}
-            className="text-xs px-1"
-          >
-            Custom
-          </Badge>
-          <span>{formatBsAmount(customAmount)} Bs</span>
-        </div>
-      </div>
-    </div>
-  )
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <span className={`cursor-help ${className}`}>
+            ${amount.toFixed(2)}
+            <span className="text-muted-foreground text-sm ml-1">
+              ({preferredAmount.toFixed(2)} Bs)
+            </span>
+          </span>
+        </TooltipTrigger>
+        <TooltipContent className="w-60">
+          <div className="space-y-1">
+            <div className="font-medium">Exchange Rates</div>
+            {currencySettings.bcv > 0 && (
+              <div className="flex justify-between text-sm">
+                <span>BCV Official:</span>
+                <span>{bcvAmount.toFixed(2)} Bs</span>
+              </div>
+            )}
+            {currencySettings.parallel > 0 && (
+              <div className="flex justify-between text-sm">
+                <span>Parallel Market:</span>
+                <span>{parallelAmount.toFixed(2)} Bs</span>
+              </div>
+            )}
+            {currencySettings.custom > 0 && (
+              <div className="flex justify-between text-sm">
+                <span>Custom Rate:</span>
+                <span>{customAmount.toFixed(2)} Bs</span>
+              </div>
+            )}
+            <div className="text-xs text-muted-foreground pt-1">
+              Using {currencySettings.preferredRate.toUpperCase()} rate
+            </div>
+          </div>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
 }
-

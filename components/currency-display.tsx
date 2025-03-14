@@ -1,81 +1,52 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 
 interface CurrencyDisplayProps {
-  amount: number
-  showBs?: boolean
-  className?: string
+  amount: number;
+  showSymbol?: boolean;
+  className?: string;
 }
 
-export default function CurrencyDisplay({ amount, showBs = true, className = "" }: CurrencyDisplayProps) {
-  const [exchangeSettings, setExchangeSettings] = useState({
-    enableVenezuelanBs: false,
-    bcvRate: 35.5,
-    parallelRate: 38.2,
-    customRate: 36.0,
-    preferredRateSource: "bcv" as "bcv" | "parallel" | "custom",
-  })
+export default function CurrencyDisplay({
+  amount,
+  showSymbol = true,
+  className = "",
+}: CurrencyDisplayProps) {
+  const [showBs, setShowBs] = useState(false);
+  const [exchangeRate, setExchangeRate] = useState(0);
+  const [rateSource, setRateSource] = useState<string>("bcv");
 
   useEffect(() => {
-    // Load exchange rate settings from localStorage
-    const savedPaymentSettings = localStorage.getItem("restaurantPaymentSettings")
-    if (savedPaymentSettings) {
-      try {
-        const parsedSettings = JSON.parse(savedPaymentSettings)
-        setExchangeSettings({
-          enableVenezuelanBs: parsedSettings.enableVenezuelanBs || false,
-          bcvRate: parsedSettings.bcvRate || 35.5,
-          parallelRate: parsedSettings.parallelRate || 38.2,
-          customRate: parsedSettings.customRate || 36.0,
-          preferredRateSource: parsedSettings.preferredRateSource || "bcv",
-        })
-      } catch (error) {
-        console.error("Error parsing saved payment settings:", error)
-      }
+    // Load settings from localStorage
+    const settings = localStorage.getItem("currency-settings");
+    if (settings) {
+      const parsedSettings = JSON.parse(settings);
+      setShowBs(parsedSettings.showBs || false);
+      setExchangeRate(parsedSettings[parsedSettings.preferredRate] || 0);
+      setRateSource(parsedSettings.preferredRate || "bcv");
     }
-  }, [])
+  }, []);
 
-  // Calculate Bs amount based on preferred rate
-  const calculateBsAmount = () => {
-    let rate = 0
-    switch (exchangeSettings.preferredRateSource) {
-      case "bcv":
-        rate = exchangeSettings.bcvRate
-        break
-      case "parallel":
-        rate = exchangeSettings.parallelRate
-        break
-      case "custom":
-        rate = exchangeSettings.customRate
-        break
-      default:
-        rate = exchangeSettings.bcvRate
-    }
-    return amount * rate
+  if (!showBs || exchangeRate <= 0) {
+    return (
+      <span className={className}>
+        {showSymbol ? "$" : ""}
+        {amount.toFixed(2)}
+      </span>
+    );
   }
 
-  // Format the Bs amount with thousands separators
-  const formatBsAmount = (bsAmount: number) => {
-    return new Intl.NumberFormat("es-VE", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(bsAmount)
-  }
-
-  // If Venezuelan Bs is not enabled or explicitly not shown, just return USD
-  if (!exchangeSettings.enableVenezuelanBs || !showBs) {
-    return <span className={className}>${amount.toFixed(2)}</span>
-  }
-
-  // Calculate and format the Bs amount
-  const bsAmount = calculateBsAmount()
-  const formattedBsAmount = formatBsAmount(bsAmount)
+  // Calculate the amount in Bs
+  const bsAmount = amount * exchangeRate;
 
   return (
     <span className={className}>
-      ${amount.toFixed(2)} <span className="text-muted-foreground">({formattedBsAmount} Bs)</span>
+      {showSymbol ? "$" : ""}
+      {amount.toFixed(2)}
+      <span className="text-muted-foreground text-sm ml-1">
+        ({bsAmount.toFixed(2)} Bs)
+      </span>
     </span>
-  )
+  );
 }
-

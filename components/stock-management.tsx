@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { Save, Search, Package2, Minus, Plus } from "lucide-react";
+import { Save, Search, Package2, Minus, Plus, Store } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -254,18 +254,40 @@ const formSchema = z.object({
   search: z.string().optional(),
 });
 
-export default function StockManagement() {
+const stockItemSchema = z.object({
+  id: z.string(),
+  productId: z.string(),
+  productName: z.string(),
+  branchId: z.string(),
+  quantity: z.number().min(0, { message: "Quantity cannot be negative" }),
+});
+
+interface StockManagementProps {
+  selectedBranchId?: string;
+}
+
+export default function StockManagement({
+  selectedBranchId = "all",
+}: StockManagementProps) {
   const [stock, setStock] = useState<StockItem[]>([]);
   const [filteredStock, setFilteredStock] = useState<StockItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [products, setProducts] = useState<any[]>([]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      branch: "1",
+      branch: selectedBranchId === "all" ? "1" : selectedBranchId,
       search: "",
     },
   });
+
+  // Update form when selectedBranchId changes
+  useEffect(() => {
+    if (selectedBranchId !== "all") {
+      form.setValue("branch", selectedBranchId);
+    }
+  }, [selectedBranchId, form]);
 
   useEffect(() => {
     // Load stock from localStorage if available
@@ -280,6 +302,16 @@ export default function StockManagement() {
       }
     } else {
       setStock(defaultStock);
+    }
+
+    // Load products to get branch-specific products
+    const savedProducts = localStorage.getItem("restaurantProducts");
+    if (savedProducts) {
+      try {
+        setProducts(JSON.parse(savedProducts));
+      } catch (error) {
+        console.error("Error parsing saved products:", error);
+      }
     }
 
     setIsLoading(false);
@@ -303,8 +335,21 @@ export default function StockManagement() {
       );
     }
 
+    // Filter out products that aren't available in the selected branch
+    if (products.length > 0 && branch !== "all") {
+      const branchProducts = products
+        .filter(
+          (product) => product.branchIds && product.branchIds.includes(branch)
+        )
+        .map((product) => product.stockId);
+
+      filtered = filtered.filter((item) =>
+        branchProducts.includes(item.productId)
+      );
+    }
+
     setFilteredStock(filtered);
-  }, [stock, form.watch("branch"), form.watch("search")]);
+  }, [stock, form.watch("branch"), form.watch("search"), products]);
 
   const handleQuantityChange = (id: string, newQuantity: number) => {
     if (newQuantity < 0) return;
@@ -330,12 +375,21 @@ export default function StockManagement() {
     setIsLoading(false);
   };
 
+  const selectedBranchName =
+    branches.find((b) => b.id === form.watch("branch"))?.name || "All Branches";
+
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold tracking-tight">
-          Inventory Management
-        </h2>
+        <div>
+          <h2 className="text-3xl font-bold tracking-tight">
+            Inventory Management
+          </h2>
+          <Badge variant="outline" className="mt-1 flex items-center gap-1">
+            <Store className="h-3 w-3 mr-1" />
+            {selectedBranchName}
+          </Badge>
+        </div>
         <Button onClick={handleSaveStock} disabled={isLoading}>
           <Save className="mr-2 h-4 w-4" />
           Save Changes
@@ -358,14 +412,20 @@ export default function StockManagement() {
                 render={({ field }) => (
                   <FormItem className="flex-1">
                     <FormLabel>Branch</FormLabel>
-                    <Select value={field.value} onValueChange={field.onChange}>
+                    <Select
+                      value={field.value}
+                      onValueChange={field.onChange}
+                      disabled={selectedBranchId !== "all"}
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select branch" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="all">All Branches</SelectItem>
+                        {selectedBranchId === "all" && (
+                          <SelectItem value="all">All Branches</SelectItem>
+                        )}
                         {branches.map((branch) => (
                           <SelectItem key={branch.id} value={branch.id}>
                             {branch.name}
@@ -473,7 +533,7 @@ export default function StockManagement() {
                         <Badge
                           variant={
                             item.quantity > 10
-                              ? "default"
+                              ? "success"
                               : item.quantity > 5
                               ? "default"
                               : "destructive"
