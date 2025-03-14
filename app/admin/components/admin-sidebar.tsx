@@ -12,7 +12,6 @@ import {
   ShoppingBag,
   Users,
   Database,
-  Utensils,
   Tag,
   Plus,
   ChevronDown,

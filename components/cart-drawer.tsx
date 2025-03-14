@@ -18,13 +18,13 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
-import type { CartItem, Branch } from "./restaurant-menu";
+import type { CartItem, Branch, SelectedExtra } from "./restaurant-menu";
 import CheckoutForm from "./checkout-form";
 import PaymentForm from "./payment-form";
 import OrderConfirmation from "./order-confirmation";
 // Add this import at the top
 import CurrencyDisplay from "./currency-display";
-
+import Image from "next/image";
 type CheckoutStep = "cart" | "userInfo" | "payment" | "confirmation";
 
 // Update the CartDrawerProps interface to include isRestaurantOpen
@@ -33,7 +33,7 @@ interface CartDrawerProps {
   onClose: () => void;
   cartItems: CartItem[];
   updateQuantity: (index: number, quantity: number) => void;
-  removeFromCart: (productId: string, selectedExtras: any[]) => void;
+  removeFromCart: (productId: string, selectedExtras: SelectedExtra[]) => void;
   cartTotal: number;
   selectedBranch: Branch | undefined;
   isRestaurantOpen?: boolean;
@@ -214,7 +214,7 @@ export default function CartDrawer({
                       className="flex gap-4 py-2"
                     >
                       <div className="w-16 h-16 relative rounded overflow-hidden flex-shrink-0">
-                        <img
+                        <Image
                           src={item.product.image || "/placeholder.svg"}
                           alt={item.product.name}
                           className="object-cover w-full h-full"
@@ -239,15 +239,12 @@ export default function CartDrawer({
                           </Button>
                         </div>
                         <p className="text-sm text-muted-foreground">
-                          <CurrencyDisplay
-                            amount={item.product.price}
-                            showBs={false}
-                          />
+                          <CurrencyDisplay amount={item.product.price} />
                         </p>
 
                         {item.selectedExtras.length > 0 && (
                           <div className="mt-1 text-xs text-muted-foreground">
-                            {item.selectedExtras.map((extra, i) => (
+                            {item.selectedExtras.map((extra) => (
                               <div key={extra.extraId}>
                                 + {extra.quantity || 1}x {extra.name} ($
                                 {(extra.price * (extra.quantity || 1)).toFixed(

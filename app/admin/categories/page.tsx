@@ -1,8 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { Plus, Search, Edit, Trash2, Tag, ArrowLeft } from "lucide-react";
+import { Plus, Search, Edit, Trash2, Tag } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,7 +35,6 @@ import {
 } from "@/components/ui/table";
 import { products as mockProducts } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 
 // Category type
 type Category = {
@@ -115,7 +114,6 @@ const categoryColors = [
 ];
 
 export default function CategoriesPage() {
-  const router = useRouter();
   const [categories, setCategories] = useState<Category[]>([]);
   const [products, setProducts] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");

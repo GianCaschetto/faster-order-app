@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import {
   Plus,
   Search,
@@ -167,17 +166,15 @@ const initialExtraGroups: ExtraGroup[] = [
         id: "ice-cream",
         name: "Vanilla Ice Cream",
         price: 1.99,
-        min: 0,
+        min: 1,
         max: 2,
         required: true,
-        min: 1,
       },
     ],
   },
 ];
 
 export default function ExtrasPage() {
-  const router = useRouter();
   const [extraGroups, setExtraGroups] = useState<ExtraGroup[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -775,7 +772,7 @@ export default function ExtrasPage() {
                   No extra groups found
                 </h3>
                 <p className="text-muted-foreground mt-2">
-                  Try adjusting your search or filter to find what you're
+                  Try adjusting your search or filter to find what you&apos;re
                   looking for.
                 </p>
                 <Button

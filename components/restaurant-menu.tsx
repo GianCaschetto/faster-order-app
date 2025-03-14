@@ -143,7 +143,6 @@ const products: Product[] = [
         min: 0,
         max: 2,
         required: true,
-        min: 1,
       },
       {
         id: "garlic-bread-side",

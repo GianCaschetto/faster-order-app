@@ -15,6 +15,7 @@ export default function CurrencyDisplay({
 }: CurrencyDisplayProps) {
   const [showBs, setShowBs] = useState(false);
   const [exchangeRate, setExchangeRate] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [rateSource, setRateSource] = useState<string>("bcv");
 
   useEffect(() => {

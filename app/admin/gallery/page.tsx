@@ -1,16 +1,6 @@
 "use client";
-
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import {
-  Plus,
-  Search,
-  Trash2,
-  ArrowLeft,
-  ImageIcon,
-  Copy,
-  Check,
-} from "lucide-react";
+import { Plus, Search, Trash2, ImageIcon, Copy, Check } from "lucide-react";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
@@ -35,7 +25,6 @@ import { toast } from "@/components/ui/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Dropzone } from "@/components/dropzone";
-import Link from "next/link";
 
 // Gallery image type
 type GalleryImage = {
@@ -104,7 +93,6 @@ const sampleImages: GalleryImage[] = [
 ];
 
 export default function GalleryPage() {
-  const router = useRouter();
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isAddImageOpen, setIsAddImageOpen] = useState(false);

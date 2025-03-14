@@ -49,6 +49,7 @@ export default function ProductModal({
     extras: Extra[];
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [extraGroups, setExtraGroups] = useState<ExtraGroup[]>([]);
   const [groupExtras, setGroupExtras] = useState<Extra[]>([]);
 
@@ -183,7 +184,8 @@ export default function ProductModal({
     return requiredExtras.every((extra) =>
       selectedExtras.some(
         (selected) =>
-          selected.extraId === extra.id && selected.quantity >= (extra.min ?? 1)
+          selected.extraId === extra.id &&
+          (selected.quantity ?? 1) >= (extra.min ?? 1)
       )
     );
   };

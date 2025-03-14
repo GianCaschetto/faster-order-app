@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import {
   Plus,
@@ -82,7 +81,6 @@ const categories = [
 ];
 
 export default function ProductsPage() {
-  const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
@@ -502,7 +500,7 @@ export default function ProductsPage() {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Products</h1>
           <p className="text-muted-foreground">
-            Manage your restaurant's menu items
+            Manage your restaurant&apos;s menu items
           </p>
         </div>
 
@@ -716,8 +714,8 @@ export default function ProductsPage() {
               <Package className="h-12 w-12 mx-auto text-muted-foreground" />
               <h3 className="mt-4 text-lg font-medium">No products found</h3>
               <p className="text-muted-foreground mt-2">
-                Try adjusting your search or filter to find what you're looking
-                for.
+                Try adjusting your search or filter to find what you&apos;re
+                looking for.
               </p>
               <Button
                 className="mt-4"

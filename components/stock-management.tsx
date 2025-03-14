@@ -254,13 +254,13 @@ const formSchema = z.object({
   search: z.string().optional(),
 });
 
-const stockItemSchema = z.object({
-  id: z.string(),
-  productId: z.string(),
-  productName: z.string(),
-  branchId: z.string(),
-  quantity: z.number().min(0, { message: "Quantity cannot be negative" }),
-});
+// const stockItemSchema = z.object({
+//   id: z.string(),
+//   productId: z.string(),
+//   productName: z.string(),
+//   branchId: z.string(),
+//   quantity: z.number().min(0, { message: "Quantity cannot be negative" }),
+// });
 
 interface StockManagementProps {
   selectedBranchId?: string;
@@ -272,6 +272,7 @@ export default function StockManagement({
   const [stock, setStock] = useState<StockItem[]>([]);
   const [filteredStock, setFilteredStock] = useState<StockItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [products, setProducts] = useState<any[]>([]);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -349,6 +350,7 @@ export default function StockManagement({
     }
 
     setFilteredStock(filtered);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stock, form.watch("branch"), form.watch("search"), products]);
 
   const handleQuantityChange = (id: string, newQuantity: number) => {
@@ -533,9 +535,9 @@ export default function StockManagement({
                         <Badge
                           variant={
                             item.quantity > 10
-                              ? "success"
-                              : item.quantity > 5
                               ? "default"
+                              : item.quantity > 5
+                              ? "secondary"
                               : "destructive"
                           }
                         >
