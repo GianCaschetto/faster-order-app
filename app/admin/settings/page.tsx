@@ -463,15 +463,15 @@ export default function SettingsPage() {
     });
   };
 
-  // const onAppearanceSubmit = (data: z.infer<typeof appearanceFormSchema>) => {
-  //   // Save to localStorage
-  //   localStorage.setItem("restaurantAppearanceSettings", JSON.stringify(data));
+  const onAppearanceSubmit = (data: z.infer<typeof appearanceFormSchema>) => {
+    // Save to localStorage
+    localStorage.setItem("restaurantAppearanceSettings", JSON.stringify(data));
 
-  //   toast({
-  //     title: "Appearance settings updated",
-  //     description: "Your appearance settings have been saved successfully.",
-  //   });
-  // };
+    toast({
+      title: "Appearance settings updated",
+      description: "Your appearance settings have been saved successfully.",
+    });
+  };
 
   // const onNotificationSubmit = (
   //   data: z.infer<typeof notificationFormSchema>
@@ -488,15 +488,15 @@ export default function SettingsPage() {
   //   });
   // };
 
-  // const onPaymentSubmit = (data: z.infer<typeof paymentFormSchema>) => {
-  //   // Save to localStorage
-  //   localStorage.setItem("restaurantPaymentSettings", JSON.stringify(data));
+  const onPaymentSubmit = (data: z.infer<typeof paymentFormSchema>) => {
+    // Save to localStorage
+    localStorage.setItem("restaurantPaymentSettings", JSON.stringify(data));
 
-  //   toast({
-  //     title: "Payment settings updated",
-  //     description: "Your payment settings have been saved successfully.",
-  //   });
-  // };
+    toast({
+      title: "Payment settings updated",
+      description: "Your payment settings have been saved successfully.",
+    });
+  };
 
   const onWhatsAppSubmit = (data: z.infer<typeof whatsAppFormSchema>) => {
     // Update branch phone numbers based on current branches
@@ -603,15 +603,6 @@ export default function SettingsPage() {
     setEditingBranchId(null);
     setEditBranchName("");
     setEditBranchAddress("");
-
-    // Show success message
-    toast({
-      title: "Branch updated",
-      description: `Branch "${editBranchName}" has been updated successfully.`,
-    });
-
-    // Trigger a storage event to notify other components
-    window.dispatchEvent(new Event("storage"));
   };
 
   const deleteBranch = (branchId: string) => {
@@ -1094,17 +1085,742 @@ export default function SettingsPage() {
 
         {/* Appearance Settings */}
         <TabsContent value="appearance" className="space-y-4 mt-4">
-          {/* Appearance settings content - omitted for brevity */}
+          {/* Appearance settings content */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Appearance</CardTitle>
+              <CardDescription>
+                Customize the look and feel of your restaurant website
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Form {...appearanceForm}>
+                <form
+                  id="appearance-form"
+                  onSubmit={appearanceForm.handleSubmit(onAppearanceSubmit)}
+                  className="space-y-4"
+                >
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-medium">Theme</h3>
+
+                    <FormField
+                      control={appearanceForm.control}
+                      name="theme"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Color Theme</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select theme" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="light">Light</SelectItem>
+                              <SelectItem value="dark">Dark</SelectItem>
+                              <SelectItem value="system">
+                                System (follows device settings)
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormDescription>
+                            Choose the default color theme for your website
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={appearanceForm.control}
+                        name="primaryColor"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Primary Color</FormLabel>
+                            <div className="flex gap-2">
+                              <FormControl>
+                                <Input
+                                  type="color"
+                                  {...field}
+                                  className="w-12 h-10 p-1"
+                                />
+                              </FormControl>
+                              <Input
+                                value={field.value}
+                                onChange={field.onChange}
+                                className="flex-1"
+                              />
+                            </div>
+                            <FormDescription>
+                              Main color for buttons and accents
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={appearanceForm.control}
+                        name="accentColor"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Accent Color</FormLabel>
+                            <div className="flex gap-2">
+                              <FormControl>
+                                <Input
+                                  type="color"
+                                  {...field}
+                                  className="w-12 h-10 p-1"
+                                />
+                              </FormControl>
+                              <Input
+                                value={field.value}
+                                onChange={field.onChange}
+                                className="flex-1"
+                              />
+                            </div>
+                            <FormDescription>
+                              Secondary color for highlights
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </div>
+
+                  <Separator className="my-4" />
+
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-medium">Branding</h3>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={appearanceForm.control}
+                        name="logo"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Logo URL</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="https://example.com/logo.png"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormDescription>
+                              URL to your restaurant logo image
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={appearanceForm.control}
+                        name="favicon"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Favicon URL</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="https://example.com/favicon.ico"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormDescription>
+                              URL to your website favicon
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={appearanceForm.control}
+                        name="showBranchSelector"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                            <div className="space-y-0.5">
+                              <FormLabel>Show Branch Selector</FormLabel>
+                              <FormDescription>
+                                Display branch selection dropdown to customers
+                              </FormDescription>
+                            </div>
+                            <FormControl>
+                              <Switch
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={appearanceForm.control}
+                        name="showCurrencySymbol"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                            <div className="space-y-0.5">
+                              <FormLabel>Show Currency Symbol</FormLabel>
+                              <FormDescription>
+                                Display currency symbol with prices
+                              </FormDescription>
+                            </div>
+                            <FormControl>
+                              <Switch
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </div>
+
+                  <Separator className="my-4" />
+
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-medium">Date & Time Format</h3>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={appearanceForm.control}
+                        name="dateFormat"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Date Format</FormLabel>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select date format" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="MM/DD/YYYY">
+                                  MM/DD/YYYY (US)
+                                </SelectItem>
+                                <SelectItem value="DD/MM/YYYY">
+                                  DD/MM/YYYY (EU)
+                                </SelectItem>
+                                <SelectItem value="YYYY-MM-DD">
+                                  YYYY-MM-DD (ISO)
+                                </SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormDescription>
+                              Format for displaying dates
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={appearanceForm.control}
+                        name="timeFormat"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Time Format</FormLabel>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select time format" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="12h">
+                                  12-hour (AM/PM)
+                                </SelectItem>
+                                <SelectItem value="24h">24-hour</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormDescription>
+                              Format for displaying times
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="mt-6">
+                    <Alert>
+                      <Info className="h-4 w-4" />
+                      <AlertTitle>Theme Preview</AlertTitle>
+                      <AlertDescription>
+                        <div className="mt-2 space-y-4">
+                          <div className="flex flex-wrap gap-2">
+                            <div
+                              className="w-24 h-12 rounded flex items-center justify-center text-white"
+                              style={{
+                                backgroundColor:
+                                  appearanceForm.watch("primaryColor"),
+                              }}
+                            >
+                              Primary
+                            </div>
+                            <div
+                              className="w-24 h-12 rounded flex items-center justify-center text-white"
+                              style={{
+                                backgroundColor:
+                                  appearanceForm.watch("accentColor"),
+                              }}
+                            >
+                              Accent
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button>Primary Button</Button>
+                            <Button variant="outline">Outline Button</Button>
+                          </div>
+                        </div>
+                      </AlertDescription>
+                    </Alert>
+                  </div>
+                </form>
+              </Form>
+            </CardContent>
+            <CardFooter className="flex justify-between">
+              <Button variant="outline">Cancel</Button>
+              <Button type="submit" form="appearance-form">
+                <Save className="mr-2 h-4 w-4" />
+                Save Changes
+              </Button>
+            </CardFooter>
+          </Card>
         </TabsContent>
 
         {/* Notification Settings */}
         <TabsContent value="notifications" className="space-y-4 mt-4">
-          {/* Notification settings content - omitted for brevity */}
+          {/* Notification settings content */}
         </TabsContent>
 
         {/* Payment Settings */}
         <TabsContent value="payment" className="space-y-4 mt-4">
-          {/* Payment settings content - omitted for brevity */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Payment Methods</CardTitle>
+              <CardDescription>
+                Configure payment options for your customers
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Form {...paymentForm}>
+                <form
+                  id="payment-form"
+                  onSubmit={paymentForm.handleSubmit(onPaymentSubmit)}
+                  className="space-y-4"
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField
+                      control={paymentForm.control}
+                      name="acceptCash"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                          <div className="space-y-0.5">
+                            <FormLabel>Accept Cash</FormLabel>
+                            <FormDescription>
+                              Allow customers to pay with cash on delivery
+                            </FormDescription>
+                          </div>
+                          <FormControl>
+                            <Switch
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={paymentForm.control}
+                      name="acceptCards"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                          <div className="space-y-0.5">
+                            <FormLabel>Accept Cards</FormLabel>
+                            <FormDescription>
+                              Allow customers to pay with credit/debit cards
+                            </FormDescription>
+                          </div>
+                          <FormControl>
+                            <Switch
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <Separator className="my-4" />
+
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-medium">Stripe Integration</h3>
+
+                    <FormField
+                      control={paymentForm.control}
+                      name="stripeEnabled"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                          <div className="space-y-0.5">
+                            <FormLabel>Enable Stripe</FormLabel>
+                            <FormDescription>
+                              Process payments through Stripe
+                            </FormDescription>
+                          </div>
+                          <FormControl>
+                            <Switch
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+
+                    {paymentForm.watch("stripeEnabled") && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <FormField
+                          control={paymentForm.control}
+                          name="stripePublicKey"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Stripe Public Key</FormLabel>
+                              <FormControl>
+                                <Input placeholder="pk_test_..." {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={paymentForm.control}
+                          name="stripeSecretKey"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Stripe Secret Key</FormLabel>
+                              <FormControl>
+                                <Input
+                                  placeholder="sk_test_..."
+                                  type="password"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  <Separator className="my-4" />
+
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-medium">PayPal Integration</h3>
+
+                    <FormField
+                      control={paymentForm.control}
+                      name="paypalEnabled"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                          <div className="space-y-0.5">
+                            <FormLabel>Enable PayPal</FormLabel>
+                            <FormDescription>
+                              Process payments through PayPal
+                            </FormDescription>
+                          </div>
+                          <FormControl>
+                            <Switch
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+
+                    {paymentForm.watch("paypalEnabled") && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <FormField
+                          control={paymentForm.control}
+                          name="paypalClientId"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>PayPal Client ID</FormLabel>
+                              <FormControl>
+                                <Input placeholder="Client ID" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={paymentForm.control}
+                          name="paypalSecretKey"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>PayPal Secret Key</FormLabel>
+                              <FormControl>
+                                <Input
+                                  placeholder="Secret Key"
+                                  type="password"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  <Separator className="my-4" />
+
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-medium">
+                      Venezuelan Bolivar (Bs) Support
+                    </h3>
+
+                    <FormField
+                      control={paymentForm.control}
+                      name="enableVenezuelanBs"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                          <div className="space-y-0.5">
+                            <FormLabel>
+                              Enable Venezuelan Bolivar (Bs)
+                            </FormLabel>
+                            <FormDescription>
+                              Allow customers to pay in Venezuelan Bolivar
+                            </FormDescription>
+                          </div>
+                          <FormControl>
+                            <Switch
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+
+                    {paymentForm.watch("enableVenezuelanBs") && (
+                      <>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          <FormField
+                            control={paymentForm.control}
+                            name="bcvRate"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>BCV Rate (USD to Bs)</FormLabel>
+                                <FormControl>
+                                  <Input
+                                    type="number"
+                                    step="0.01"
+                                    min="0"
+                                    {...field}
+                                  />
+                                </FormControl>
+                                <FormDescription>
+                                  Official exchange rate
+                                </FormDescription>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+
+                          <FormField
+                            control={paymentForm.control}
+                            name="parallelRate"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Parallel Rate (USD to Bs)</FormLabel>
+                                <FormControl>
+                                  <Input
+                                    type="number"
+                                    step="0.01"
+                                    min="0"
+                                    {...field}
+                                  />
+                                </FormControl>
+                                <FormDescription>
+                                  Market exchange rate
+                                </FormDescription>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+
+                          <FormField
+                            control={paymentForm.control}
+                            name="customRate"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Custom Rate (USD to Bs)</FormLabel>
+                                <FormControl>
+                                  <Input
+                                    type="number"
+                                    step="0.01"
+                                    min="0"
+                                    {...field}
+                                  />
+                                </FormControl>
+                                <FormDescription>
+                                  Your custom exchange rate
+                                </FormDescription>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+
+                        <FormField
+                          control={paymentForm.control}
+                          name="preferredRateSource"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>
+                                Preferred Exchange Rate Source
+                              </FormLabel>
+                              <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                              >
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select rate source" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectItem value="bcv">
+                                    BCV (Official)
+                                  </SelectItem>
+                                  <SelectItem value="parallel">
+                                    Parallel Market
+                                  </SelectItem>
+                                  <SelectItem value="custom">
+                                    Custom Rate
+                                  </SelectItem>
+                                </SelectContent>
+                              </Select>
+                              <FormDescription>
+                                Choose which exchange rate to use for USD to Bs
+                                conversion
+                              </FormDescription>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </>
+                    )}
+                  </div>
+
+                  <Separator className="my-4" />
+
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-medium">
+                      Additional Payment Settings
+                    </h3>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={paymentForm.control}
+                        name="taxIncluded"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                            <div className="space-y-0.5">
+                              <FormLabel>Tax Included in Prices</FormLabel>
+                              <FormDescription>
+                                Are product prices tax-inclusive?
+                              </FormDescription>
+                            </div>
+                            <FormControl>
+                              <Switch
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+
+                      <div className="space-y-4">
+                        <FormField
+                          control={paymentForm.control}
+                          name="deliveryFee"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Delivery Fee</FormLabel>
+                              <FormControl>
+                                <Input
+                                  type="number"
+                                  step="0.01"
+                                  min="0"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={paymentForm.control}
+                          name="minimumOrderAmount"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Minimum Order Amount</FormLabel>
+                              <FormControl>
+                                <Input
+                                  type="number"
+                                  step="0.01"
+                                  min="0"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormDescription>
+                                Minimum amount required for checkout
+                              </FormDescription>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </Form>
+            </CardContent>
+            <CardFooter className="flex justify-between">
+              <Button variant="outline">Cancel</Button>
+              <Button type="submit" form="payment-form">
+                <Save className="mr-2 h-4 w-4" />
+                Save Changes
+              </Button>
+            </CardFooter>
+          </Card>
         </TabsContent>
 
         {/* WhatsApp Settings */}
