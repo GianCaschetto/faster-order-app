@@ -376,7 +376,7 @@ export default function OrdersPage() {
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
       {/* Hidden audio element for notifications */}
-      <audio ref={audioRef} src="/notification.mp3" />
+      {/* <audio ref={audioRef} src="/notification.mp3" /> */}
 
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="flex items-center gap-2">

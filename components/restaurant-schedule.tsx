@@ -20,8 +20,14 @@ export type DaySchedule = {
 
 export type WeekSchedule = DaySchedule[];
 
+export type BranchSchedule = {
+  branchId: string;
+  schedule: WeekSchedule;
+};
+
 interface RestaurantScheduleProps {
   schedule?: WeekSchedule;
+  branchId?: string;
   compact?: boolean;
 }
 
@@ -38,6 +44,7 @@ export const defaultSchedule: WeekSchedule = [
 
 export default function RestaurantSchedule({
   schedule = defaultSchedule,
+
   compact = false,
 }: RestaurantScheduleProps) {
   const [currentDay, setCurrentDay] = useState<string>("");
@@ -85,7 +92,7 @@ export default function RestaurantSchedule({
     return (
       <div className="flex items-center gap-2">
         <Clock className="h-4 w-4 text-muted-foreground" />
-        <Badge variant={isOpen ? "default" : "destructive"}>
+        <Badge variant={isOpen ? "default" : "secondary"}>
           {isOpen ? "Open Now" : "Closed"}
         </Badge>
       </div>
@@ -99,7 +106,7 @@ export default function RestaurantSchedule({
           <Clock className="h-5 w-5" /> Hours of Operation
         </CardTitle>
         <CardDescription>
-          <Badge variant={isOpen ? "default" : "destructive"} className="mt-1">
+          <Badge variant={isOpen ? "default" : "secondary"} className="mt-1">
             {isOpen ? "Open Now" : "Closed"}
           </Badge>
         </CardDescription>

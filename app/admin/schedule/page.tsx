@@ -1,9 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Save } from "lucide-react";
+import { Save, Copy } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -28,11 +27,25 @@ import {
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "@/components/ui/use-toast";
-import { defaultSchedule } from "@/components/restaurant-schedule";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  defaultSchedule,
+  type BranchSchedule,
+} from "@/components/restaurant-schedule";
+import { branches } from "@/components/restaurant-menu";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const timeRegex = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
 
 const formSchema = z.object({
+  branchId: z.string(),
   schedule: z.array(
     z.object({
       day: z.string(),
@@ -51,13 +64,18 @@ export default function ScheduleManagement() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [branchSchedules, setBranchSchedules] = useState<BranchSchedule[]>([]);
+  const [selectedTab, setSelectedTab] = useState<string>("branch");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      branchId: branches[0]?.id || "",
       schedule: [],
     },
   });
+
+  const watchBranchId = form.watch("branchId");
 
   useEffect(() => {
     // Check if user is authenticated
@@ -70,35 +88,117 @@ export default function ScheduleManagement() {
       setIsAuthenticated(true);
     }
 
-    // Load saved schedule or use default
-    const savedSchedule = localStorage.getItem("restaurantSchedule");
-    if (savedSchedule) {
+    // Load saved schedules or initialize with defaults
+    const savedSchedules = localStorage.getItem("branchSchedules");
+    let schedules: BranchSchedule[] = [];
+
+    if (savedSchedules) {
       try {
-        const parsedSchedule = JSON.parse(savedSchedule);
-        form.reset({ schedule: parsedSchedule });
+        schedules = JSON.parse(savedSchedules);
       } catch (error) {
-        console.error("Error parsing saved schedule:", error);
-        form.reset({ schedule: defaultSchedule });
+        console.error("Error parsing saved schedules:", error);
+        // Initialize with default schedules for all branches
+        schedules = branches.map((branch) => ({
+          branchId: branch.id,
+          schedule: [...defaultSchedule], // Create a copy of the default schedule
+        }));
       }
     } else {
-      form.reset({ schedule: defaultSchedule });
+      // Initialize with default schedules for all branches
+      schedules = branches.map((branch) => ({
+        branchId: branch.id,
+        schedule: [...defaultSchedule], // Create a copy of the default schedule
+      }));
+    }
+
+    setBranchSchedules(schedules);
+
+    // Set the form with the schedule for the first branch
+    if (schedules.length > 0 && branches.length > 0) {
+      const firstBranchId = branches[0].id;
+      const firstBranchSchedule = schedules.find(
+        (s) => s.branchId === firstBranchId
+      );
+
+      if (firstBranchSchedule) {
+        form.reset({
+          branchId: firstBranchId,
+          schedule: firstBranchSchedule.schedule,
+        });
+      }
     }
 
     setIsLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router, form.reset]);
+
+  // When branch selection changes, update the form with that branch's schedule
+  useEffect(() => {
+    if (!watchBranchId || branchSchedules.length === 0) return;
+
+    const selectedBranchSchedule = branchSchedules.find(
+      (s) => s.branchId === watchBranchId
+    );
+
+    if (selectedBranchSchedule) {
+      form.setValue("schedule", selectedBranchSchedule.schedule);
+    } else {
+      // If no schedule exists for this branch, create one with defaults
+      form.setValue("schedule", [...defaultSchedule]);
+    }
+  }, [watchBranchId, branchSchedules, form]);
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
 
-    // Save schedule to localStorage (in a real app, this would be an API call)
-    localStorage.setItem("restaurantSchedule", JSON.stringify(values.schedule));
+    // Update the branch schedules array
+    const updatedSchedules = [...branchSchedules];
+    const existingIndex = updatedSchedules.findIndex(
+      (s) => s.branchId === values.branchId
+    );
+
+    if (existingIndex >= 0) {
+      updatedSchedules[existingIndex] = {
+        branchId: values.branchId,
+        schedule: values.schedule,
+      };
+    } else {
+      updatedSchedules.push({
+        branchId: values.branchId,
+        schedule: values.schedule,
+      });
+    }
+
+    // Save updated schedules to localStorage
+    localStorage.setItem("branchSchedules", JSON.stringify(updatedSchedules));
+    setBranchSchedules(updatedSchedules);
 
     toast({
       title: "Schedule updated",
-      description: "The restaurant schedule has been updated successfully.",
+      description: `The schedule for ${
+        branches.find((b) => b.id === values.branchId)?.name
+      } has been updated successfully.`,
     });
 
     setIsLoading(false);
+  };
+
+  const applyToAllBranches = () => {
+    if (!watchBranchId) return;
+
+    const currentSchedule = form.getValues("schedule");
+    const updatedSchedules = branches.map((branch) => ({
+      branchId: branch.id,
+      schedule: [...currentSchedule], // Create a copy of the current schedule
+    }));
+
+    setBranchSchedules(updatedSchedules);
+    localStorage.setItem("branchSchedules", JSON.stringify(updatedSchedules));
+
+    toast({
+      title: "Schedule applied to all branches",
+      description: "The current schedule has been applied to all branches.",
+    });
   };
 
   if (isLoading) {
@@ -119,118 +219,174 @@ export default function ScheduleManagement() {
         <h2 className="text-3xl font-bold tracking-tight">
           Schedule Management
         </h2>
-        <Button
-          onClick={() => form.handleSubmit(onSubmit)()}
-          disabled={isLoading}
-        >
-          <Save className="mr-2 h-4 w-4" />
-          Save Changes
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            onClick={applyToAllBranches}
+            disabled={isLoading}
+          >
+            <Copy className="mr-2 h-4 w-4" />
+            Apply to All Branches
+          </Button>
+          <Button
+            onClick={() => form.handleSubmit(onSubmit)()}
+            disabled={isLoading}
+          >
+            <Save className="mr-2 h-4 w-4" />
+            Save Changes
+          </Button>
+        </div>
       </div>
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Hours of Operation</CardTitle>
-              <CardDescription>
-                Set your restaurant&apos;s opening hours for each day of the
-                week.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {form.watch("schedule").map((day, index) => (
-                <div
-                  key={day.day}
-                  className="grid gap-4 md:grid-cols-4 items-center"
-                >
-                  <div className="font-medium">{day.day}</div>
+      <Tabs value={selectedTab} onValueChange={setSelectedTab}>
+        <TabsList className="mb-4">
+          <TabsTrigger value="branch">Branch Schedule</TabsTrigger>
+        </TabsList>
 
+        <TabsContent value="branch">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Branch Hours of Operation</CardTitle>
+                  <CardDescription>
+                    Set your restaurant&apos;s opening hours for each branch.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
                   <FormField
                     control={form.control}
-                    name={`schedule.${index}.isClosed`}
+                    name="branchId"
                     render={({ field }) => (
-                      <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
-                        <div className="space-y-0.5">
-                          <FormLabel>Closed</FormLabel>
-                          <FormDescription>
-                            Restaurant is closed on this day
-                          </FormDescription>
-                        </div>
-                        <FormControl>
-                          <Switch
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                          />
-                        </FormControl>
+                      <FormItem>
+                        <FormLabel>Select Branch</FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select a branch" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {branches.map((branch) => (
+                              <SelectItem key={branch.id} value={branch.id}>
+                                {branch.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormDescription>
+                          Choose the branch to edit its schedule
+                        </FormDescription>
                       </FormItem>
                     )}
                   />
 
-                  <div
-                    className={
-                      form.watch(`schedule.${index}.isClosed`)
-                        ? "opacity-50"
-                        : ""
-                    }
-                  >
-                    <FormField
-                      control={form.control}
-                      name={`schedule.${index}.openTime`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Opening Time</FormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              placeholder="09:00"
-                              disabled={form.watch(
-                                `schedule.${index}.isClosed`
-                              )}
-                            />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+                  <Alert>
+                    <AlertDescription>
+                      You are editing the schedule for{" "}
+                      {branches.find((b) => b.id === watchBranchId)?.name}. To
+                      apply this schedule to all branches, click &quot;Apply to
+                      All Branches&quot; after making your changes.
+                    </AlertDescription>
+                  </Alert>
 
-                  <div
-                    className={
-                      form.watch(`schedule.${index}.isClosed`)
-                        ? "opacity-50"
-                        : ""
-                    }
-                  >
-                    <FormField
-                      control={form.control}
-                      name={`schedule.${index}.closeTime`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Closing Time</FormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              placeholder="22:00"
-                              disabled={form.watch(
-                                `schedule.${index}.isClosed`
-                              )}
-                            />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-              ))}
-            </CardContent>
-            <CardFooter>
-              <Button type="submit" disabled={isLoading}>
-                Save Changes
-              </Button>
-            </CardFooter>
-          </Card>
-        </form>
-      </Form>
+                  {form.watch("schedule").map((day, index) => (
+                    <div
+                      key={day.day}
+                      className="grid gap-4 md:grid-cols-4 items-center"
+                    >
+                      <div className="font-medium">{day.day}</div>
+
+                      <FormField
+                        control={form.control}
+                        name={`schedule.${index}.isClosed`}
+                        render={({ field }) => (
+                          <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                            <div className="space-y-0.5">
+                              <FormLabel>Closed</FormLabel>
+                              <FormDescription>
+                                Restaurant is closed on this day
+                              </FormDescription>
+                            </div>
+                            <FormControl>
+                              <Switch
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+
+                      <div
+                        className={
+                          form.watch(`schedule.${index}.isClosed`)
+                            ? "opacity-50"
+                            : ""
+                        }
+                      >
+                        <FormField
+                          control={form.control}
+                          name={`schedule.${index}.openTime`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Opening Time</FormLabel>
+                              <FormControl>
+                                <Input
+                                  {...field}
+                                  placeholder="09:00"
+                                  disabled={form.watch(
+                                    `schedule.${index}.isClosed`
+                                  )}
+                                />
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+
+                      <div
+                        className={
+                          form.watch(`schedule.${index}.isClosed`)
+                            ? "opacity-50"
+                            : ""
+                        }
+                      >
+                        <FormField
+                          control={form.control}
+                          name={`schedule.${index}.closeTime`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Closing Time</FormLabel>
+                              <FormControl>
+                                <Input
+                                  {...field}
+                                  placeholder="22:00"
+                                  disabled={form.watch(
+                                    `schedule.${index}.isClosed`
+                                  )}
+                                />
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </CardContent>
+                <CardFooter>
+                  <Button type="submit" disabled={isLoading}>
+                    Save Changes
+                  </Button>
+                </CardFooter>
+              </Card>
+            </form>
+          </Form>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

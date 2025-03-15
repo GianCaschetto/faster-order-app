@@ -1,8 +1,10 @@
 "use client";
 
+import type React from "react";
+
 import { useState, useEffect } from "react";
+import { X, Plus, Minus } from "lucide-react";
 import Image from "next/image";
-import { Minus, Plus, X, AlertCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -11,10 +13,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import type { Product, Extra, SelectedExtra } from "./restaurant-menu";
-import CurrencyDisplay from "./currency-display";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import type { Product, SelectedExtra } from "./restaurant-menu";
 
 interface ProductModalProps {
   product: Product;
@@ -39,94 +42,97 @@ export default function ProductModal({
 }: ProductModalProps) {
   const [quantity, setQuantity] = useState(1);
   const [selectedExtras, setSelectedExtras] = useState<SelectedExtra[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
 
-  // Extra group type
-  type ExtraGroup = {
-    id: string;
-    name: string;
-    description: string;
-    categoryIds: string[];
-    extras: Extra[];
-  };
+  // Initialize required extras with their minimum quantity
+  useEffect(() => {
+    if (product.extras) {
+      const requiredExtras = product.extras
+        .filter((extra) => extra.required)
+        .map((extra) => ({
+          extraId: extra.id,
+          name: extra.name,
+          price: extra.price,
+          quantity: extra.min || 1,
+        }));
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [extraGroups, setExtraGroups] = useState<ExtraGroup[]>([]);
-  const [groupExtras, setGroupExtras] = useState<Extra[]>([]);
+      setSelectedExtras(requiredExtras);
+    }
+  }, [product]);
 
   useEffect(() => {
-    // Load extra groups from localStorage
-    const savedExtraGroups = localStorage.getItem("restaurantExtraGroups");
-    if (savedExtraGroups && product.extraGroupIds?.length) {
-      try {
-        const groups = JSON.parse(savedExtraGroups) as ExtraGroup[];
-        setExtraGroups(groups);
+    setIsOpen(true);
+  }, []);
 
-        // Get all extras from the selected groups
-        const selectedGroups = groups.filter((group) =>
-          product.extraGroupIds?.includes(group.id)
-        );
+  const handleClose = () => {
+    setIsOpen(false);
+    setTimeout(onClose, 300); // Wait for animation to complete
+  };
 
-        // Flatten all extras from selected groups
-        const allGroupExtras = selectedGroups.flatMap((group) => group.extras);
-
-        // Remove duplicates based on id
-        const uniqueExtras = allGroupExtras.filter(
-          (extra, index, self) =>
-            index === self.findIndex((e) => e.id === extra.id)
-        );
-
-        setGroupExtras(uniqueExtras);
-      } catch (error) {
-        console.error("Error parsing saved extra groups:", error);
-      }
-    }
-  }, [product.extraGroupIds]);
-
-  const handleQuantityChange = (newQuantity: number) => {
-    if (newQuantity >= 1) {
-      // Don't allow more than stock quantity if available
-      if (stockQuantity !== null && newQuantity > stockQuantity) {
-        newQuantity = stockQuantity;
-      }
-      setQuantity(newQuantity);
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number.parseInt(e.target.value);
+    if (!isNaN(value) && value > 0) {
+      setQuantity(value);
     }
   };
 
-  const handleExtraQuantityChange = (extra: Extra, quantity: number) => {
-    // Get min and max values (default to 0 and 10 if not specified)
-    const min = extra.min ?? 0;
-    const max = extra.max ?? 10;
+  const incrementQuantity = () => {
+    if (stockQuantity !== null && quantity >= stockQuantity) {
+      return;
+    }
+    setQuantity((prev) => prev + 1);
+  };
 
-    // Ensure quantity is within bounds
-    if (quantity < min) quantity = min;
-    if (quantity > max) quantity = max;
+  const decrementQuantity = () => {
+    if (quantity > 1) {
+      setQuantity((prev) => prev - 1);
+    }
+  };
+
+  const handleExtraQuantityChange = (
+    extraId: string,
+    extraName: string,
+    extraPrice: number,
+    newQuantity: number
+  ) => {
+    // Find the extra in the product
+    const extra = product.extras?.find((e) => e.id === extraId);
+    if (!extra) return;
+
+    // Enforce min/max constraints
+    if (extra.min !== undefined && newQuantity < extra.min) {
+      newQuantity = extra.min;
+    }
+    if (extra.max !== undefined && newQuantity > extra.max) {
+      newQuantity = extra.max;
+    }
 
     setSelectedExtras((prev) => {
-      const existingIndex = prev.findIndex((item) => item.extraId === extra.id);
+      // Check if this extra is already selected
+      const existingIndex = prev.findIndex((e) => e.extraId === extraId);
 
       if (existingIndex >= 0) {
         // If quantity is 0 and it's not required, remove it
-        if (quantity === 0 && !(extra.required ?? false)) {
-          return prev.filter((item) => item.extraId !== extra.id);
+        if (newQuantity === 0 && !extra.required) {
+          return prev.filter((_, i) => i !== existingIndex);
         }
 
         // Otherwise update the quantity
         const updated = [...prev];
         updated[existingIndex] = {
           ...updated[existingIndex],
-          quantity: quantity,
-          price: extra.price,
+          quantity: newQuantity,
         };
         return updated;
-      } else if (quantity > 0) {
+      } else if (newQuantity > 0) {
         // Add new extra with quantity
         return [
           ...prev,
           {
-            extraId: extra.id,
-            name: extra.name,
-            price: extra.price,
-            quantity: quantity,
+            extraId,
+            name: extraName,
+            price: extraPrice,
+            quantity: newQuantity,
           },
         ];
       }
@@ -135,31 +141,59 @@ export default function ProductModal({
     });
   };
 
-  // Initialize required extras with min quantity
-  useEffect(() => {
-    const allExtras = [...(product.extras || []), ...groupExtras];
-    const requiredExtras = allExtras.filter((extra) => extra.required);
+  const incrementExtraQuantity = (
+    extraId: string,
+    extraName: string,
+    extraPrice: number
+  ) => {
+    const extra = product.extras?.find((e) => e.id === extraId);
+    if (!extra) return;
 
-    if (requiredExtras.length > 0) {
-      setSelectedExtras((prev) => {
-        const newExtras = [...prev];
+    const currentExtra = selectedExtras.find((e) => e.extraId === extraId);
+    const currentQuantity = currentExtra?.quantity || 0;
 
-        for (const extra of requiredExtras) {
-          // Only add if not already in the selection
-          if (!newExtras.some((e) => e.extraId === extra.id)) {
-            newExtras.push({
-              extraId: extra.id,
-              name: extra.name,
-              price: extra.price,
-              quantity: extra.min ?? 1,
-            });
-          }
-        }
+    // Don't increment if already at max
+    if (extra.max !== undefined && currentQuantity >= extra.max) return;
 
-        return newExtras;
-      });
-    }
-  }, [product.extras, groupExtras]);
+    handleExtraQuantityChange(
+      extraId,
+      extraName,
+      extraPrice,
+      currentQuantity + 1
+    );
+  };
+
+  const decrementExtraQuantity = (
+    extraId: string,
+    extraName: string,
+    extraPrice: number
+  ) => {
+    const extra = product.extras?.find((e) => e.id === extraId);
+    if (!extra) return;
+
+    const currentExtra = selectedExtras.find((e) => e.extraId === extraId);
+    const currentQuantity = currentExtra?.quantity || 0;
+
+    // Don't decrement below min for required extras
+    if (
+      extra.required &&
+      extra.min !== undefined &&
+      currentQuantity <= extra.min
+    )
+      return;
+
+    handleExtraQuantityChange(
+      extraId,
+      extraName,
+      extraPrice,
+      currentQuantity - 1
+    );
+  };
+
+  const getExtraQuantity = (extraId: string): number => {
+    const extra = selectedExtras.find((e) => e.extraId === extraId);
+    return extra?.quantity || 0;
+  };
 
   const calculateTotalPrice = () => {
     const extrasTotal = selectedExtras.reduce(
@@ -169,220 +203,202 @@ export default function ProductModal({
     return (product.price + extrasTotal) * quantity;
   };
 
+  // Check if all required extras are selected with their minimum quantities
+  const areRequiredExtrasSelected = (): boolean => {
+    if (!product.extras) return true;
+
+    return product.extras
+      .filter((extra) => extra.required)
+      .every((extra) => {
+        const selectedExtra = selectedExtras.find(
+          (e) => e.extraId === extra.id
+        );
+        return (
+          selectedExtra && (selectedExtra.quantity ?? 1) >= (extra.min || 1)
+        );
+      });
+  };
+
   const handleAddToCart = () => {
-    if (inStock) {
-      onAddToCart(product, quantity, selectedExtras);
-      onClose();
-    }
-  };
-
-  // Check if all required extras are selected
-  const allRequiredExtrasSelected = () => {
-    const allExtras = [...(product.extras || []), ...groupExtras];
-    const requiredExtras = allExtras.filter((extra) => extra.required);
-
-    return requiredExtras.every((extra) =>
-      selectedExtras.some(
-        (selected) =>
-          selected.extraId === extra.id &&
-          (selected.quantity ?? 1) >= (extra.min ?? 1)
-      )
-    );
-  };
-
-  // Render extra counter with min/max/required handling
-  const renderExtraCounter = (extra: Extra) => {
-    const selectedExtra = selectedExtras.find(
-      (item) => item.extraId === extra.id
-    );
-    const currentQuantity = selectedExtra?.quantity || 0;
-    const min = extra.min ?? 0;
-    const max = extra.max ?? 10;
-    const isRequired = extra.required ?? false;
-
-    return (
-      <div key={extra.id} className="flex items-center justify-between py-2">
-        <div className="flex-1">
-          <div className="flex items-center">
-            <span className="font-medium">{extra.name}</span>
-            {isRequired && (
-              <Badge variant="outline" className="ml-2 text-xs">
-                Required
-              </Badge>
-            )}
-          </div>
-          <span className="text-sm text-muted-foreground">
-            +${extra.price.toFixed(2)} each
-          </span>
-        </div>
-        <div className="flex items-center">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() =>
-              handleExtraQuantityChange(extra, currentQuantity - 1)
-            }
-            disabled={
-              !inStock ||
-              currentQuantity <= min ||
-              (isRequired && currentQuantity <= min)
-            }
-            className="h-8 w-8"
-          >
-            <Minus className="h-3 w-3" />
-          </Button>
-          <span className="w-10 text-center">{currentQuantity}</span>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() =>
-              handleExtraQuantityChange(extra, currentQuantity + 1)
-            }
-            disabled={!inStock || currentQuantity >= max}
-            className="h-8 w-8"
-          >
-            <Plus className="h-3 w-3" />
-          </Button>
-        </div>
-      </div>
-    );
+    if (!inStock) return;
+    onAddToCart(product, quantity, selectedExtras);
+    handleClose();
   };
 
   return (
-    <Dialog open={true} onOpenChange={() => onClose()}>
-      <DialogContent className="sm:max-w-md md:max-w-lg">
+    <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
+      <DialogContent className="sm:max-w-[425px] md:max-w-[600px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <div className="flex items-center justify-between">
-            <DialogTitle className="text-xl">{product.name}</DialogTitle>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onClose}
-              className="h-8 w-8"
-            >
-              <X className="h-4 w-4" />
-            </Button>
-          </div>
+          <DialogTitle className="text-xl">{product.name}</DialogTitle>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute right-4 top-4"
+            onClick={handleClose}
+          >
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </Button>
         </DialogHeader>
 
         <div className="grid gap-4">
-          <div className="relative h-48 w-full rounded-md overflow-hidden">
+          <div className="relative aspect-video overflow-hidden rounded-lg">
             <Image
               src={product.image || "/placeholder.svg"}
               alt={product.name}
               fill
               className="object-cover"
             />
-
-            {showStock && !inStock && (
-              <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                <Badge variant="destructive" className="text-sm px-3 py-1">
-                  Out of Stock
-                </Badge>
-              </div>
-            )}
           </div>
 
           <div>
             <p className="text-muted-foreground">{product.description}</p>
-            <p className="text-xl font-bold mt-2">
-              <CurrencyDisplay amount={product.price} />
+            <p className="mt-2 text-lg font-semibold">
+              ${product.price.toFixed(2)}
             </p>
-
-            {showStock && inStock && stockQuantity !== null && (
-              <div className="mt-1 flex items-center">
-                <span className="text-sm text-muted-foreground">
-                  {stockQuantity > 10 ? (
-                    "In Stock"
-                  ) : stockQuantity > 5 ? (
-                    `Only ${stockQuantity} remaining`
-                  ) : (
-                    <span className="flex items-center text-yellow-700">
-                      <AlertCircle className="h-3 w-3 mr-1" />
-                      Low Stock: {stockQuantity} left
-                    </span>
-                  )}
-                </span>
-              </div>
-            )}
           </div>
+
+          {showStock && (
+            <div>
+              {inStock ? (
+                <Badge variant="outline" className="bg-green-50">
+                  In Stock{" "}
+                  {stockQuantity !== null && `(${stockQuantity} available)`}
+                </Badge>
+              ) : (
+                <Badge variant="outline" className="bg-red-50 text-red-600">
+                  Out of Stock
+                </Badge>
+              )}
+            </div>
+          )}
 
           <Separator />
 
           <div>
-            <h3 className="font-medium mb-2">Quantity</h3>
-            <div className="flex items-center">
+            <Label htmlFor="quantity">Quantity</Label>
+            <div className="flex items-center mt-1.5">
               <Button
                 variant="outline"
                 size="icon"
-                onClick={() => handleQuantityChange(quantity - 1)}
-                disabled={quantity <= 1 || !inStock}
-                className="h-8 w-8"
+                onClick={decrementQuantity}
+                disabled={quantity <= 1}
               >
-                <Minus className="h-3 w-3" />
+                <Minus className="h-4 w-4" />
               </Button>
-              <span className="w-12 text-center">{quantity}</span>
+              <Input
+                id="quantity"
+                type="number"
+                value={quantity}
+                onChange={handleQuantityChange}
+                min={1}
+                max={stockQuantity || undefined}
+                className="w-16 mx-2 text-center"
+              />
               <Button
                 variant="outline"
                 size="icon"
-                onClick={() => handleQuantityChange(quantity + 1)}
-                disabled={
-                  !inStock ||
-                  (stockQuantity !== null && quantity >= stockQuantity)
-                }
-                className="h-8 w-8"
+                onClick={incrementQuantity}
+                disabled={stockQuantity !== null && quantity >= stockQuantity}
               >
-                <Plus className="h-3 w-3" />
+                <Plus className="h-4 w-4" />
               </Button>
             </div>
           </div>
 
           {product.extras && product.extras.length > 0 && (
-            <>
-              <Separator />
-
-              <div>
-                <h3 className="font-medium mb-2">Extras</h3>
-                <div className="space-y-1">
-                  {product.extras.map((extra) => renderExtraCounter(extra))}
-                </div>
+            <div className="space-y-4">
+              <h3 className="font-medium">Extras</h3>
+              <div className="space-y-2">
+                {product.extras.map((extra) => (
+                  <div
+                    key={extra.id}
+                    className="flex items-center justify-between p-2 rounded-md border"
+                  >
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-2">
+                        <span>{extra.name}</span>
+                        {extra.required && (
+                          <Badge variant="secondary" className="text-xs">
+                            Required
+                          </Badge>
+                        )}
+                      </div>
+                      <span className="text-sm text-muted-foreground">
+                        +${extra.price.toFixed(2)}
+                        {extra.min !== undefined && extra.max !== undefined && (
+                          <span className="text-xs ml-1">
+                            {extra.min === 0 && extra.max === 1
+                              ? "(Optional)"
+                              : `(Min: ${extra.min}, Max: ${extra.max})`}
+                          </span>
+                        )}
+                      </span>
+                    </div>
+                    <div className="flex items-center">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="h-8 w-8"
+                        onClick={() =>
+                          decrementExtraQuantity(
+                            extra.id,
+                            extra.name,
+                            extra.price
+                          )
+                        }
+                        disabled={
+                          (extra.required &&
+                            getExtraQuantity(extra.id) <= (extra.min || 1)) ||
+                          getExtraQuantity(extra.id) === 0
+                        }
+                      >
+                        <Minus className="h-3 w-3" />
+                      </Button>
+                      <span className="w-8 text-center">
+                        {getExtraQuantity(extra.id)}
+                      </span>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="h-8 w-8"
+                        onClick={() =>
+                          incrementExtraQuantity(
+                            extra.id,
+                            extra.name,
+                            extra.price
+                          )
+                        }
+                        disabled={
+                          extra.max !== undefined &&
+                          getExtraQuantity(extra.id) >= extra.max
+                        }
+                      >
+                        <Plus className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
               </div>
-            </>
-          )}
-
-          {/* Group Extras */}
-          {groupExtras.length > 0 && (
-            <>
-              <Separator className="my-4" />
-              <div>
-                <h3 className="font-medium mb-2">Group Extras</h3>
-                <div className="space-y-1">
-                  {groupExtras.map((extra) => renderExtraCounter(extra))}
-                </div>
-              </div>
-            </>
+            </div>
           )}
 
           <Separator />
 
           <div className="flex justify-between items-center">
-            <div>
-              <span className="text-sm text-muted-foreground">Total Price</span>
-              <p className="text-xl font-bold">
-                <CurrencyDisplay amount={calculateTotalPrice()} />
-              </p>
-            </div>
-            <Button
-              onClick={handleAddToCart}
-              disabled={!inStock || !allRequiredExtrasSelected()}
-            >
-              {!inStock
-                ? "Out of Stock"
-                : !allRequiredExtrasSelected()
-                ? "Select Required Extras"
-                : "Add to Cart"}
-            </Button>
+            <span className="font-semibold">Total:</span>
+            <span className="text-lg font-bold">
+              ${calculateTotalPrice().toFixed(2)}
+            </span>
           </div>
+
+          <Button
+            onClick={handleAddToCart}
+            disabled={!inStock || !areRequiredExtrasSelected()}
+            className="w-full"
+          >
+            Add to Cart
+          </Button>
         </div>
       </DialogContent>
     </Dialog>

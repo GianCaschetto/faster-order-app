@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { AdminSidebar } from "./components/admin-sidebar";
 import { Button } from "@/components/ui/button";
 import { HomeIcon, LogOut } from "lucide-react";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function AdminLayout({
   children,
@@ -57,10 +58,13 @@ export default function AdminLayout({
   return (
     <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
       <AdminSidebar />
-      <div className="flex flex-col">
+      <div className="flex flex-col shrink">
         <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-muted/40 px-6">
           <div className="w-full flex-1">
             <h1 className="text-lg font-semibold">Admin Dashboard</h1>
+          </div>
+          <div>
+            <ThemeToggle />
           </div>
           <Button variant="outline" size="sm" className="lg:hidden">
             Menu

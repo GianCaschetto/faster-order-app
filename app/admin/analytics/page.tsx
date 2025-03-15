@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import {
   BarChart,
@@ -70,6 +70,7 @@ export default function AnalyticsPage() {
   const [orders, setOrders] = useState(mockOrders);
   const [customers, setCustomers] = useState(mockCustomers);
   const [timeRange, setTimeRange] = useState("7days");
+  const [selectedBranch, setSelectedBranch] = useState<string>("all");
 
   // Derived data for charts
   const [salesData, setSalesData] = useState<any[]>([]);
@@ -113,9 +114,31 @@ export default function AnalyticsPage() {
     setIsLoading(false);
   }, [router]);
 
-  // Generate chart data based on time range
+  // Filter orders based on selected branch
+  const filteredOrders = useMemo(() => {
+    if (selectedBranch === "all") {
+      return orders;
+    }
+    return orders.filter((order) => order.branchId === selectedBranch);
+  }, [orders, selectedBranch]);
+
+  // Filter customers based on selected branch
+  const filteredCustomers = useMemo(() => {
+    if (selectedBranch === "all") {
+      return customers;
+    }
+
+    // Get customer IDs who have ordered from the selected branch
+    const customerIds = new Set(
+      filteredOrders.map((order) => order.customerEmail)
+    );
+
+    return customers.filter((customer) => customerIds.has(customer.email));
+  }, [customers, filteredOrders, selectedBranch]);
+
+  // Generate chart data based on time range and selected branch
   useEffect(() => {
-    if (orders.length === 0) return;
+    if (filteredOrders.length === 0) return;
 
     // Determine date range
     let days = 7;
@@ -127,7 +150,7 @@ export default function AnalyticsPage() {
 
     // Sales data over time
     const salesByDate = dateRange.map((date) => {
-      const dayOrders = orders.filter(
+      const dayOrders = filteredOrders.filter(
         (order) =>
           new Date(order.createdAt).toISOString().split("T")[0] === date
       );
@@ -141,7 +164,7 @@ export default function AnalyticsPage() {
 
     // Category data
     const categorySales: Record<string, number> = {};
-    orders.forEach((order) => {
+    filteredOrders.forEach((order) => {
       order.items.forEach((item) => {
         const product = products.find((p) => p.name === item.productName);
         if (product) {
@@ -161,7 +184,7 @@ export default function AnalyticsPage() {
     setCategoryData(categoryDataArray);
 
     // Payment method data
-    const paymentMethods = orders.reduce(
+    const paymentMethods = filteredOrders.reduce(
       (acc: Record<string, number>, order) => {
         const method = order.paymentMethod;
         acc[method] = (acc[method] || 0) + 1;
@@ -180,13 +203,17 @@ export default function AnalyticsPage() {
 
     // Branch performance data
     const branchSales = branches.map((branch) => {
-      const branchOrders = orders.filter(
-        (order) => order.branchId === branch.id
-      );
+      // If a specific branch is selected, highlight that branch in the comparison
+      const branchOrders =
+        selectedBranch === "all"
+          ? orders.filter((order) => order.branchId === branch.id)
+          : orders.filter((order) => order.branchId === branch.id);
+
       return {
         name: branch.name,
         sales: branchOrders.reduce((sum, order) => sum + order.total, 0),
         orders: branchOrders.length,
+        isSelected: branch.id === selectedBranch,
       };
     });
     setBranchPerformanceData(branchSales);
@@ -196,14 +223,14 @@ export default function AnalyticsPage() {
       .fill(0)
       .map((_, hour) => ({
         hour: `${hour}:00`,
-        orders: orders.filter(
+        orders: filteredOrders.filter(
           (order) => new Date(order.createdAt).getHours() === hour
         ).length,
       }));
     setHourlyOrdersData(hourlyOrders);
 
     // Customer status distribution
-    const customerStatus = customers.reduce(
+    const customerStatus = filteredCustomers.reduce(
       (acc: Record<string, number>, customer) => {
         acc[customer.status] = (acc[customer.status] || 0) + 1;
         return acc;
@@ -218,14 +245,17 @@ export default function AnalyticsPage() {
       })
     );
     setCustomerStatusData(customerStatusArray);
-  }, [orders, customers, timeRange]);
+  }, [filteredOrders, filteredCustomers, timeRange, selectedBranch, orders]);
 
-  // Calculate summary metrics
-  const totalSales = orders.reduce((sum, order) => sum + order.total, 0);
-  const totalOrders = orders.length;
+  // Calculate summary metrics based on filtered orders
+  const totalSales = filteredOrders.reduce(
+    (sum, order) => sum + order.total,
+    0
+  );
+  const totalOrders = filteredOrders.length;
   const averageOrderValue = totalOrders > 0 ? totalSales / totalOrders : 0;
-  const totalCustomers = customers.length;
-  const vipCustomers = customers.filter(
+  const totalCustomers = filteredCustomers.length;
+  const vipCustomers = filteredCustomers.filter(
     (customer) => customer.status === "vip"
   ).length;
 
@@ -246,14 +276,27 @@ export default function AnalyticsPage() {
 
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-col sm:flex-row gap-4">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">Analytics</h2>
           <p className="text-muted-foreground">
             Track your restaurant&apos;s performance and insights
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap justify-end">
+          <Select value={selectedBranch} onValueChange={setSelectedBranch}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select branch" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Branches</SelectItem>
+              {branches.map((branch) => (
+                <SelectItem key={branch.id} value={branch.id}>
+                  {branch.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <Select value={timeRange} onValueChange={setTimeRange}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Select time range" />
@@ -271,6 +314,17 @@ export default function AnalyticsPage() {
         </div>
       </div>
 
+      {/* Branch indicator */}
+      {selectedBranch !== "all" && (
+        <div className="bg-muted/50 p-2 rounded-md text-center">
+          <p className="text-sm font-medium">
+            Showing data for:{" "}
+            {branches.find((b) => b.id === selectedBranch)?.name ||
+              "Unknown Branch"}
+          </p>
+        </div>
+      )}
+
       {/* Summary Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
@@ -286,7 +340,7 @@ export default function AnalyticsPage() {
               +
               {(
                 (salesData[salesData.length - 1]?.sales /
-                  (totalSales / salesData.length)) *
+                  (totalSales / salesData.length || 1)) *
                   100 -
                 100
               ).toFixed(1)}
@@ -337,11 +391,14 @@ export default function AnalyticsPage() {
       </div>
 
       <Tabs defaultValue="overview">
-        <TabsList>
+        <TabsList className="flex flex-wrap">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="sales">Sales</TabsTrigger>
           <TabsTrigger value="products">Products</TabsTrigger>
           <TabsTrigger value="customers">Customers</TabsTrigger>
+          {selectedBranch === "all" && (
+            <TabsTrigger value="branches">Branch Comparison</TabsTrigger>
+          )}
         </TabsList>
 
         {/* Overview Tab */}
@@ -351,7 +408,11 @@ export default function AnalyticsPage() {
               <CardHeader>
                 <CardTitle>Sales Overview</CardTitle>
                 <CardDescription>
-                  Daily sales and order volume for the selected period
+                  {selectedBranch === "all"
+                    ? "Daily sales and order volume across all branches"
+                    : `Daily sales and order volume for ${
+                        branches.find((b) => b.id === selectedBranch)?.name
+                      }`}
                 </CardDescription>
               </CardHeader>
               <CardContent className="h-[300px]">
@@ -406,7 +467,11 @@ export default function AnalyticsPage() {
               <CardHeader>
                 <CardTitle>Sales by Category</CardTitle>
                 <CardDescription>
-                  Revenue distribution across menu categories
+                  {selectedBranch === "all"
+                    ? "Revenue distribution across menu categories"
+                    : `Revenue distribution for ${
+                        branches.find((b) => b.id === selectedBranch)?.name
+                      }`}
                 </CardDescription>
               </CardHeader>
               <CardContent className="h-[300px]">
@@ -445,41 +510,51 @@ export default function AnalyticsPage() {
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-            <Card className="lg:col-span-3">
-              <CardHeader>
-                <CardTitle>Branch Performance</CardTitle>
-                <CardDescription>
-                  Sales and order comparison across branches
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="h-[300px]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart
-                    data={branchPerformanceData}
-                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip
-                      formatter={(value: number, name) => [
-                        name === "sales" ? `$${value.toFixed(2)}` : value,
-                        name === "sales" ? "Sales" : "Orders",
-                      ]}
-                    />
-                    <Legend />
-                    <Bar dataKey="sales" name="Sales ($)" fill="#8884d8" />
-                    <Bar dataKey="orders" name="Orders" fill="#82ca9d" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
+            {selectedBranch === "all" && (
+              <Card className="lg:col-span-3">
+                <CardHeader>
+                  <CardTitle>Branch Performance</CardTitle>
+                  <CardDescription>
+                    Sales and order comparison across branches
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="h-[300px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart
+                      data={branchPerformanceData}
+                      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="name" />
+                      <YAxis />
+                      <Tooltip
+                        formatter={(value: number, name) => [
+                          name === "sales" ? `$${value.toFixed(2)}` : value,
+                          name === "sales" ? "Sales" : "Orders",
+                        ]}
+                      />
+                      <Legend />
+                      <Bar dataKey="sales" name="Sales ($)" fill="#8884d8" />
+                      <Bar dataKey="orders" name="Orders" fill="#82ca9d" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </CardContent>
+              </Card>
+            )}
 
-            <Card className="lg:col-span-2">
+            <Card
+              className={`${
+                selectedBranch === "all" ? "lg:col-span-2" : "lg:col-span-3"
+              }`}
+            >
               <CardHeader>
                 <CardTitle>Payment Methods</CardTitle>
                 <CardDescription>
-                  Distribution of payment methods
+                  {selectedBranch === "all"
+                    ? "Distribution of payment methods"
+                    : `Payment methods for ${
+                        branches.find((b) => b.id === selectedBranch)?.name
+                      }`}
                 </CardDescription>
               </CardHeader>
               <CardContent className="h-[300px]">
@@ -511,11 +586,19 @@ export default function AnalyticsPage() {
               </CardContent>
             </Card>
 
-            <Card className="lg:col-span-2">
+            <Card
+              className={`${
+                selectedBranch === "all" ? "lg:col-span-2" : "lg:col-span-4"
+              }`}
+            >
               <CardHeader>
                 <CardTitle>Customer Status</CardTitle>
                 <CardDescription>
-                  Distribution of customer statuses
+                  {selectedBranch === "all"
+                    ? "Distribution of customer statuses"
+                    : `Customer statuses for ${
+                        branches.find((b) => b.id === selectedBranch)?.name
+                      }`}
                 </CardDescription>
               </CardHeader>
               <CardContent className="h-[300px]">
@@ -551,7 +634,13 @@ export default function AnalyticsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Hourly Order Distribution</CardTitle>
-              <CardDescription>Number of orders by hour of day</CardDescription>
+              <CardDescription>
+                {selectedBranch === "all"
+                  ? "Number of orders by hour of day"
+                  : `Hourly orders for ${
+                      branches.find((b) => b.id === selectedBranch)?.name
+                    }`}
+              </CardDescription>
             </CardHeader>
             <CardContent className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
@@ -580,7 +669,11 @@ export default function AnalyticsPage() {
             <CardHeader>
               <CardTitle>Sales Trends</CardTitle>
               <CardDescription>
-                Detailed sales analysis over time
+                {selectedBranch === "all"
+                  ? "Detailed sales analysis over time"
+                  : `Sales trends for ${
+                      branches.find((b) => b.id === selectedBranch)?.name
+                    }`}
               </CardDescription>
             </CardHeader>
             <CardContent className="h-[400px]">
@@ -626,7 +719,13 @@ export default function AnalyticsPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Order Volume</CardTitle>
-                <CardDescription>Number of orders over time</CardDescription>
+                <CardDescription>
+                  {selectedBranch === "all"
+                    ? "Number of orders over time"
+                    : `Order volume for ${
+                        branches.find((b) => b.id === selectedBranch)?.name
+                      }`}
+                </CardDescription>
               </CardHeader>
               <CardContent className="h-[300px]">
                 <ResponsiveContainer width="100%" height="100%">
@@ -660,7 +759,13 @@ export default function AnalyticsPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Average Order Value</CardTitle>
-                <CardDescription>Average order value over time</CardDescription>
+                <CardDescription>
+                  {selectedBranch === "all"
+                    ? "Average order value over time"
+                    : `Average order value for ${
+                        branches.find((b) => b.id === selectedBranch)?.name
+                      }`}
+                </CardDescription>
               </CardHeader>
               <CardContent className="h-[300px]">
                 <ResponsiveContainer width="100%" height="100%">
@@ -712,7 +817,11 @@ export default function AnalyticsPage() {
               <CardHeader>
                 <CardTitle>Sales by Category</CardTitle>
                 <CardDescription>
-                  Revenue distribution across menu categories
+                  {selectedBranch === "all"
+                    ? "Revenue distribution across menu categories"
+                    : `Category sales for ${
+                        branches.find((b) => b.id === selectedBranch)?.name
+                      }`}
                 </CardDescription>
               </CardHeader>
               <CardContent className="h-[300px]">
@@ -753,7 +862,11 @@ export default function AnalyticsPage() {
               <CardHeader>
                 <CardTitle>Top Selling Items</CardTitle>
                 <CardDescription>
-                  Most popular menu items by order count
+                  {selectedBranch === "all"
+                    ? "Most popular menu items by order count"
+                    : `Top items for ${
+                        branches.find((b) => b.id === selectedBranch)?.name
+                      }`}
                 </CardDescription>
               </CardHeader>
               <CardContent className="h-[300px]">
@@ -786,7 +899,11 @@ export default function AnalyticsPage() {
             <CardHeader>
               <CardTitle>Product Performance</CardTitle>
               <CardDescription>
-                Sales and order metrics for top products
+                {selectedBranch === "all"
+                  ? "Sales and order metrics for top products"
+                  : `Product performance for ${
+                      branches.find((b) => b.id === selectedBranch)?.name
+                    }`}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -835,7 +952,11 @@ export default function AnalyticsPage() {
               <CardHeader>
                 <CardTitle>Customer Status Distribution</CardTitle>
                 <CardDescription>
-                  Breakdown of customer statuses
+                  {selectedBranch === "all"
+                    ? "Breakdown of customer statuses"
+                    : `Customer statuses for ${
+                        branches.find((b) => b.id === selectedBranch)?.name
+                      }`}
                 </CardDescription>
               </CardHeader>
               <CardContent className="h-[300px]">
@@ -871,7 +992,11 @@ export default function AnalyticsPage() {
               <CardHeader>
                 <CardTitle>Customer Spending</CardTitle>
                 <CardDescription>
-                  Average spending per customer type
+                  {selectedBranch === "all"
+                    ? "Average spending per customer type"
+                    : `Customer spending for ${
+                        branches.find((b) => b.id === selectedBranch)?.name
+                      }`}
                 </CardDescription>
               </CardHeader>
               <CardContent className="h-[300px]">
@@ -881,27 +1006,42 @@ export default function AnalyticsPage() {
                       {
                         name: "Regular",
                         value:
-                          customers
-                            .filter((c) => c.status === "active")
-                            .reduce((sum, c) => sum + c.totalSpent, 0) /
-                          customers.filter((c) => c.status === "active").length,
+                          filteredCustomers.filter((c) => c.status === "active")
+                            .length > 0
+                            ? filteredCustomers
+                                .filter((c) => c.status === "active")
+                                .reduce((sum, c) => sum + c.totalSpent, 0) /
+                              filteredCustomers.filter(
+                                (c) => c.status === "active"
+                              ).length
+                            : 0,
                       },
                       {
                         name: "VIP",
                         value:
-                          customers
-                            .filter((c) => c.status === "vip")
-                            .reduce((sum, c) => sum + c.totalSpent, 0) /
-                          customers.filter((c) => c.status === "vip").length,
+                          filteredCustomers.filter((c) => c.status === "vip")
+                            .length > 0
+                            ? filteredCustomers
+                                .filter((c) => c.status === "vip")
+                                .reduce((sum, c) => sum + c.totalSpent, 0) /
+                              filteredCustomers.filter(
+                                (c) => c.status === "vip"
+                              ).length
+                            : 0,
                       },
                       {
                         name: "Inactive",
                         value:
-                          customers
-                            .filter((c) => c.status === "inactive")
-                            .reduce((sum, c) => sum + c.totalSpent, 0) /
-                          customers.filter((c) => c.status === "inactive")
-                            .length,
+                          filteredCustomers.filter(
+                            (c) => c.status === "inactive"
+                          ).length > 0
+                            ? filteredCustomers
+                                .filter((c) => c.status === "inactive")
+                                .reduce((sum, c) => sum + c.totalSpent, 0) /
+                              filteredCustomers.filter(
+                                (c) => c.status === "inactive"
+                              ).length
+                            : 0,
                       },
                     ]}
                     margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
@@ -929,65 +1069,14 @@ export default function AnalyticsPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Customer Growth</CardTitle>
-              <CardDescription>
-                New customer acquisition over time
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart
-                  data={getPastDays(
-                    timeRange === "7days" ? 7 : timeRange === "30days" ? 30 : 90
-                  ).map((date) => {
-                    // Mock data for customer growth
-                    const newCustomers = Math.floor(Math.random() * 5) + 1;
-                    return {
-                      date,
-                      customers: newCustomers,
-                      cumulative: newCustomers, // This would be calculated properly in a real app
-                    };
-                  })}
-                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis
-                    dataKey="date"
-                    tick={{ fontSize: 12 }}
-                    tickFormatter={(value) => {
-                      const date = new Date(value);
-                      return `${date.getMonth() + 1}/${date.getDate()}`;
-                    }}
-                  />
-                  <YAxis />
-                  <Tooltip
-                    labelFormatter={(label) => {
-                      const date = new Date(label);
-                      return date.toLocaleDateString();
-                    }}
-                  />
-                  <Legend />
-                  <Line
-                    type="monotone"
-                    dataKey="customers"
-                    stroke="#8884d8"
-                    name="New Customers"
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="cumulative"
-                    stroke="#82ca9d"
-                    name="Cumulative Growth"
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
               <CardTitle>Top Customers</CardTitle>
-              <CardDescription>Customers with highest spending</CardDescription>
+              <CardDescription>
+                {selectedBranch === "all"
+                  ? "Customers with highest spending"
+                  : `Top customers for ${
+                      branches.find((b) => b.id === selectedBranch)?.name
+                    }`}
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="rounded-md border">
@@ -1004,7 +1093,7 @@ export default function AnalyticsPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {customers
+                    {filteredCustomers
                       .sort((a, b) => b.totalSpent - a.totalSpent)
                       .slice(0, 10)
                       .map((customer) => (
@@ -1046,6 +1135,162 @@ export default function AnalyticsPage() {
             </CardContent>
           </Card>
         </TabsContent>
+
+        {/* Branch Comparison Tab - Only visible when "All Branches" is selected */}
+        {selectedBranch === "all" && (
+          <TabsContent value="branches" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Branch Revenue Comparison</CardTitle>
+                <CardDescription>
+                  Total revenue by branch for the selected time period
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="h-[400px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={branchPerformanceData}
+                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip
+                      formatter={(value: number) => [
+                        `$${value.toFixed(2)}`,
+                        "Revenue",
+                      ]}
+                    />
+                    <Legend />
+                    <Bar dataKey="sales" name="Revenue ($)" fill="#8884d8" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Order Volume by Branch</CardTitle>
+                  <CardDescription>
+                    Number of orders processed by each branch
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="h-[300px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart
+                      data={branchPerformanceData}
+                      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="name" />
+                      <YAxis />
+                      <Tooltip />
+                      <Legend />
+                      <Bar dataKey="orders" name="Orders" fill="#82ca9d" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Average Order Value by Branch</CardTitle>
+                  <CardDescription>
+                    Average order value comparison across branches
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="h-[300px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart
+                      data={branchPerformanceData.map((branch) => ({
+                        name: branch.name,
+                        avg:
+                          branch.orders > 0 ? branch.sales / branch.orders : 0,
+                      }))}
+                      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="name" />
+                      <YAxis />
+                      <Tooltip
+                        formatter={(value: number) => [
+                          `$${value.toFixed(2)}`,
+                          "Avg. Order Value",
+                        ]}
+                      />
+                      <Legend />
+                      <Bar
+                        dataKey="avg"
+                        name="Avg. Order Value ($)"
+                        fill="#ff7300"
+                      />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </CardContent>
+              </Card>
+            </div>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Branch Performance Metrics</CardTitle>
+                <CardDescription>
+                  Detailed comparison of key metrics across all branches
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="rounded-md border">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b bg-muted/50">
+                        <th className="p-2 text-left font-medium">Branch</th>
+                        <th className="p-2 text-right font-medium">Revenue</th>
+                        <th className="p-2 text-right font-medium">Orders</th>
+                        <th className="p-2 text-right font-medium">
+                          Avg. Order Value
+                        </th>
+                        <th className="p-2 text-right font-medium">
+                          Customers
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {branchPerformanceData.map((branch) => {
+                        const branchCustomers = customers.filter((c) =>
+                          orders.some(
+                            (o) =>
+                              o.branchId ===
+                                branches.find((b) => b.name === branch.name)
+                                  ?.id && o.customerEmail === c.email
+                          )
+                        );
+
+                        return (
+                          <tr key={branch.name} className="border-b">
+                            <td className="p-2">{branch.name}</td>
+                            <td className="p-2 text-right">
+                              ${branch.sales.toFixed(2)}
+                            </td>
+                            <td className="p-2 text-right">{branch.orders}</td>
+                            <td className="p-2 text-right">
+                              $
+                              {branch.orders > 0
+                                ? (branch.sales / branch.orders).toFixed(2)
+                                : "0.00"}
+                            </td>
+                            <td className="p-2 text-right">
+                              {branchCustomers.length}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        )}
       </Tabs>
     </div>
   );

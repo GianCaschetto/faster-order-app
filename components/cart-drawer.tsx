@@ -218,6 +218,8 @@ export default function CartDrawer({
                           src={item.product.image || "/placeholder.svg"}
                           alt={item.product.name}
                           className="object-cover w-full h-full"
+                          width={64}
+                          height={64}
                         />
                       </div>
                       <div className="flex-1">

@@ -19,6 +19,7 @@ import ProductModal from "./product-modal";
 import RestaurantSchedule, {
   defaultSchedule,
   type WeekSchedule,
+  type BranchSchedule,
 } from "./restaurant-schedule";
 import { type StockItem, defaultStock } from "./stock-management";
 import FloatingCartButton from "./floating-cart-button";
@@ -140,9 +141,9 @@ const products: Product[] = [
         id: "parmesan-pasta",
         name: "Parmesan Cheese",
         price: 1.0,
-        min: 0,
-        max: 2,
         required: true,
+        min: 1,
+        max: 2,
       },
       {
         id: "garlic-bread-side",
@@ -264,28 +265,70 @@ const products: Product[] = [
   },
 ];
 
-export const branches: Branch[] = [
+// Default branches - will be used if no branches are found in localStorage
+export const defaultBranches: Branch[] = [
   { id: "1", name: "Downtown", address: "123 Main St, Downtown" },
   { id: "2", name: "Uptown", address: "456 High St, Uptown" },
   { id: "3", name: "Westside", address: "789 West Blvd, Westside" },
 ];
+
+// Function to get branches from localStorage or use defaults
+export function getBranches(): Branch[] {
+  try {
+    const savedBranches = localStorage.getItem("restaurantBranches");
+    if (savedBranches) {
+      return JSON.parse(savedBranches);
+    }
+  } catch (error) {
+    console.error("Error loading branches from localStorage:", error);
+  }
+  return defaultBranches;
+}
+
+// Export branches for use in other components
+export const branches = getBranches();
 
 export default function RestaurantMenu() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedBranch, setSelectedBranch] = useState<string>("");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [schedule, setSchedule] = useState<WeekSchedule>(defaultSchedule);
+  const [branchSchedules, setBranchSchedules] = useState<BranchSchedule[]>([]);
+  const [currentBranchSchedule, setCurrentBranchSchedule] =
+    useState<WeekSchedule>(defaultSchedule);
   const [isRestaurantOpen, setIsRestaurantOpen] = useState(false);
   const [stock, setStock] = useState<StockItem[]>([]);
   const [activeCategory, setActiveCategory] = useState(categories[0].id);
+  const [availableBranches, setAvailableBranches] =
+    useState<Branch[]>(branches);
 
-  // First effect - Load schedule and stock from localStorage only once on component mount
+  // First effect - Load schedules, stock, and branches from localStorage only once on component mount
   useEffect(() => {
-    // Load schedule from localStorage if available
-    const savedSchedule = localStorage.getItem("restaurantSchedule");
-    if (savedSchedule) {
-      setSchedule(JSON.parse(savedSchedule));
+    // Load branches from localStorage
+    setAvailableBranches(getBranches());
+
+    // Load branch schedules from localStorage if available
+    const savedBranchSchedules = localStorage.getItem("branchSchedules");
+    if (savedBranchSchedules) {
+      try {
+        const parsedSchedules = JSON.parse(savedBranchSchedules);
+        setBranchSchedules(parsedSchedules);
+      } catch (error) {
+        console.error("Error parsing saved branch schedules:", error);
+        // Initialize with default schedules for all branches
+        const defaultBranchSchedules = getBranches().map((branch) => ({
+          branchId: branch.id,
+          schedule: [...defaultSchedule], // Create a copy of the default schedule
+        }));
+        setBranchSchedules(defaultBranchSchedules);
+      }
+    } else {
+      // Initialize with default schedules for all branches
+      const defaultBranchSchedules = getBranches().map((branch) => ({
+        branchId: branch.id,
+        schedule: [...defaultSchedule], // Create a copy of the default schedule
+      }));
+      setBranchSchedules(defaultBranchSchedules);
     }
 
     // Load stock from localStorage if available
@@ -297,7 +340,26 @@ export default function RestaurantMenu() {
     }
   }, []);
 
-  // Second effect - Check if restaurant is open, with proper dependencies
+  // Update current branch schedule when selected branch changes or branch schedules are loaded
+  useEffect(() => {
+    if (selectedBranch && branchSchedules.length > 0) {
+      const branchSchedule = branchSchedules.find(
+        (bs) => bs.branchId === selectedBranch
+      );
+      if (branchSchedule) {
+        setCurrentBranchSchedule(branchSchedule.schedule);
+      } else {
+        setCurrentBranchSchedule(defaultSchedule);
+      }
+    } else if (branchSchedules.length > 0) {
+      // If no branch is selected, use the first branch's schedule
+      setCurrentBranchSchedule(branchSchedules[0].schedule);
+    } else {
+      setCurrentBranchSchedule(defaultSchedule);
+    }
+  }, [selectedBranch, branchSchedules]);
+
+  // Check if restaurant is open based on current branch schedule
   useEffect(() => {
     // Check if restaurant is currently open
     const checkIfOpen = () => {
@@ -313,7 +375,9 @@ export default function RestaurantMenu() {
       const now = new Date();
       const dayName = days[now.getDay()];
 
-      const todaySchedule = schedule.find((day) => day.day === dayName);
+      const todaySchedule = currentBranchSchedule.find(
+        (day) => day.day === dayName
+      );
       if (todaySchedule && !todaySchedule.isClosed) {
         const currentTime = now.getHours() * 60 + now.getMinutes();
         const [openHour, openMinute] = todaySchedule.openTime
@@ -339,7 +403,19 @@ export default function RestaurantMenu() {
     const interval = setInterval(checkIfOpen, 60000);
 
     return () => clearInterval(interval);
-  }, [schedule]); // Only depend on schedule, not on isRestaurantOpen
+  }, [currentBranchSchedule]); // Depend on currentBranchSchedule
+
+  // Listen for branch changes in localStorage
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === "restaurantBranches") {
+        setAvailableBranches(getBranches());
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
 
   // Check if a product is in stock at the selected branch
   const isInStock = (product: Product) => {
@@ -462,7 +538,9 @@ export default function RestaurantMenu() {
     }
 
     setCartItems((prevItems) =>
-      prevItems.map((item, i) => (i === index ? { ...item, quantity } : item))
+      prevItems.map((prevItem, i) =>
+        i === index ? { ...prevItem, quantity } : prevItem
+      )
     );
   };
 
@@ -507,7 +585,7 @@ export default function RestaurantMenu() {
               <SelectValue placeholder="Select branch" />
             </SelectTrigger>
             <SelectContent>
-              {branches.map((branch) => (
+              {availableBranches.map((branch) => (
                 <SelectItem key={branch.id} value={branch.id}>
                   {branch.name}
                 </SelectItem>
@@ -571,7 +649,10 @@ export default function RestaurantMenu() {
 
       {/* Schedule moved to the bottom of the page */}
       <div className="mt-12 border-t pt-6">
-        <RestaurantSchedule schedule={schedule} />
+        <RestaurantSchedule
+          schedule={currentBranchSchedule}
+          branchId={selectedBranch}
+        />
       </div>
 
       {selectedProduct && (
@@ -592,12 +673,12 @@ export default function RestaurantMenu() {
         updateQuantity={updateQuantity}
         removeFromCart={removeFromCart}
         cartTotal={cartTotal}
-        selectedBranch={branches.find((b) => b.id === selectedBranch)}
+        selectedBranch={availableBranches.find((b) => b.id === selectedBranch)}
         isRestaurantOpen={isRestaurantOpen}
       />
 
       {/* Add the floating cart button for mobile */}
-      <FloatingCartButton itemCount={cartItemCount} onClick={openCart} />
+      <FloatingCartButton cartItems={cartItems} openCart={openCart} />
     </div>
   );
 }
