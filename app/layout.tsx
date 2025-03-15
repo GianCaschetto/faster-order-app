@@ -12,9 +12,6 @@ export const metadata: Metadata = {
   title: "FasterOrder",
   description:
     "Optimizando pedidos para un servicio más rápido y un mejor negocio.",
-  viewport: {
-    colorScheme: "light dark",
-  },
 };
 
 export default function RootLayout({
