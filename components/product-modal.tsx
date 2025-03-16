@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import type { Product, SelectedExtra } from "./restaurant-menu";
+import CurrencyDisplay from "./currency-display";
 
 interface ProductModalProps {
   product: Product;
@@ -214,7 +215,9 @@ export default function ProductModal({
           (e) => e.extraId === extra.id
         );
         return (
-          selectedExtra && (selectedExtra.quantity ?? 1) >= (extra.min || 1)
+          selectedExtra &&
+          selectedExtra.quantity !== undefined &&
+          selectedExtra.quantity >= (extra.min || 1)
         );
       });
   };
@@ -237,7 +240,7 @@ export default function ProductModal({
             onClick={handleClose}
           >
             <X className="h-4 w-4" />
-            <span className="sr-only">Close</span>
+            <span className="sr-only">Cerrar</span>
           </Button>
         </DialogHeader>
 
@@ -254,7 +257,7 @@ export default function ProductModal({
           <div>
             <p className="text-muted-foreground">{product.description}</p>
             <p className="mt-2 text-lg font-semibold">
-              ${product.price.toFixed(2)}
+              <CurrencyDisplay amount={product.price} />
             </p>
           </div>
 
@@ -262,12 +265,12 @@ export default function ProductModal({
             <div>
               {inStock ? (
                 <Badge variant="outline" className="bg-green-50">
-                  In Stock{" "}
-                  {stockQuantity !== null && `(${stockQuantity} available)`}
+                  En stock{" "}
+                  {stockQuantity !== null && `(${stockQuantity} disponibles)`}
                 </Badge>
               ) : (
                 <Badge variant="outline" className="bg-red-50 text-red-600">
-                  Out of Stock
+                  Sin stock
                 </Badge>
               )}
             </div>
@@ -276,7 +279,7 @@ export default function ProductModal({
           <Separator />
 
           <div>
-            <Label htmlFor="quantity">Quantity</Label>
+            <Label htmlFor="quantity">Cantidad</Label>
             <div className="flex items-center mt-1.5">
               <Button
                 variant="outline"
@@ -320,17 +323,21 @@ export default function ProductModal({
                         <span>{extra.name}</span>
                         {extra.required && (
                           <Badge variant="secondary" className="text-xs">
-                            Required
+                            Requerido
                           </Badge>
                         )}
                       </div>
                       <span className="text-sm text-muted-foreground">
-                        +${extra.price.toFixed(2)}
+                        +
+                        <CurrencyDisplay
+                          amount={extra.price}
+                          showSymbol={false}
+                        />
                         {extra.min !== undefined && extra.max !== undefined && (
                           <span className="text-xs ml-1">
                             {extra.min === 0 && extra.max === 1
-                              ? "(Optional)"
-                              : `(Min: ${extra.min}, Max: ${extra.max})`}
+                              ? "(Opcional)"
+                              : `(Mín: ${extra.min}, Máx: ${extra.max})`}
                           </span>
                         )}
                       </span>
@@ -388,7 +395,7 @@ export default function ProductModal({
           <div className="flex justify-between items-center">
             <span className="font-semibold">Total:</span>
             <span className="text-lg font-bold">
-              ${calculateTotalPrice().toFixed(2)}
+              <CurrencyDisplay amount={calculateTotalPrice()} />
             </span>
           </div>
 
@@ -397,7 +404,7 @@ export default function ProductModal({
             disabled={!inStock || !areRequiredExtrasSelected()}
             className="w-full"
           >
-            Add to Cart
+            Agregar al carrito
           </Button>
         </div>
       </DialogContent>

@@ -23,6 +23,7 @@ import RestaurantSchedule, {
 } from "./restaurant-schedule";
 import { type StockItem, defaultStock } from "./stock-management";
 import FloatingCartButton from "./floating-cart-button";
+import { SiteFooter } from "./site-footer";
 
 // Types
 export type Extra = {
@@ -486,7 +487,9 @@ export default function RestaurantMenu() {
         );
       } else {
         // Add new item
-        return [...prevItems, { product, quantity, selectedExtras }];
+        const newItem = { product, quantity, selectedExtras };
+        setIsCartOpen(true); // Open cart drawer after adding item
+        return [...prevItems, newItem];
       }
     });
   };
@@ -570,115 +573,120 @@ export default function RestaurantMenu() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col gap-4">
+    <>
+      <div className="space-y-6">
+        <div className="flex flex-col gap-4">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold">Demo</h1>
+            <p className="text-muted-foreground">
+              Ordena con facilidad y rapidez
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 w-full">
+            <Select value={selectedBranch} onValueChange={setSelectedBranch}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select branch" />
+              </SelectTrigger>
+              <SelectContent>
+                {availableBranches.map((branch) => (
+                  <SelectItem key={branch.id} value={branch.id}>
+                    {branch.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Button
+              onClick={() => setIsCartOpen(true)}
+              className="w-full sm:w-auto flex gap-2"
+            >
+              <ShoppingCart className="h-5 w-5" />
+              <span>Cart ({cartItemCount})</span>
+            </Button>
+          </div>
+        </div>
+
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold">Our Menu</h1>
-          <p className="text-muted-foreground">
-            Order delicious food from our restaurant
-          </p>
-        </div>
-
-        <div className="flex flex-col sm:flex-row gap-4 w-full">
-          <Select value={selectedBranch} onValueChange={setSelectedBranch}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select branch" />
-            </SelectTrigger>
-            <SelectContent>
-              {availableBranches.map((branch) => (
-                <SelectItem key={branch.id} value={branch.id}>
-                  {branch.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <Button
-            onClick={() => setIsCartOpen(true)}
-            className="w-full sm:w-auto flex gap-2"
+          <Tabs
+            value={activeCategory}
+            onValueChange={setActiveCategory}
+            className="w-full"
           >
-            <ShoppingCart className="h-5 w-5" />
-            <span>Cart ({cartItemCount})</span>
-          </Button>
-        </div>
-      </div>
+            <TabsList className="mb-4 flex flex-wrap h-auto">
+              {categories.map((category) => (
+                <TabsTrigger
+                  key={category.id}
+                  value={category.id}
+                  className="flex-grow sm:flex-grow-0"
+                >
+                  {category.name}
+                </TabsTrigger>
+              ))}
+            </TabsList>
 
-      <div>
-        <Tabs
-          value={activeCategory}
-          onValueChange={setActiveCategory}
-          className="w-full"
-        >
-          <TabsList className="mb-4 flex flex-wrap h-auto">
             {categories.map((category) => (
-              <TabsTrigger
+              <TabsContent
                 key={category.id}
                 value={category.id}
-                className="flex-grow sm:flex-grow-0"
+                className="space-y-4"
               >
-                {category.name}
-              </TabsTrigger>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {products
+                    .filter((product) => product.categoryId === category.id)
+                    .map((product) => (
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                        onAddToCart={() => openProductModal(product)}
+                        onClick={() => openProductModal(product)}
+                        inStock={isInStock(product)}
+                        stockQuantity={getStockQuantity(product)}
+                        showStock={!!selectedBranch}
+                      />
+                    ))}
+                </div>
+              </TabsContent>
             ))}
-          </TabsList>
+          </Tabs>
+        </div>
 
-          {categories.map((category) => (
-            <TabsContent
-              key={category.id}
-              value={category.id}
-              className="space-y-4"
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {products
-                  .filter((product) => product.categoryId === category.id)
-                  .map((product) => (
-                    <ProductCard
-                      key={product.id}
-                      product={product}
-                      onAddToCart={() => openProductModal(product)}
-                      onClick={() => openProductModal(product)}
-                      inStock={isInStock(product)}
-                      stockQuantity={getStockQuantity(product)}
-                      showStock={!!selectedBranch}
-                    />
-                  ))}
-              </div>
-            </TabsContent>
-          ))}
-        </Tabs>
-      </div>
+        {/* Schedule moved to the bottom of the page */}
+        <div className="mt-12 border-t pt-6">
+          <RestaurantSchedule
+            schedule={currentBranchSchedule}
+            branchId={selectedBranch}
+          />
+        </div>
 
-      {/* Schedule moved to the bottom of the page */}
-      <div className="mt-12 border-t pt-6">
-        <RestaurantSchedule
-          schedule={currentBranchSchedule}
-          branchId={selectedBranch}
+        {selectedProduct && (
+          <ProductModal
+            product={selectedProduct}
+            onClose={closeProductModal}
+            onAddToCart={addToCart}
+            inStock={isInStock(selectedProduct)}
+            stockQuantity={getStockQuantity(selectedProduct)}
+            showStock={!!selectedBranch}
+          />
+        )}
+
+        <CartDrawer
+          isOpen={isCartOpen}
+          onClose={() => setIsCartOpen(false)}
+          cartItems={cartItems}
+          updateQuantity={updateQuantity}
+          removeFromCart={removeFromCart}
+          cartTotal={cartTotal}
+          selectedBranch={availableBranches.find(
+            (b) => b.id === selectedBranch
+          )}
+          isRestaurantOpen={isRestaurantOpen}
         />
+
+        {/* Add the floating cart button for mobile */}
+        <FloatingCartButton cartItems={cartItems} openCart={openCart} />
       </div>
-
-      {selectedProduct && (
-        <ProductModal
-          product={selectedProduct}
-          onClose={closeProductModal}
-          onAddToCart={addToCart}
-          inStock={isInStock(selectedProduct)}
-          stockQuantity={getStockQuantity(selectedProduct)}
-          showStock={!!selectedBranch}
-        />
-      )}
-
-      <CartDrawer
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        cartItems={cartItems}
-        updateQuantity={updateQuantity}
-        removeFromCart={removeFromCart}
-        cartTotal={cartTotal}
-        selectedBranch={availableBranches.find((b) => b.id === selectedBranch)}
-        isRestaurantOpen={isRestaurantOpen}
-      />
-
-      {/* Add the floating cart button for mobile */}
-      <FloatingCartButton cartItems={cartItems} openCart={openCart} />
-    </div>
+      <SiteFooter />
+    </>
   );
 }

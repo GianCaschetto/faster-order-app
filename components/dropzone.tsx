@@ -120,19 +120,23 @@ export function Dropzone({
 
           <div className="space-y-1">
             <p className="text-sm font-medium">
-              {isDragActive ? "Drop the files here" : "Drag & drop files here"}
+              {isDragActive
+                ? "Suelta los archivos aquí"
+                : "Arrastra y suelta archivos aquí"}
             </p>
-            <p className="text-xs text-muted-foreground">or click to browse</p>
+            <p className="text-xs text-muted-foreground">
+              o haz click para navegar
+            </p>
           </div>
 
           {maxFiles > 1 && (
             <p className="text-xs text-muted-foreground">
-              Upload up to {maxFiles} files
+              Sube hasta {maxFiles} archivos
             </p>
           )}
 
           <p className="text-xs text-muted-foreground">
-            Max file size: {Math.round(maxSize / 1024 / 1024)}MB
+            Tamaño máximo: {Math.round(maxSize / 1024 / 1024)}MB
           </p>
         </div>
       </div>
@@ -186,7 +190,7 @@ export function Dropzone({
                 className="absolute top-1 right-1 bg-black/50 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
               >
                 <X className="h-4 w-4" />
-                <span className="sr-only">Remove file</span>
+                <span className="sr-only">Eliminar archivo</span>
               </button>
               <div className="absolute bottom-0 inset-x-0 bg-black/50 text-white text-xs truncate px-2 py-1">
                 {files[index]?.name}

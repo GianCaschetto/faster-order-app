@@ -458,8 +458,8 @@ export default function SettingsPage() {
     localStorage.setItem("restaurantGeneralSettings", JSON.stringify(data));
 
     toast({
-      title: "General settings updated",
-      description: "Your general settings have been saved successfully.",
+      title: "Ajustes generales actualizados",
+      description: "Tus ajustes generales han sido guardados exitosamente.",
     });
   };
 
@@ -468,8 +468,8 @@ export default function SettingsPage() {
     localStorage.setItem("restaurantAppearanceSettings", JSON.stringify(data));
 
     toast({
-      title: "Appearance settings updated",
-      description: "Your appearance settings have been saved successfully.",
+      title: "Aparición actualizada",
+      description: "Tus ajustes de apariencia han sido guardados exitosamente.",
     });
   };
 
@@ -493,8 +493,8 @@ export default function SettingsPage() {
     localStorage.setItem("restaurantPaymentSettings", JSON.stringify(data));
 
     toast({
-      title: "Payment settings updated",
-      description: "Your payment settings have been saved successfully.",
+      title: "Ajustes de pago actualizados",
+      description: "Tus ajustes de pago han sido guardados exitosamente.",
     });
   };
 
@@ -522,8 +522,8 @@ export default function SettingsPage() {
     );
 
     toast({
-      title: "WhatsApp settings updated",
-      description: "Your WhatsApp settings have been saved successfully.",
+      title: "Ajustes de WhatsApp actualizados",
+      description: "Tus ajustes de WhatsApp han sido guardados exitosamente.",
     });
   };
 
@@ -553,8 +553,8 @@ export default function SettingsPage() {
 
     // Show success message
     toast({
-      title: "Branch added",
-      description: `Branch "${data.name}" has been added successfully.`,
+      title: "Sucursal agregada",
+      description: `La sucursal "${data.name}" ha sido agregada exitosamente.`,
     });
 
     // Trigger a storage event to notify other components
@@ -579,9 +579,9 @@ export default function SettingsPage() {
       editBranchAddress.trim().length < 5
     ) {
       toast({
-        title: "Invalid input",
+        title: "Entrada inválida",
         description:
-          "Branch name must be at least 2 characters and address must be at least 5 characters.",
+          "El nombre de la sucursal debe tener al menos 2 caracteres y la dirección debe tener al menos 5 caracteres.",
         variant: "destructive",
       });
       return;
@@ -609,8 +609,8 @@ export default function SettingsPage() {
     // Don't allow deleting if there's only one branch
     if (branches.length <= 1) {
       toast({
-        title: "Cannot delete branch",
-        description: "You must have at least one branch.",
+        title: "No se puede eliminar la sucursal",
+        description: "Debes tener al menos una sucursal.",
         variant: "destructive",
       });
       return;
@@ -629,8 +629,8 @@ export default function SettingsPage() {
 
     // Show success message
     toast({
-      title: "Branch deleted",
-      description: `Branch "${branchToDelete.name}" has been deleted.`,
+      title: "Sucursal eliminada",
+      description: `La sucursal "${branchToDelete.name}" ha sido eliminada.`,
     });
 
     // Trigger a storage event to notify other components
@@ -640,7 +640,7 @@ export default function SettingsPage() {
   if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <p>Loading...</p>
+        <p>Cargando...</p>
       </div>
     );
   }
@@ -653,9 +653,9 @@ export default function SettingsPage() {
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight">Settings</h2>
+          <h2 className="text-3xl font-bold tracking-tight">Ajustes</h2>
           <p className="text-muted-foreground">
-            Manage your restaurant settings and preferences
+            Administra tus ajustes y preferencias de restaurante
           </p>
         </div>
       </div>
@@ -668,18 +668,18 @@ export default function SettingsPage() {
           </TabsTrigger>
           <TabsTrigger value="appearance" className="flex items-center gap-2">
             <Palette className="h-4 w-4" />
-            <span className="hidden sm:inline">Appearance</span>
+            <span className="hidden sm:inline">Aparición</span>
           </TabsTrigger>
           <TabsTrigger
             value="notifications"
             className="flex items-center gap-2"
           >
             <Bell className="h-4 w-4" />
-            <span className="hidden sm:inline">Notifications</span>
+            <span className="hidden sm:inline">Notificaciones</span>
           </TabsTrigger>
           <TabsTrigger value="payment" className="flex items-center gap-2">
             <CreditCard className="h-4 w-4" />
-            <span className="hidden sm:inline">Payment</span>
+            <span className="hidden sm:inline">Pago</span>
           </TabsTrigger>
           <TabsTrigger value="whatsapp" className="flex items-center gap-2">
             <MessageSquare className="h-4 w-4" />
@@ -691,9 +691,9 @@ export default function SettingsPage() {
         <TabsContent value="general" className="space-y-4 mt-4">
           <Card>
             <CardHeader>
-              <CardTitle>General Information</CardTitle>
+              <CardTitle>Información general</CardTitle>
               <CardDescription>
-                Basic information about your restaurant
+                Información básica sobre tu restaurante
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -709,9 +709,12 @@ export default function SettingsPage() {
                       name="restaurantName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Restaurant Name</FormLabel>
+                          <FormLabel>Nombre del restaurante</FormLabel>
                           <FormControl>
-                            <Input placeholder="Restaurant Name" {...field} />
+                            <Input
+                              placeholder="Nombre del restaurante"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -723,15 +726,15 @@ export default function SettingsPage() {
                       name="tagline"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Tagline</FormLabel>
+                          <FormLabel>Slogan</FormLabel>
                           <FormControl>
                             <Input
-                              placeholder="Delicious food delivered to your door"
+                              placeholder="Delicioso comida entregada a tu puerta"
                               {...field}
                             />
                           </FormControl>
                           <FormDescription>
-                            A short slogan for your restaurant
+                            Un eslogan corto para tu restaurante
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -745,7 +748,7 @@ export default function SettingsPage() {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Email</FormLabel>
+                          <FormLabel>Correo electrónico</FormLabel>
                           <FormControl>
                             <Input
                               placeholder="contact@restaurant.com"
@@ -762,7 +765,7 @@ export default function SettingsPage() {
                       name="phone"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Phone</FormLabel>
+                          <FormLabel>Teléfono</FormLabel>
                           <FormControl>
                             <Input placeholder="(123) 456-7890" {...field} />
                           </FormControl>
@@ -777,7 +780,7 @@ export default function SettingsPage() {
                     name="address"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Address</FormLabel>
+                        <FormLabel>Dirección</FormLabel>
                         <FormControl>
                           <Textarea
                             placeholder="123 Main St, City, Country"
@@ -794,7 +797,7 @@ export default function SettingsPage() {
                     name="website"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Website</FormLabel>
+                        <FormLabel>Sitio web</FormLabel>
                         <FormControl>
                           <Input
                             placeholder="https://restaurant.com"
@@ -810,7 +813,7 @@ export default function SettingsPage() {
 
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-medium">Branches</h3>
+                      <h3 className="text-lg font-medium">Sucursales</h3>
                       <Dialog
                         open={isAddBranchDialogOpen}
                         onOpenChange={setIsAddBranchDialogOpen}
@@ -818,14 +821,14 @@ export default function SettingsPage() {
                         <DialogTrigger asChild>
                           <Button size="sm" className="flex items-center gap-1">
                             <Plus className="h-4 w-4" />
-                            <span>Add Branch</span>
+                            <span>Agregar sucursal</span>
                           </Button>
                         </DialogTrigger>
                         <DialogContent>
                           <DialogHeader>
-                            <DialogTitle>Add New Branch</DialogTitle>
+                            <DialogTitle>Agregar nueva sucursal</DialogTitle>
                             <DialogDescription>
-                              Add a new branch location for your restaurant.
+                              Agrega una nueva sucursal para tu restaurante.
                             </DialogDescription>
                           </DialogHeader>
                           <Form {...branchForm}>
@@ -841,7 +844,7 @@ export default function SettingsPage() {
                                 name="name"
                                 render={({ field }) => (
                                   <FormItem>
-                                    <FormLabel>Branch Name</FormLabel>
+                                    <FormLabel>Nombre de la sucursal</FormLabel>
                                     <FormControl>
                                       <Input
                                         placeholder="Downtown"
@@ -857,7 +860,9 @@ export default function SettingsPage() {
                                 name="address"
                                 render={({ field }) => (
                                   <FormItem>
-                                    <FormLabel>Branch Address</FormLabel>
+                                    <FormLabel>
+                                      Dirección de la sucursal
+                                    </FormLabel>
                                     <FormControl>
                                       <Input
                                         placeholder="123 Main St, Downtown"
@@ -878,7 +883,7 @@ export default function SettingsPage() {
                               Cancel
                             </Button>
                             <Button type="submit" form="branch-form">
-                              Add Branch
+                              Agregar sucursal
                             </Button>
                           </DialogFooter>
                         </DialogContent>
@@ -887,9 +892,9 @@ export default function SettingsPage() {
 
                     <div className="border rounded-md">
                       <div className="grid grid-cols-12 gap-2 p-3 font-medium border-b bg-muted/50">
-                        <div className="col-span-4">Name</div>
-                        <div className="col-span-6">Address</div>
-                        <div className="col-span-2 text-right">Actions</div>
+                        <div className="col-span-4">Nombre</div>
+                        <div className="col-span-6">Dirección</div>
+                        <div className="col-span-2 text-right">Acciones</div>
                       </div>
                       <div className="divide-y">
                         {branches.map((branch) => (
@@ -905,7 +910,7 @@ export default function SettingsPage() {
                                     onChange={(e) =>
                                       setEditBranchName(e.target.value)
                                     }
-                                    placeholder="Branch name"
+                                    placeholder="Nombre de la sucursal"
                                   />
                                 </div>
                                 <div className="col-span-6">
@@ -914,7 +919,7 @@ export default function SettingsPage() {
                                     onChange={(e) =>
                                       setEditBranchAddress(e.target.value)
                                     }
-                                    placeholder="Branch address"
+                                    placeholder="Dirección de la sucursal"
                                   />
                                 </div>
                                 <div className="col-span-2 flex justify-end gap-1">
@@ -977,14 +982,14 @@ export default function SettingsPage() {
                       name="defaultBranch"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Default Branch</FormLabel>
+                          <FormLabel>Sucursal predeterminada</FormLabel>
                           <Select
                             onValueChange={field.onChange}
                             defaultValue={field.value}
                           >
                             <FormControl>
                               <SelectTrigger>
-                                <SelectValue placeholder="Select a branch" />
+                                <SelectValue placeholder="Selecciona una sucursal" />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
@@ -996,7 +1001,7 @@ export default function SettingsPage() {
                             </SelectContent>
                           </Select>
                           <FormDescription>
-                            Default branch for new orders
+                            Sucursal predeterminada para nuevos pedidos
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -1008,14 +1013,14 @@ export default function SettingsPage() {
                       name="currency"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Currency</FormLabel>
+                          <FormLabel>Moneda</FormLabel>
                           <Select
                             onValueChange={field.onChange}
                             defaultValue={field.value}
                           >
                             <FormControl>
                               <SelectTrigger>
-                                <SelectValue placeholder="Select currency" />
+                                <SelectValue placeholder="Selecciona una moneda" />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
@@ -1038,7 +1043,7 @@ export default function SettingsPage() {
                       name="taxRate"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Tax Rate (%)</FormLabel>
+                          <FormLabel>Tasa de impuestos (%)</FormLabel>
                           <FormControl>
                             <Input
                               type="number"
@@ -1058,12 +1063,12 @@ export default function SettingsPage() {
                       name="orderPrefix"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Order ID Prefix</FormLabel>
+                          <FormLabel>Prefijo de ID de pedido</FormLabel>
                           <FormControl>
                             <Input placeholder="ORD-" {...field} />
                           </FormControl>
                           <FormDescription>
-                            Prefix for order numbers
+                            Prefijo para los números de pedido
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -1088,9 +1093,9 @@ export default function SettingsPage() {
           {/* Appearance settings content */}
           <Card>
             <CardHeader>
-              <CardTitle>Appearance</CardTitle>
+              <CardTitle>Aparición</CardTitle>
               <CardDescription>
-                Customize the look and feel of your restaurant website
+                Personaliza la apariencia de tu sitio web de restaurante
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -1101,33 +1106,35 @@ export default function SettingsPage() {
                   className="space-y-4"
                 >
                   <div className="space-y-4">
-                    <h3 className="text-lg font-medium">Theme</h3>
+                    <h3 className="text-lg font-medium">Tema</h3>
 
                     <FormField
                       control={appearanceForm.control}
                       name="theme"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Color Theme</FormLabel>
+                          <FormLabel>Tema de color</FormLabel>
                           <Select
                             onValueChange={field.onChange}
                             defaultValue={field.value}
                           >
                             <FormControl>
                               <SelectTrigger>
-                                <SelectValue placeholder="Select theme" />
+                                <SelectValue placeholder="Selecciona un tema" />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="light">Light</SelectItem>
-                              <SelectItem value="dark">Dark</SelectItem>
+                              <SelectItem value="light">Claro</SelectItem>
+                              <SelectItem value="dark">Oscuro</SelectItem>
                               <SelectItem value="system">
-                                System (follows device settings)
+                                Sistema (sigue las configuraciones del
+                                dispositivo)
                               </SelectItem>
                             </SelectContent>
                           </Select>
                           <FormDescription>
-                            Choose the default color theme for your website
+                            Elige el tema de color predeterminado para tu sitio
+                            web
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -1140,7 +1147,7 @@ export default function SettingsPage() {
                         name="primaryColor"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Primary Color</FormLabel>
+                            <FormLabel>Color principal</FormLabel>
                             <div className="flex gap-2">
                               <FormControl>
                                 <Input
@@ -1156,7 +1163,7 @@ export default function SettingsPage() {
                               />
                             </div>
                             <FormDescription>
-                              Main color for buttons and accents
+                              Color principal para botones y acentos
                             </FormDescription>
                             <FormMessage />
                           </FormItem>
@@ -1168,7 +1175,7 @@ export default function SettingsPage() {
                         name="accentColor"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Accent Color</FormLabel>
+                            <FormLabel>Color secundario</FormLabel>
                             <div className="flex gap-2">
                               <FormControl>
                                 <Input
@@ -1184,7 +1191,7 @@ export default function SettingsPage() {
                               />
                             </div>
                             <FormDescription>
-                              Secondary color for highlights
+                              Color secundario para resaltes
                             </FormDescription>
                             <FormMessage />
                           </FormItem>
@@ -1196,7 +1203,7 @@ export default function SettingsPage() {
                   <Separator className="my-4" />
 
                   <div className="space-y-4">
-                    <h3 className="text-lg font-medium">Branding</h3>
+                    <h3 className="text-lg font-medium">Marca</h3>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <FormField
@@ -1204,7 +1211,7 @@ export default function SettingsPage() {
                         name="logo"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Logo URL</FormLabel>
+                            <FormLabel>URL del logo</FormLabel>
                             <FormControl>
                               <Input
                                 placeholder="https://example.com/logo.png"
@@ -1212,7 +1219,7 @@ export default function SettingsPage() {
                               />
                             </FormControl>
                             <FormDescription>
-                              URL to your restaurant logo image
+                              URL a la imagen del logo de tu restaurante
                             </FormDescription>
                             <FormMessage />
                           </FormItem>
@@ -1224,7 +1231,7 @@ export default function SettingsPage() {
                         name="favicon"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Favicon URL</FormLabel>
+                            <FormLabel>URL del favicon</FormLabel>
                             <FormControl>
                               <Input
                                 placeholder="https://example.com/favicon.ico"
@@ -1232,7 +1239,7 @@ export default function SettingsPage() {
                               />
                             </FormControl>
                             <FormDescription>
-                              URL to your website favicon
+                              URL al favicon de tu sitio web
                             </FormDescription>
                             <FormMessage />
                           </FormItem>
@@ -1247,9 +1254,11 @@ export default function SettingsPage() {
                         render={({ field }) => (
                           <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                             <div className="space-y-0.5">
-                              <FormLabel>Show Branch Selector</FormLabel>
+                              <FormLabel>
+                                Mostrar selector de sucursal
+                              </FormLabel>
                               <FormDescription>
-                                Display branch selection dropdown to customers
+                                Mostrar el selector de sucursal a los clientes
                               </FormDescription>
                             </div>
                             <FormControl>
@@ -1268,9 +1277,9 @@ export default function SettingsPage() {
                         render={({ field }) => (
                           <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                             <div className="space-y-0.5">
-                              <FormLabel>Show Currency Symbol</FormLabel>
+                              <FormLabel>Mostrar símbolo de moneda</FormLabel>
                               <FormDescription>
-                                Display currency symbol with prices
+                                Mostrar el símbolo de moneda con los precios
                               </FormDescription>
                             </div>
                             <FormControl>
@@ -1288,7 +1297,9 @@ export default function SettingsPage() {
                   <Separator className="my-4" />
 
                   <div className="space-y-4">
-                    <h3 className="text-lg font-medium">Date & Time Format</h3>
+                    <h3 className="text-lg font-medium">
+                      Formato de fecha y hora
+                    </h3>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <FormField
@@ -1296,14 +1307,14 @@ export default function SettingsPage() {
                         name="dateFormat"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Date Format</FormLabel>
+                            <FormLabel>Formato de fecha</FormLabel>
                             <Select
                               onValueChange={field.onChange}
                               defaultValue={field.value}
                             >
                               <FormControl>
                                 <SelectTrigger>
-                                  <SelectValue placeholder="Select date format" />
+                                  <SelectValue placeholder="Selecciona un formato de fecha" />
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
@@ -1319,7 +1330,7 @@ export default function SettingsPage() {
                               </SelectContent>
                             </Select>
                             <FormDescription>
-                              Format for displaying dates
+                              Formato para mostrar fechas
                             </FormDescription>
                             <FormMessage />
                           </FormItem>
@@ -1331,14 +1342,14 @@ export default function SettingsPage() {
                         name="timeFormat"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Time Format</FormLabel>
+                            <FormLabel>Formato de hora</FormLabel>
                             <Select
                               onValueChange={field.onChange}
                               defaultValue={field.value}
                             >
                               <FormControl>
                                 <SelectTrigger>
-                                  <SelectValue placeholder="Select time format" />
+                                  <SelectValue placeholder="Selecciona un formato de hora" />
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
@@ -1349,7 +1360,7 @@ export default function SettingsPage() {
                               </SelectContent>
                             </Select>
                             <FormDescription>
-                              Format for displaying times
+                              Formato para mostrar horas
                             </FormDescription>
                             <FormMessage />
                           </FormItem>
@@ -1361,7 +1372,7 @@ export default function SettingsPage() {
                   <div className="mt-6">
                     <Alert>
                       <Info className="h-4 w-4" />
-                      <AlertTitle>Theme Preview</AlertTitle>
+                      <AlertTitle>Vista previa del tema</AlertTitle>
                       <AlertDescription>
                         <div className="mt-2 space-y-4">
                           <div className="flex flex-wrap gap-2">
@@ -1372,7 +1383,7 @@ export default function SettingsPage() {
                                   appearanceForm.watch("primaryColor"),
                               }}
                             >
-                              Primary
+                              Principal
                             </div>
                             <div
                               className="w-24 h-12 rounded flex items-center justify-center text-white"
@@ -1381,12 +1392,12 @@ export default function SettingsPage() {
                                   appearanceForm.watch("accentColor"),
                               }}
                             >
-                              Accent
+                              Secundario
                             </div>
                           </div>
                           <div className="flex gap-2">
-                            <Button>Primary Button</Button>
-                            <Button variant="outline">Outline Button</Button>
+                            <Button>Botón principal</Button>
+                            <Button variant="outline">Botón de contorno</Button>
                           </div>
                         </div>
                       </AlertDescription>
@@ -1396,10 +1407,10 @@ export default function SettingsPage() {
               </Form>
             </CardContent>
             <CardFooter className="flex justify-between">
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline">Cancelar</Button>
               <Button type="submit" form="appearance-form">
                 <Save className="mr-2 h-4 w-4" />
-                Save Changes
+                Guardar cambios
               </Button>
             </CardFooter>
           </Card>
@@ -1414,9 +1425,9 @@ export default function SettingsPage() {
         <TabsContent value="payment" className="space-y-4 mt-4">
           <Card>
             <CardHeader>
-              <CardTitle>Payment Methods</CardTitle>
+              <CardTitle>Métodos de pago</CardTitle>
               <CardDescription>
-                Configure payment options for your customers
+                Configura las opciones de pago para tus clientes
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -1433,9 +1444,10 @@ export default function SettingsPage() {
                       render={({ field }) => (
                         <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                           <div className="space-y-0.5">
-                            <FormLabel>Accept Cash</FormLabel>
+                            <FormLabel>Aceptar efectivo</FormLabel>
                             <FormDescription>
-                              Allow customers to pay with cash on delivery
+                              Permitir a los clientes pagar con efectivo en la
+                              entrega
                             </FormDescription>
                           </div>
                           <FormControl>
@@ -1454,9 +1466,10 @@ export default function SettingsPage() {
                       render={({ field }) => (
                         <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                           <div className="space-y-0.5">
-                            <FormLabel>Accept Cards</FormLabel>
+                            <FormLabel>Aceptar tarjetas</FormLabel>
                             <FormDescription>
-                              Allow customers to pay with credit/debit cards
+                              Permitir a los clientes pagar con tarjetas de
+                              crédito/débito
                             </FormDescription>
                           </div>
                           <FormControl>
@@ -1473,7 +1486,9 @@ export default function SettingsPage() {
                   <Separator className="my-4" />
 
                   <div className="space-y-4">
-                    <h3 className="text-lg font-medium">Stripe Integration</h3>
+                    <h3 className="text-lg font-medium">
+                      Integración de Stripe
+                    </h3>
 
                     <FormField
                       control={paymentForm.control}
@@ -1481,9 +1496,9 @@ export default function SettingsPage() {
                       render={({ field }) => (
                         <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                           <div className="space-y-0.5">
-                            <FormLabel>Enable Stripe</FormLabel>
+                            <FormLabel>Habilitar Stripe</FormLabel>
                             <FormDescription>
-                              Process payments through Stripe
+                              Procesar pagos a través de Stripe
                             </FormDescription>
                           </div>
                           <FormControl>
@@ -1503,7 +1518,7 @@ export default function SettingsPage() {
                           name="stripePublicKey"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Stripe Public Key</FormLabel>
+                              <FormLabel>Clave pública de Stripe</FormLabel>
                               <FormControl>
                                 <Input placeholder="pk_test_..." {...field} />
                               </FormControl>
@@ -1517,7 +1532,7 @@ export default function SettingsPage() {
                           name="stripeSecretKey"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Stripe Secret Key</FormLabel>
+                              <FormLabel>Clave secreta de Stripe</FormLabel>
                               <FormControl>
                                 <Input
                                   placeholder="sk_test_..."
@@ -1536,7 +1551,9 @@ export default function SettingsPage() {
                   <Separator className="my-4" />
 
                   <div className="space-y-4">
-                    <h3 className="text-lg font-medium">PayPal Integration</h3>
+                    <h3 className="text-lg font-medium">
+                      Integración de PayPal
+                    </h3>
 
                     <FormField
                       control={paymentForm.control}
@@ -1544,9 +1561,9 @@ export default function SettingsPage() {
                       render={({ field }) => (
                         <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                           <div className="space-y-0.5">
-                            <FormLabel>Enable PayPal</FormLabel>
+                            <FormLabel>Habilitar PayPal</FormLabel>
                             <FormDescription>
-                              Process payments through PayPal
+                              Procesar pagos a través de PayPal
                             </FormDescription>
                           </div>
                           <FormControl>
@@ -1566,9 +1583,9 @@ export default function SettingsPage() {
                           name="paypalClientId"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>PayPal Client ID</FormLabel>
+                              <FormLabel>ID de cliente de PayPal</FormLabel>
                               <FormControl>
-                                <Input placeholder="Client ID" {...field} />
+                                <Input placeholder="ID de cliente" {...field} />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -1580,10 +1597,10 @@ export default function SettingsPage() {
                           name="paypalSecretKey"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>PayPal Secret Key</FormLabel>
+                              <FormLabel>Clave secreta de PayPal</FormLabel>
                               <FormControl>
                                 <Input
-                                  placeholder="Secret Key"
+                                  placeholder="Clave secreta"
                                   type="password"
                                   {...field}
                                 />
@@ -1600,7 +1617,7 @@ export default function SettingsPage() {
 
                   <div className="space-y-4">
                     <h3 className="text-lg font-medium">
-                      Venezuelan Bolivar (Bs) Support
+                      Soporte de Bolívares (Bs)
                     </h3>
 
                     <FormField
@@ -1609,11 +1626,10 @@ export default function SettingsPage() {
                       render={({ field }) => (
                         <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                           <div className="space-y-0.5">
-                            <FormLabel>
-                              Enable Venezuelan Bolivar (Bs)
-                            </FormLabel>
+                            <FormLabel>Habilitar Bolívares (Bs)</FormLabel>
                             <FormDescription>
-                              Allow customers to pay in Venezuelan Bolivar
+                              Permitir a los clientes pagar en Bolívar
+                              Venezolano
                             </FormDescription>
                           </div>
                           <FormControl>
@@ -1634,7 +1650,7 @@ export default function SettingsPage() {
                             name="bcvRate"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>BCV Rate (USD to Bs)</FormLabel>
+                                <FormLabel>Tasa de BCV (USD a Bs)</FormLabel>
                                 <FormControl>
                                   <Input
                                     type="number"
@@ -1644,7 +1660,7 @@ export default function SettingsPage() {
                                   />
                                 </FormControl>
                                 <FormDescription>
-                                  Official exchange rate
+                                  Tasa de cambio oficial
                                 </FormDescription>
                                 <FormMessage />
                               </FormItem>
@@ -1656,7 +1672,7 @@ export default function SettingsPage() {
                             name="parallelRate"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Parallel Rate (USD to Bs)</FormLabel>
+                                <FormLabel>Tasa paralela (USD a Bs)</FormLabel>
                                 <FormControl>
                                   <Input
                                     type="number"
@@ -1666,7 +1682,7 @@ export default function SettingsPage() {
                                   />
                                 </FormControl>
                                 <FormDescription>
-                                  Market exchange rate
+                                  Tasa de cambio del mercado
                                 </FormDescription>
                                 <FormMessage />
                               </FormItem>
@@ -1678,7 +1694,9 @@ export default function SettingsPage() {
                             name="customRate"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Custom Rate (USD to Bs)</FormLabel>
+                                <FormLabel>
+                                  Tasa personalizada (USD a Bs)
+                                </FormLabel>
                                 <FormControl>
                                   <Input
                                     type="number"
@@ -1688,7 +1706,7 @@ export default function SettingsPage() {
                                   />
                                 </FormControl>
                                 <FormDescription>
-                                  Your custom exchange rate
+                                  Tu tasa de cambio personalizada
                                 </FormDescription>
                                 <FormMessage />
                               </FormItem>
@@ -1702,7 +1720,7 @@ export default function SettingsPage() {
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>
-                                Preferred Exchange Rate Source
+                                Fuente de tasa de cambio preferida
                               </FormLabel>
                               <Select
                                 onValueChange={field.onChange}
@@ -1710,24 +1728,24 @@ export default function SettingsPage() {
                               >
                                 <FormControl>
                                   <SelectTrigger>
-                                    <SelectValue placeholder="Select rate source" />
+                                    <SelectValue placeholder="Selecciona la fuente de tasa de cambio" />
                                   </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
                                   <SelectItem value="bcv">
-                                    BCV (Official)
+                                    BCV (Oficial)
                                   </SelectItem>
                                   <SelectItem value="parallel">
-                                    Parallel Market
+                                    Mercado Paralelo
                                   </SelectItem>
                                   <SelectItem value="custom">
-                                    Custom Rate
+                                    Tasa personalizada
                                   </SelectItem>
                                 </SelectContent>
                               </Select>
                               <FormDescription>
-                                Choose which exchange rate to use for USD to Bs
-                                conversion
+                                Elige qué tasa de cambio usar para la conversión
+                                de USD a Bs
                               </FormDescription>
                               <FormMessage />
                             </FormItem>
@@ -1741,7 +1759,7 @@ export default function SettingsPage() {
 
                   <div className="space-y-4">
                     <h3 className="text-lg font-medium">
-                      Additional Payment Settings
+                      Configuración adicional de pago
                     </h3>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1751,9 +1769,12 @@ export default function SettingsPage() {
                         render={({ field }) => (
                           <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                             <div className="space-y-0.5">
-                              <FormLabel>Tax Included in Prices</FormLabel>
+                              <FormLabel>
+                                Impuestos incluidos en los precios
+                              </FormLabel>
                               <FormDescription>
-                                Are product prices tax-inclusive?
+                                ¿Los precios de los productos incluyen
+                                impuestos?
                               </FormDescription>
                             </div>
                             <FormControl>
@@ -1772,7 +1793,7 @@ export default function SettingsPage() {
                           name="deliveryFee"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Delivery Fee</FormLabel>
+                              <FormLabel>Cuota de entrega</FormLabel>
                               <FormControl>
                                 <Input
                                   type="number"
@@ -1791,7 +1812,7 @@ export default function SettingsPage() {
                           name="minimumOrderAmount"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Minimum Order Amount</FormLabel>
+                              <FormLabel>Monto mínimo de pedido</FormLabel>
                               <FormControl>
                                 <Input
                                   type="number"
@@ -1801,7 +1822,7 @@ export default function SettingsPage() {
                                 />
                               </FormControl>
                               <FormDescription>
-                                Minimum amount required for checkout
+                                Monto mínimo requerido para el pago
                               </FormDescription>
                               <FormMessage />
                             </FormItem>
@@ -1814,10 +1835,10 @@ export default function SettingsPage() {
               </Form>
             </CardContent>
             <CardFooter className="flex justify-between">
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline">Cancelar</Button>
               <Button type="submit" form="payment-form">
                 <Save className="mr-2 h-4 w-4" />
-                Save Changes
+                Guardar cambios
               </Button>
             </CardFooter>
           </Card>
@@ -1827,9 +1848,9 @@ export default function SettingsPage() {
         <TabsContent value="whatsapp" className="space-y-4 mt-4">
           <Card>
             <CardHeader>
-              <CardTitle>WhatsApp Integration</CardTitle>
+              <CardTitle>Integración de WhatsApp</CardTitle>
               <CardDescription>
-                Configure WhatsApp messaging for order sharing
+                Configurar mensajería de WhatsApp para compartir pedidos
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -1845,9 +1866,12 @@ export default function SettingsPage() {
                     render={({ field }) => (
                       <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                         <div className="space-y-0.5">
-                          <FormLabel>Enable WhatsApp Integration</FormLabel>
+                          <FormLabel>
+                            Habilitar integración de WhatsApp
+                          </FormLabel>
                           <FormDescription>
-                            Allow customers to share orders via WhatsApp
+                            Permitir a los clientes compartir pedidos a través
+                            de WhatsApp
                           </FormDescription>
                         </div>
                         <FormControl>
@@ -1868,13 +1892,16 @@ export default function SettingsPage() {
                         name="defaultPhoneNumber"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Default WhatsApp Phone Number</FormLabel>
+                            <FormLabel>
+                              Número de WhatsApp predeterminado
+                            </FormLabel>
                             <FormControl>
                               <Input placeholder="5551234567" {...field} />
                             </FormControl>
                             <FormDescription>
-                              Enter your default WhatsApp number with country
-                              code, without + or spaces (e.g., 5551234567)
+                              Ingresa tu número de WhatsApp predeterminado con
+                              el código de país, sin + o espacios (e.g.,
+                              5551234567)
                             </FormDescription>
                             <FormMessage />
                           </FormItem>
@@ -1883,10 +1910,11 @@ export default function SettingsPage() {
 
                       <div className="space-y-2">
                         <h3 className="text-lg font-medium">
-                          Branch-Specific Phone Numbers
+                          Números de WhatsApp específicos de sucursal
                         </h3>
                         <p className="text-sm text-muted-foreground">
-                          Configure different WhatsApp numbers for each branch
+                          Configura diferentes números de WhatsApp para cada
+                          sucursal
                         </p>
 
                         <div className="space-y-4 mt-2">
@@ -1949,10 +1977,10 @@ export default function SettingsPage() {
                         render={({ field }) => (
                           <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                             <div className="space-y-0.5">
-                              <FormLabel>Show WhatsApp Button</FormLabel>
+                              <FormLabel>Mostrar botón de WhatsApp</FormLabel>
                               <FormDescription>
-                                Display WhatsApp sharing button on order
-                                confirmation
+                                Mostrar el botón de WhatsApp de compartir
+                                pedidos en la confirmación de pedido
                               </FormDescription>
                             </div>
                             <FormControl>
@@ -1968,58 +1996,62 @@ export default function SettingsPage() {
 
                       <div className="space-y-2">
                         <h3 className="text-lg font-medium">
-                          Message Template
+                          Plantilla de mensaje
                         </h3>
                         <Alert>
                           <Info className="h-4 w-4" />
-                          <AlertTitle>Available Placeholders</AlertTitle>
+                          <AlertTitle>Marcadores disponibles</AlertTitle>
                           <AlertDescription>
                             <p className="mb-2">
-                              Use these placeholders in your template:
+                              Usa estos marcadores en tu plantilla:
                             </p>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-1 text-sm">
                               <div>
-                                <code>{"{order-number}"}</code> - Order ID
+                                <code>{"{order-number}"}</code> - Número de
+                                pedido
                               </div>
                               <div>
-                                <code>{"{customer-name}"}</code> - Customer name
+                                <code>{"{customer-name}"}</code> - Nombre del
+                                cliente
                               </div>
                               <div>
-                                <code>{"{customer-phone}"}</code> - Customer
-                                phone
+                                <code>{"{customer-phone}"}</code> - Teléfono del
+                                cliente
                               </div>
                               <div>
-                                <code>{"{customer-email}"}</code> - Customer
-                                email
+                                <code>{"{customer-email}"}</code> - Email del
+                                cliente
                               </div>
                               <div>
-                                <code>{"{customer-address}"}</code> - Delivery
-                                address
+                                <code>{"{customer-address}"}</code> - Dirección
+                                de entrega
                               </div>
                               <div>
-                                <code>{"{order-items}"}</code> - List of ordered
-                                items
+                                <code>{"{order-items}"}</code> - Lista de ítems
+                                pedidos
                               </div>
                               <div>
-                                <code>{"{subtotal}"}</code> - Order subtotal
+                                <code>{"{subtotal}"}</code> - Subtotal del
+                                pedido
                               </div>
                               <div>
-                                <code>{"{delivery-fee}"}</code> - Delivery fee
+                                <code>{"{delivery-fee}"}</code> - Cuota de
+                                entrega
                               </div>
                               <div>
-                                <code>{"{total}"}</code> - Total amount
+                                <code>{"{total}"}</code> - Monto total
                               </div>
                               <div>
-                                <code>{"{branch-name}"}</code> - Restaurant
-                                branch
+                                <code>{"{branch-name}"}</code> - Nombre de la
+                                sucursal
                               </div>
                               <div>
-                                <code>{"{branch-address}"}</code> - Branch
-                                address
+                                <code>{"{branch-address}"}</code> - Dirección de
+                                la sucursal
                               </div>
                               <div>
-                                <code>{"{estimated-delivery}"}</code> - Delivery
-                                time
+                                <code>{"{estimated-delivery}"}</code> - Tiempo
+                                estimado de entrega
                               </div>
                             </div>
                           </AlertDescription>
@@ -2030,17 +2062,16 @@ export default function SettingsPage() {
                           name="messageTemplate"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Message Template</FormLabel>
+                              <FormLabel>Plantilla de mensaje</FormLabel>
                               <FormControl>
                                 <Textarea
-                                  placeholder="Enter your WhatsApp message template"
+                                  placeholder="Ingresa tu plantilla de mensaje de WhatsApp"
                                   className="font-mono text-sm h-40"
                                   {...field}
                                 />
                               </FormControl>
                               <FormDescription>
-                                Customize the message that will be sent to
-                                WhatsApp
+                                Personaliza el mensaje que se enviará a WhatsApp
                               </FormDescription>
                               <FormMessage />
                             </FormItem>
@@ -2049,7 +2080,7 @@ export default function SettingsPage() {
 
                         <div className="mt-4">
                           <h4 className="text-sm font-medium mb-2">
-                            Message Preview
+                            Vista previa del mensaje
                           </h4>
                           <div className="bg-green-50 p-4 rounded-md border border-green-200 whitespace-pre-wrap font-mono text-sm max-h-60 overflow-y-auto">
                             {previewMessage}
@@ -2062,10 +2093,10 @@ export default function SettingsPage() {
               </Form>
             </CardContent>
             <CardFooter className="flex justify-between">
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline">Cancelar</Button>
               <Button type="submit" form="whatsapp-form">
                 <Save className="mr-2 h-4 w-4" />
-                Save Changes
+                Guardar cambios
               </Button>
             </CardFooter>
           </Card>

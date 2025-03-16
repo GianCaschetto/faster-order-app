@@ -174,10 +174,10 @@ export default function ScheduleManagement() {
     setBranchSchedules(updatedSchedules);
 
     toast({
-      title: "Schedule updated",
-      description: `The schedule for ${
+      title: "Horario actualizado",
+      description: `El horario para ${
         branches.find((b) => b.id === values.branchId)?.name
-      } has been updated successfully.`,
+      } ha sido actualizado exitosamente.`,
     });
 
     setIsLoading(false);
@@ -196,15 +196,15 @@ export default function ScheduleManagement() {
     localStorage.setItem("branchSchedules", JSON.stringify(updatedSchedules));
 
     toast({
-      title: "Schedule applied to all branches",
-      description: "The current schedule has been applied to all branches.",
+      title: "Horario aplicado a todas las sucursales",
+      description: "El horario actual ha sido aplicado a todas las sucursales.",
     });
   };
 
   if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <p>Loading...</p>
+        <p>Cargando...</p>
       </div>
     );
   }
@@ -217,7 +217,7 @@ export default function ScheduleManagement() {
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
       <div className="flex items-center justify-between">
         <h2 className="text-3xl font-bold tracking-tight">
-          Schedule Management
+          Gestión de horarios
         </h2>
         <div className="flex gap-2">
           <Button
@@ -226,21 +226,21 @@ export default function ScheduleManagement() {
             disabled={isLoading}
           >
             <Copy className="mr-2 h-4 w-4" />
-            Apply to All Branches
+            Aplicar a todas las sucursales
           </Button>
           <Button
             onClick={() => form.handleSubmit(onSubmit)()}
             disabled={isLoading}
           >
             <Save className="mr-2 h-4 w-4" />
-            Save Changes
+            Guardar cambios
           </Button>
         </div>
       </div>
 
       <Tabs value={selectedTab} onValueChange={setSelectedTab}>
         <TabsList className="mb-4">
-          <TabsTrigger value="branch">Branch Schedule</TabsTrigger>
+          <TabsTrigger value="branch">Horario de sucursal</TabsTrigger>
         </TabsList>
 
         <TabsContent value="branch">
@@ -248,9 +248,10 @@ export default function ScheduleManagement() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <Card>
                 <CardHeader>
-                  <CardTitle>Branch Hours of Operation</CardTitle>
+                  <CardTitle>Horario de operación de sucursal</CardTitle>
                   <CardDescription>
-                    Set your restaurant&apos;s opening hours for each branch.
+                    Establece el horario de apertura de sucursal para cada
+                    sucursal.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -259,14 +260,14 @@ export default function ScheduleManagement() {
                     name="branchId"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Select Branch</FormLabel>
+                        <FormLabel>Seleccionar sucursal</FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
                         >
                           <FormControl>
                             <SelectTrigger>
-                              <SelectValue placeholder="Select a branch" />
+                              <SelectValue placeholder="Seleccionar una sucursal" />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
@@ -278,7 +279,7 @@ export default function ScheduleManagement() {
                           </SelectContent>
                         </Select>
                         <FormDescription>
-                          Choose the branch to edit its schedule
+                          Selecciona la sucursal para editar su horario
                         </FormDescription>
                       </FormItem>
                     )}
@@ -286,10 +287,11 @@ export default function ScheduleManagement() {
 
                   <Alert>
                     <AlertDescription>
-                      You are editing the schedule for{" "}
-                      {branches.find((b) => b.id === watchBranchId)?.name}. To
-                      apply this schedule to all branches, click &quot;Apply to
-                      All Branches&quot; after making your changes.
+                      Estás editando el horario para{" "}
+                      {branches.find((b) => b.id === watchBranchId)?.name}. Para
+                      aplicar este horario a todas las sucursales, haz clic en
+                      &quot;Aplicar a todas las sucursales&quot; después de
+                      hacer tus cambios.
                     </AlertDescription>
                   </Alert>
 
@@ -306,9 +308,9 @@ export default function ScheduleManagement() {
                         render={({ field }) => (
                           <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                             <div className="space-y-0.5">
-                              <FormLabel>Closed</FormLabel>
+                              <FormLabel>Cerrado</FormLabel>
                               <FormDescription>
-                                Restaurant is closed on this day
+                                La sucursal está cerrada en este día
                               </FormDescription>
                             </div>
                             <FormControl>
@@ -333,7 +335,7 @@ export default function ScheduleManagement() {
                           name={`schedule.${index}.openTime`}
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Opening Time</FormLabel>
+                              <FormLabel>Hora de apertura</FormLabel>
                               <FormControl>
                                 <Input
                                   {...field}
@@ -360,7 +362,7 @@ export default function ScheduleManagement() {
                           name={`schedule.${index}.closeTime`}
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Closing Time</FormLabel>
+                              <FormLabel>Hora de cierre</FormLabel>
                               <FormControl>
                                 <Input
                                   {...field}
@@ -379,7 +381,7 @@ export default function ScheduleManagement() {
                 </CardContent>
                 <CardFooter>
                   <Button type="submit" disabled={isLoading}>
-                    Save Changes
+                    Guardar cambios
                   </Button>
                 </CardFooter>
               </Card>

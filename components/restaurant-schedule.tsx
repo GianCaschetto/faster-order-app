@@ -33,13 +33,13 @@ interface RestaurantScheduleProps {
 
 // Default schedule
 export const defaultSchedule: WeekSchedule = [
-  { day: "Monday", openTime: "09:00", closeTime: "22:00", isClosed: false },
-  { day: "Tuesday", openTime: "09:00", closeTime: "22:00", isClosed: false },
-  { day: "Wednesday", openTime: "09:00", closeTime: "22:00", isClosed: false },
-  { day: "Thursday", openTime: "09:00", closeTime: "22:00", isClosed: false },
-  { day: "Friday", openTime: "09:00", closeTime: "23:00", isClosed: false },
-  { day: "Saturday", openTime: "10:00", closeTime: "23:00", isClosed: false },
-  { day: "Sunday", openTime: "10:00", closeTime: "21:00", isClosed: false },
+  { day: "Lunes", openTime: "09:00", closeTime: "22:00", isClosed: false },
+  { day: "Martes", openTime: "09:00", closeTime: "22:00", isClosed: false },
+  { day: "Miércoles", openTime: "09:00", closeTime: "22:00", isClosed: false },
+  { day: "Jueves", openTime: "09:00", closeTime: "22:00", isClosed: false },
+  { day: "Viernes", openTime: "09:00", closeTime: "23:00", isClosed: false },
+  { day: "Sábado", openTime: "10:00", closeTime: "23:00", isClosed: false },
+  { day: "Domingo", openTime: "10:00", closeTime: "21:00", isClosed: false },
 ];
 
 export default function RestaurantSchedule({
@@ -93,7 +93,7 @@ export default function RestaurantSchedule({
       <div className="flex items-center gap-2">
         <Clock className="h-4 w-4 text-muted-foreground" />
         <Badge variant={isOpen ? "default" : "secondary"}>
-          {isOpen ? "Open Now" : "Closed"}
+          {isOpen ? "Abierto ahora" : "Cerrado"}
         </Badge>
       </div>
     );
@@ -103,11 +103,14 @@ export default function RestaurantSchedule({
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Clock className="h-5 w-5" /> Hours of Operation
+          <Clock className="h-5 w-5" /> Horario de operación
         </CardTitle>
         <CardDescription>
-          <Badge variant={isOpen ? "default" : "secondary"} className="mt-1">
-            {isOpen ? "Open Now" : "Closed"}
+          <Badge
+            className={`mt-1 ${isOpen ? "bg-green-500" : ""}`}
+            variant={isOpen ? "default" : "secondary"}
+          >
+            {isOpen ? "Abierto ahora" : "Cerrado"}
           </Badge>
         </CardDescription>
       </CardHeader>
@@ -122,7 +125,9 @@ export default function RestaurantSchedule({
             >
               <span>{day.day}</span>
               <span>
-                {day.isClosed ? "Closed" : `${day.openTime} - ${day.closeTime}`}
+                {day.isClosed
+                  ? "Cerrado"
+                  : `${day.openTime} - ${day.closeTime}`}
               </span>
             </div>
           ))}

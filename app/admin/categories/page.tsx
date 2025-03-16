@@ -180,7 +180,7 @@ export default function CategoriesPage() {
     if (!newCategory.name) {
       toast({
         title: "Error",
-        description: "Category name is required",
+        description: "El nombre de la categoría es requerido",
         variant: "destructive",
       });
       return;
@@ -192,7 +192,7 @@ export default function CategoriesPage() {
     if (categories.some((cat) => cat.id === categoryId)) {
       toast({
         title: "Error",
-        description: "A category with this name already exists",
+        description: "Ya existe una categoría con este nombre",
         variant: "destructive",
       });
       return;
@@ -216,7 +216,7 @@ export default function CategoriesPage() {
 
     toast({
       title: "Success",
-      description: "Category added successfully",
+      description: "Categoría agregada exitosamente",
     });
   };
 
@@ -232,7 +232,7 @@ export default function CategoriesPage() {
 
     toast({
       title: "Success",
-      description: "Category updated successfully",
+      description: "Categoría actualizada exitosamente",
     });
   };
 
@@ -245,8 +245,8 @@ export default function CategoriesPage() {
     );
     if (productsInCategory.length > 0) {
       toast({
-        title: "Cannot delete category",
-        description: `This category contains ${productsInCategory.length} products. Please reassign or delete these products first.`,
+        title: "No se puede eliminar la categoría",
+        description: `Esta categoría contiene ${productsInCategory.length} productos. Por favor, reasigna o elimina estos productos primero.`,
         variant: "destructive",
       });
       setIsDeleteCategoryOpen(false);
@@ -260,7 +260,7 @@ export default function CategoriesPage() {
 
     toast({
       title: "Success",
-      description: "Category deleted successfully",
+      description: "Categoría eliminada exitosamente",
     });
   };
 
@@ -277,7 +277,7 @@ export default function CategoriesPage() {
       <div className="grid gap-4 py-4">
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="category-name" className="text-right">
-            Name
+            Nombre
           </Label>
           <Input
             id="category-name"
@@ -289,7 +289,7 @@ export default function CategoriesPage() {
 
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="category-description" className="text-right">
-            Description
+            Descripción
           </Label>
           <Textarea
             id="category-description"
@@ -341,12 +341,12 @@ export default function CategoriesPage() {
           <DialogTrigger asChild>
             <Button>
               <Plus className="h-4 w-4 mr-2" />
-              Add Category
+              Agregar Categoría
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
-              <DialogTitle>Add New Category</DialogTitle>
+              <DialogTitle>Agregar Nueva Categoría</DialogTitle>
             </DialogHeader>
             <CategoryForm />
             <DialogFooter>
@@ -354,9 +354,9 @@ export default function CategoriesPage() {
                 variant="outline"
                 onClick={() => setIsAddCategoryOpen(false)}
               >
-                Cancel
+                Cancelar
               </Button>
-              <Button onClick={handleAddCategory}>Save Category</Button>
+              <Button onClick={handleAddCategory}>Guardar Categoría</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -366,7 +366,7 @@ export default function CategoriesPage() {
         <div className="relative flex-1">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search categories..."
+            placeholder="Buscar categorías..."
             className="pl-8"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -376,23 +376,25 @@ export default function CategoriesPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Product Categories</CardTitle>
-          <CardDescription>Organize your menu with categories</CardDescription>
+          <CardTitle>Categorías de Productos</CardTitle>
+          <CardDescription>Organiza tu menú con categorías</CardDescription>
         </CardHeader>
         <CardContent>
           {filteredCategories.length === 0 ? (
             <div className="text-center py-12">
               <Tag className="h-12 w-12 mx-auto text-muted-foreground" />
-              <h3 className="mt-4 text-lg font-medium">No categories found</h3>
+              <h3 className="mt-4 text-lg font-medium">
+                No se encontraron categorías
+              </h3>
               <p className="text-muted-foreground mt-2">
-                Try adjusting your search or add a new category.
+                Intenta ajustar tu búsqueda o agrega una nueva categoría.
               </p>
               <Button
                 className="mt-4"
                 onClick={() => setIsAddCategoryOpen(true)}
               >
                 <Plus className="h-4 w-4 mr-2" />
-                Add Category
+                Agregar Categoría
               </Button>
             </div>
           ) : (
@@ -400,10 +402,10 @@ export default function CategoriesPage() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Category</TableHead>
-                    <TableHead>Description</TableHead>
-                    <TableHead className="text-center">Products</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
+                    <TableHead>Categoría</TableHead>
+                    <TableHead>Descripción</TableHead>
+                    <TableHead className="text-center">Productos</TableHead>
+                    <TableHead className="text-right">Acciones</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -469,7 +471,7 @@ export default function CategoriesPage() {
       <Dialog open={isEditCategoryOpen} onOpenChange={setIsEditCategoryOpen}>
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
-            <DialogTitle>Edit Category</DialogTitle>
+            <DialogTitle>Editar Categoría</DialogTitle>
           </DialogHeader>
           <CategoryForm isEdit />
           <DialogFooter>
@@ -479,7 +481,7 @@ export default function CategoriesPage() {
             >
               Cancel
             </Button>
-            <Button onClick={handleEditCategory}>Save Changes</Button>
+            <Button onClick={handleEditCategory}>Guardar Cambios</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -491,24 +493,25 @@ export default function CategoriesPage() {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Delete Category</DialogTitle>
+            <DialogTitle>Eliminar Categoría</DialogTitle>
           </DialogHeader>
           <div className="py-4">
             <p>
-              Are you sure you want to delete{" "}
+              Estás seguro de querer eliminar{" "}
               <strong>{currentCategory?.name}</strong>?
             </p>
             {currentCategory?.productCount ? (
               <div className="bg-yellow-50 text-yellow-800 p-3 rounded-md mt-3">
-                <p className="font-medium">Cannot delete category</p>
+                <p className="font-medium">No se puede eliminar la categoría</p>
                 <p className="text-sm mt-1">
-                  This category contains {currentCategory.productCount}{" "}
-                  products. Please reassign or delete these products first.
+                  Esta categoría contiene {currentCategory.productCount}{" "}
+                  productos. Por favor, reasigna o elimina estos productos
+                  primero.
                 </p>
               </div>
             ) : (
               <p className="text-sm text-muted-foreground mt-2">
-                This action cannot be undone.
+                Esta acción no se puede deshacer.
               </p>
             )}
           </div>
@@ -517,14 +520,14 @@ export default function CategoriesPage() {
               variant="outline"
               onClick={() => setIsDeleteCategoryOpen(false)}
             >
-              Cancel
+              Cancelar
             </Button>
             <Button
               variant="destructive"
               onClick={handleDeleteCategory}
               disabled={currentCategory?.productCount ? true : false}
             >
-              Delete
+              Eliminar
             </Button>
           </DialogFooter>
         </DialogContent>

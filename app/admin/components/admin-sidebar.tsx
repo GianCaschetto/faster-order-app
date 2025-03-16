@@ -70,7 +70,7 @@ export function AdminSidebar() {
               className="flex items-center gap-2 font-semibold"
             >
               <Package className="h-6 w-6" />
-              <span>Restaurant Admin</span>
+              <span>Admin Demo</span>
             </Link>
           </div>
           <div className="flex-1 overflow-auto py-2">
@@ -84,7 +84,7 @@ export function AdminSidebar() {
                 }`}
               >
                 <Home className="h-4 w-4" />
-                Dashboard
+                Panel Principal
               </Link>
               <Link
                 href="/admin/orders"
@@ -95,7 +95,7 @@ export function AdminSidebar() {
                 }`}
               >
                 <ShoppingBag className="h-4 w-4" />
-                Orders
+                Pedidos
               </Link>
               {/* Products dropdown menu */}
               <DropdownMenu>
@@ -156,7 +156,7 @@ export function AdminSidebar() {
                 }`}
               >
                 <Database className="h-4 w-4" />
-                Inventory
+                Inventario
               </Link>
               <Link
                 href="/admin/gallery"
@@ -167,7 +167,7 @@ export function AdminSidebar() {
                 }`}
               >
                 <Camera className="h-4 w-4" />
-                Gallery
+                Galería
               </Link>
               <Link
                 href="/admin/schedule"
@@ -178,7 +178,7 @@ export function AdminSidebar() {
                 }`}
               >
                 <Clock className="h-4 w-4" />
-                Schedule
+                Horarios
               </Link>
               <Link
                 href="/admin/customers"
@@ -189,7 +189,7 @@ export function AdminSidebar() {
                 }`}
               >
                 <Users className="h-4 w-4" />
-                Customers
+                Clientes
               </Link>
               <Link
                 href="/admin/analytics"
@@ -200,7 +200,7 @@ export function AdminSidebar() {
                 }`}
               >
                 <BarChart3 className="h-4 w-4" />
-                Analytics
+                Estadísticas
               </Link>
               <Link
                 href="/admin/chatbot"
@@ -222,7 +222,7 @@ export function AdminSidebar() {
                 }`}
               >
                 <Settings className="h-4 w-4" />
-                Settings
+                Configuración
               </Link>
             </nav>
           </div>
@@ -233,7 +233,7 @@ export function AdminSidebar() {
               onClick={handleLogout}
             >
               <LogOut className="h-4 w-4" />
-              Logout
+              Cerrar Sesión
             </Button>
           </div>
         </div>

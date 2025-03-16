@@ -26,7 +26,7 @@ export default function ChatbotPage() {
     {
       id: "welcome",
       content:
-        "Hello! I'm your restaurant assistant. How can I help you today?",
+        "¡Hola! Soy tu asistente de restaurante. ¿Cómo puedo ayudarte hoy?",
       role: "assistant",
       timestamp: new Date(),
     },
@@ -55,7 +55,7 @@ export default function ChatbotPage() {
       lowerCaseMessage.includes("hours") ||
       lowerCaseMessage.includes("schedule")
     ) {
-      return "Our restaurant hours vary by branch. You can view and edit the schedule for each branch in the Schedule tab.";
+      return "Nuestras horas de restaurante varían por sucursal. Puedes ver y editar el horario para cada sucursal en la pestaña de Horarios.";
     }
 
     if (
@@ -183,7 +183,7 @@ export default function ChatbotPage() {
         <CardHeader className="bg-primary/5">
           <CardTitle className="flex items-center gap-2 text-xl">
             <Bot className="h-6 w-6" />
-            Restaurant Assistant
+            Asistente de Restaurante
           </CardTitle>
         </CardHeader>
         <CardContent className="p-0">
@@ -257,7 +257,7 @@ export default function ChatbotPage() {
               <div className="flex gap-2">
                 <Input
                   ref={inputRef}
-                  placeholder="Type your message..."
+                  placeholder="Escribe tu mensaje..."
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
@@ -270,7 +270,7 @@ export default function ChatbotPage() {
                   size="icon"
                 >
                   <Send className="h-4 w-4" />
-                  <span className="sr-only">Send message</span>
+                  <span className="sr-only">Enviar mensaje</span>
                 </Button>
               </div>
             </div>

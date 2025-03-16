@@ -110,7 +110,8 @@ export default function OrderConfirmation({
         // Check for branch-specific phone number
         if (branch && settings.branchPhoneNumbers) {
           const branchConfig = settings.branchPhoneNumbers.find(
-            (b: Branch) => b.id === branch.id
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (b: any) => b.branchId === branch.id
           );
           if (branchConfig) {
             whatsappNumber = branchConfig.phoneNumber;
@@ -298,16 +299,16 @@ export default function OrderConfirmation({
         <p>Se ha enviado un correo de confirmación a {userInfo.email}</p>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         <Button className="flex-1" asChild>
           <Link href="/">Continuar Comprando</Link>
         </Button>
         <Button variant="outline" className="flex-1" asChild>
-          <Link href={`/track/${orderNumber}`}>Seguir Pedido</Link>
+          <Link href={`/track/${orderNumber}`}>Rastrear Pedido</Link>
         </Button>
         <Button
           variant="secondary"
-          className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+          className="flex-1 bg-green-600 hover:bg-green-700 text-white col-span-2"
           onClick={shareToWhatsApp}
         >
           <Send className="mr-2 h-4 w-4" />

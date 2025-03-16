@@ -18,13 +18,14 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
-import type { CartItem, Branch, SelectedExtra } from "./restaurant-menu";
+import type { CartItem, Branch } from "./restaurant-menu";
 import CheckoutForm from "./checkout-form";
 import PaymentForm from "./payment-form";
 import OrderConfirmation from "./order-confirmation";
 // Add this import at the top
 import CurrencyDisplay from "./currency-display";
 import Image from "next/image";
+
 type CheckoutStep = "cart" | "userInfo" | "payment" | "confirmation";
 
 // Update the CartDrawerProps interface to include isRestaurantOpen
@@ -33,7 +34,8 @@ interface CartDrawerProps {
   onClose: () => void;
   cartItems: CartItem[];
   updateQuantity: (index: number, quantity: number) => void;
-  removeFromCart: (productId: string, selectedExtras: SelectedExtra[]) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  removeFromCart: (productId: string, selectedExtras: any[]) => void;
   cartTotal: number;
   selectedBranch: Branch | undefined;
   isRestaurantOpen?: boolean;
@@ -57,20 +59,15 @@ export default function CartDrawer({
     phone: "",
     address: "",
   });
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [paymentVerified, setPaymentVerified] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [orderId, setOrderId] = useState<string>("");
+  const deliveryFee = 3.99;
 
   const handleNextStep = () => {
     if (currentStep === "cart") setCurrentStep("userInfo");
     else if (currentStep === "userInfo") setCurrentStep("payment");
-    else if (currentStep === "payment" && paymentVerified) {
-      // Generate order ID when moving to confirmation
-      const newOrderId = `ORD-${Math.floor(10000 + Math.random() * 90000)}`;
-      setOrderId(newOrderId);
-      setCurrentStep("confirmation");
-      setShowConfetti(true);
-    }
   };
 
   const handlePrevStep = () => {
@@ -86,6 +83,11 @@ export default function CartDrawer({
 
   const handlePaymentComplete = () => {
     setPaymentVerified(true);
+    // Generate order ID and move to confirmation immediately
+    const newOrderId = `ORD-${Math.floor(10000 + Math.random() * 90000)}`;
+    setOrderId(newOrderId);
+    setCurrentStep("confirmation");
+    setShowConfetti(true);
   };
 
   const handleClose = () => {
@@ -218,8 +220,6 @@ export default function CartDrawer({
                           src={item.product.image || "/placeholder.svg"}
                           alt={item.product.name}
                           className="object-cover w-full h-full"
-                          width={64}
-                          height={64}
                         />
                       </div>
                       <div className="flex-1">
@@ -240,19 +240,22 @@ export default function CartDrawer({
                             <span className="sr-only">Remove</span>
                           </Button>
                         </div>
-                        <p className="text-sm text-muted-foreground">
-                          <CurrencyDisplay amount={item.product.price} />
-                        </p>
+                        {/* Replace the item price display in the cart items section: */}
+                        <div className="text-sm font-medium">
+                          <CurrencyDisplay
+                            amount={item.product.price * item.quantity}
+                          />
+                        </div>
 
                         {item.selectedExtras.length > 0 && (
                           <div className="mt-1 text-xs text-muted-foreground">
                             {item.selectedExtras.map((extra) => (
                               <div key={extra.extraId}>
-                                + {extra.quantity || 1}x {extra.name} ($
-                                {(extra.price * (extra.quantity || 1)).toFixed(
-                                  2
-                                )}
-                                )
+                                +
+                                <CurrencyDisplay
+                                  amount={extra.price * (extra.quantity || 1)}
+                                  showSymbol={false}
+                                />
                               </div>
                             ))}
                           </div>
@@ -332,29 +335,29 @@ export default function CartDrawer({
             <>
               <div className="flex justify-between mb-4">
                 <span className="font-medium">Subtotal</span>
-                <span>
+                <div className="font-medium">
                   <CurrencyDisplay amount={cartTotal} />
-                </span>
+                </div>
               </div>
               <div className="flex justify-between mb-4">
-                <span className="font-medium">Delivery Fee</span>
-                <span>
-                  <CurrencyDisplay amount={3.99} />
-                </span>
+                <span className="font-medium">Costo de Envío</span>
+                <div className="font-medium">
+                  <CurrencyDisplay amount={deliveryFee} />
+                </div>
               </div>
               <Separator className="my-2" />
               <div className="flex justify-between mb-4">
                 <span className="font-bold">Total</span>
-                <span className="font-bold">
-                  <CurrencyDisplay amount={cartTotal + 3.99} />
-                </span>
+                <div className="font-bold">
+                  <CurrencyDisplay amount={cartTotal + deliveryFee} />
+                </div>
               </div>
               <Button
                 className="w-full"
                 onClick={handleNextStep}
                 disabled={isCartEmpty || !selectedBranch}
               >
-                Proceed to Checkout
+                Proceder al Pago
                 <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
             </>
@@ -364,10 +367,10 @@ export default function CartDrawer({
             <div className="flex justify-between">
               <Button variant="outline" onClick={handlePrevStep}>
                 <ChevronLeft className="mr-2 h-4 w-4" />
-                Back to Cart
+                Volver al Carrito
               </Button>
               <Button type="submit" form="checkout-form">
-                Continue to Payment
+                Continuar al Pago
                 <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
@@ -377,24 +380,17 @@ export default function CartDrawer({
             <div className="flex justify-between">
               <Button variant="outline" onClick={handlePrevStep}>
                 <ChevronLeft className="mr-2 h-4 w-4" />
-                Back
+                Volver
               </Button>
-              {paymentVerified ? (
-                <Button onClick={handleNextStep}>
-                  Confirm Order
-                  <ChevronRight className="ml-2 h-4 w-4" />
-                </Button>
-              ) : (
-                <Button type="submit" form="payment-form">
-                  Verify Payment
-                </Button>
-              )}
+              <Button type="submit" form="payment-form">
+                Verificar Pago
+              </Button>
             </div>
           )}
 
           {currentStep === "confirmation" && (
             <Button className="w-full" onClick={handleClose}>
-              Done
+              Listo
             </Button>
           )}
         </div>

@@ -101,13 +101,13 @@ export default function ImageGalleryPicker({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[800px] max-h-[80vh] flex flex-col">
         <DialogHeader>
-          <DialogTitle>Select Image from Gallery</DialogTitle>
+          <DialogTitle>Seleccionar imagen de la galería</DialogTitle>
         </DialogHeader>
 
         <div className="relative mb-4">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search images..."
+            placeholder="Buscar imágenes..."
             className="pl-8"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -120,15 +120,17 @@ export default function ImageGalleryPicker({
           className="flex-1 flex flex-col"
         >
           <TabsList className="mb-4">
-            <TabsTrigger value="all">All Images</TabsTrigger>
-            <TabsTrigger value="recent">Recent</TabsTrigger>
+            <TabsTrigger value="all">Todas las imágenes</TabsTrigger>
+            <TabsTrigger value="recent">Recientes</TabsTrigger>
           </TabsList>
 
           <ScrollArea className="flex-1">
             <TabsContent value="all" className="mt-0">
               {filteredImages.length === 0 ? (
                 <div className="text-center py-12">
-                  <p className="text-muted-foreground">No images found</p>
+                  <p className="text-muted-foreground">
+                    No se encontraron imágenes
+                  </p>
                 </div>
               ) : (
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 p-1">
@@ -180,7 +182,9 @@ export default function ImageGalleryPicker({
             <TabsContent value="recent" className="mt-0">
               {recentImages.length === 0 ? (
                 <div className="text-center py-12">
-                  <p className="text-muted-foreground">No recent images</p>
+                  <p className="text-muted-foreground">
+                    No hay imágenes recientes
+                  </p>
                 </div>
               ) : (
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 p-1">
@@ -224,10 +228,10 @@ export default function ImageGalleryPicker({
 
         <div className="flex justify-between items-center pt-4 border-t mt-4">
           <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
+            Cancelar
           </Button>
           <p className="text-sm text-muted-foreground">
-            Click on an image to select it
+            Haz click en una imagen para seleccionarla
           </p>
         </div>
       </DialogContent>

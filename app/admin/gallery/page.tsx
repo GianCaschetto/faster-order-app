@@ -212,8 +212,8 @@ export default function GalleryPage() {
           setImages((prev) => [...prev, imageToAdd]);
 
           toast({
-            title: "Success",
-            description: `${file.name} added to gallery`,
+            title: "Excelente",
+            description: `${file.name} agregado a la galería`,
           });
         }
       };
@@ -221,7 +221,7 @@ export default function GalleryPage() {
       reader.onerror = () => {
         toast({
           title: "Error",
-          description: `Failed to upload ${file.name}`,
+          description: `Error al subir ${file.name}`,
           variant: "destructive",
         });
       };
@@ -244,8 +244,8 @@ export default function GalleryPage() {
     // Check if image is used in any products
     if (currentImage.usedIn && currentImage.usedIn.length > 0) {
       toast({
-        title: "Cannot delete image",
-        description: `This image is used in ${currentImage.usedIn.length} products. Please remove it from those products first.`,
+        title: "No se puede eliminar la imagen",
+        description: `Esta imagen está siendo utilizada en ${currentImage.usedIn.length} productos. Por favor, elimínela de esos productos primero.`,
         variant: "destructive",
       });
       setIsDeleteImageOpen(false);
@@ -256,8 +256,8 @@ export default function GalleryPage() {
     setIsDeleteImageOpen(false);
 
     toast({
-      title: "Success",
-      description: "Image deleted from gallery",
+      title: "Excelente",
+      description: "Imagen eliminada de la galería",
     });
   };
 
@@ -266,8 +266,8 @@ export default function GalleryPage() {
     setCopiedId(id);
 
     toast({
-      title: "URL Copied",
-      description: "Image URL copied to clipboard",
+      title: "URL Copiada",
+      description: "URL de la imagen copiada al portapapeles",
     });
 
     // Reset the copied state after 2 seconds
@@ -281,10 +281,12 @@ export default function GalleryPage() {
       <div className="flex justify-between items-center mb-6">
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <h1 className="text-3xl font-bold tracking-tight">Image Gallery</h1>
+            <h1 className="text-3xl font-bold tracking-tight">
+              Galería de Imágenes
+            </h1>
           </div>
           <p className="text-muted-foreground">
-            Manage and organize images for your products
+            Administra y organiza imágenes para tus productos
           </p>
         </div>
 
@@ -292,12 +294,12 @@ export default function GalleryPage() {
           <DialogTrigger asChild>
             <Button>
               <Plus className="h-4 w-4 mr-2" />
-              Add Image
+              Agregar imagen
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
-              <DialogTitle>Add New Image</DialogTitle>
+              <DialogTitle>Agregar nueva imagen</DialogTitle>
             </DialogHeader>
 
             <Tabs
@@ -308,8 +310,8 @@ export default function GalleryPage() {
               }
             >
               <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="file">Upload File</TabsTrigger>
-                <TabsTrigger value="url">Image URL</TabsTrigger>
+                <TabsTrigger value="file">Subir archivo</TabsTrigger>
+                <TabsTrigger value="url">URL de la imagen</TabsTrigger>
               </TabsList>
 
               <TabsContent value="file" className="py-4">
@@ -320,7 +322,7 @@ export default function GalleryPage() {
                   showPreview={true}
                 />
                 <p className="text-xs text-muted-foreground mt-2 text-center">
-                  Supported formats: JPG, PNG, GIF, WebP
+                  Formatos soportados: JPG, PNG, GIF, WebP
                 </p>
               </TabsContent>
 
@@ -328,7 +330,7 @@ export default function GalleryPage() {
                 <div className="grid gap-4">
                   <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="image-url" className="text-right">
-                      Image URL
+                      URL de la imagen
                     </Label>
                     <Input
                       id="image-url"
@@ -343,7 +345,7 @@ export default function GalleryPage() {
 
                   <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="image-name" className="text-right">
-                      Name
+                      Nombre
                     </Label>
                     <Input
                       id="image-name"
@@ -351,25 +353,25 @@ export default function GalleryPage() {
                       onChange={(e) =>
                         setNewImage({ ...newImage, name: e.target.value })
                       }
-                      placeholder="Product Image"
+                      placeholder="Imagen de producto"
                       className="col-span-3"
                     />
                   </div>
 
                   {newImage.url && (
                     <div className="grid grid-cols-4 items-start gap-4">
-                      <Label className="text-right pt-2">Preview</Label>
+                      <Label className="text-right pt-2">Vista previa</Label>
                       <div className="col-span-3 relative h-40 w-full border rounded-md overflow-hidden">
                         <Image
                           src={newImage.url || "/placeholder.svg"}
-                          alt="Preview"
+                          alt="Vista previa"
                           fill
                           className="object-contain"
                           onError={() => {
                             toast({
                               title: "Error",
                               description:
-                                "Failed to load image. Please check the URL.",
+                                "No se pudo cargar la imagen. Por favor, verifica la URL.",
                               variant: "destructive",
                             });
                           }}
@@ -386,14 +388,14 @@ export default function GalleryPage() {
                 variant="outline"
                 onClick={() => setIsAddImageOpen(false)}
               >
-                Cancel
+                Cancelar
               </Button>
               {uploadMethod === "url" && (
-                <Button onClick={handleAddImage}>Add to Gallery</Button>
+                <Button onClick={handleAddImage}>Agregar a la galería</Button>
               )}
               {uploadMethod === "file" && (
                 <p className="text-sm text-muted-foreground">
-                  Drop files or click to upload
+                  Arrastra archivos o haz click para subir
                 </p>
               )}
             </DialogFooter>
@@ -405,7 +407,7 @@ export default function GalleryPage() {
         <div className="relative flex-1">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search images..."
+            placeholder="Buscar imágenes..."
             className="pl-8"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -415,35 +417,37 @@ export default function GalleryPage() {
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="mb-4">
-          <TabsTrigger value="all">All Images ({images.length})</TabsTrigger>
-          <TabsTrigger value="used">Used ({usedImages.length})</TabsTrigger>
+          <TabsTrigger value="all">Todas ({images.length})</TabsTrigger>
+          <TabsTrigger value="used">Usadas ({usedImages.length})</TabsTrigger>
           <TabsTrigger value="unused">
-            Unused ({unusedImages.length})
+            No utilizadas ({unusedImages.length})
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="all">
           <Card>
             <CardHeader>
-              <CardTitle>Gallery</CardTitle>
+              <CardTitle>Galería</CardTitle>
               <CardDescription>
-                All images available for your products
+                Todas las imágenes disponibles para tus productos
               </CardDescription>
             </CardHeader>
             <CardContent>
               {filteredImages.length === 0 ? (
                 <div className="text-center py-12">
                   <ImageIcon className="h-12 w-12 mx-auto text-muted-foreground" />
-                  <h3 className="mt-4 text-lg font-medium">No images found</h3>
+                  <h3 className="mt-4 text-lg font-medium">
+                    No se encontraron imágenes
+                  </h3>
                   <p className="text-muted-foreground mt-2">
-                    Try adjusting your search or add a new image.
+                    Intenta ajustar tu búsqueda o agrega una nueva imagen.
                   </p>
                   <Button
                     className="mt-4"
                     onClick={() => setIsAddImageOpen(true)}
                   >
                     <Plus className="h-4 w-4 mr-2" />
-                    Add Image
+                    Agregar imagen
                   </Button>
                 </div>
               ) : (
@@ -504,14 +508,14 @@ export default function GalleryPage() {
                           </span>
                           {image.usedIn && image.usedIn.length > 0 ? (
                             <Badge variant="secondary" className="text-xs">
-                              Used in {image.usedIn.length}{" "}
+                              Usada en {image.usedIn.length}{" "}
                               {image.usedIn.length === 1
-                                ? "product"
-                                : "products"}
+                                ? "producto"
+                                : "productos"}
                             </Badge>
                           ) : (
                             <Badge variant="outline" className="text-xs">
-                              Unused
+                              No utilizada
                             </Badge>
                           )}
                         </div>
@@ -527,18 +531,21 @@ export default function GalleryPage() {
         <TabsContent value="used">
           <Card>
             <CardHeader>
-              <CardTitle>Used Images</CardTitle>
+              <CardTitle>Imágenes usadas</CardTitle>
               <CardDescription>
-                Images currently used in products
+                Imágenes actualmente utilizadas en productos
               </CardDescription>
             </CardHeader>
             <CardContent>
               {usedImages.length === 0 ? (
                 <div className="text-center py-12">
                   <ImageIcon className="h-12 w-12 mx-auto text-muted-foreground" />
-                  <h3 className="mt-4 text-lg font-medium">No used images</h3>
+                  <h3 className="mt-4 text-lg font-medium">
+                    No se encontraron imágenes usadas
+                  </h3>
                   <p className="text-muted-foreground mt-2">
-                    Images will appear here when they are used in products.
+                    Las imágenes aparecerán aquí cuando se utilicen en
+                    productos.
                   </p>
                 </div>
               ) : (
@@ -612,18 +619,21 @@ export default function GalleryPage() {
         <TabsContent value="unused">
           <Card>
             <CardHeader>
-              <CardTitle>Unused Images</CardTitle>
+              <CardTitle>Imágenes no utilizadas</CardTitle>
               <CardDescription>
-                Images not currently used in any products
+                Imágenes no actualmente utilizadas en ningún producto
               </CardDescription>
             </CardHeader>
             <CardContent>
               {unusedImages.length === 0 ? (
                 <div className="text-center py-12">
                   <ImageIcon className="h-12 w-12 mx-auto text-muted-foreground" />
-                  <h3 className="mt-4 text-lg font-medium">No unused images</h3>
+                  <h3 className="mt-4 text-lg font-medium">
+                    No se encontraron imágenes no utilizadas
+                  </h3>
                   <p className="text-muted-foreground mt-2">
-                    All your images are currently being used in products.
+                    Todas tus imágenes están actualmente siendo utilizadas en
+                    productos.
                   </p>
                 </div>
               ) : (
@@ -690,7 +700,7 @@ export default function GalleryPage() {
                               {new Date(image.uploadedAt).toLocaleDateString()}
                             </span>
                             <Badge variant="outline" className="text-xs">
-                              Unused
+                              No utilizada
                             </Badge>
                           </div>
                         </div>
@@ -707,7 +717,7 @@ export default function GalleryPage() {
       <Dialog open={isDeleteImageOpen} onOpenChange={setIsDeleteImageOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Delete Image</DialogTitle>
+            <DialogTitle>Eliminar imagen</DialogTitle>
           </DialogHeader>
           <div className="py-4">
             <div className="flex items-start gap-4">
@@ -723,20 +733,23 @@ export default function GalleryPage() {
               </div>
               <div>
                 <p>
-                  Are you sure you want to delete{" "}
+                  ¿Estás seguro de querer eliminar{" "}
                   <strong>{currentImage?.name}</strong>?
                 </p>
                 {currentImage?.usedIn && currentImage.usedIn.length > 0 ? (
                   <div className="bg-yellow-50 text-yellow-800 p-3 rounded-md mt-3">
-                    <p className="font-medium">Cannot delete image</p>
+                    <p className="font-medium">
+                      No se puede eliminar la imagen
+                    </p>
                     <p className="text-sm mt-1">
-                      This image is used in {currentImage.usedIn.length}{" "}
-                      products. Please remove it from those products first.
+                      Esta imagen está siendo utilizada en{" "}
+                      {currentImage.usedIn.length} productos. Por favor,
+                      elimínala de esos productos primero.
                     </p>
                   </div>
                 ) : (
                   <p className="text-sm text-muted-foreground mt-2">
-                    This action cannot be undone.
+                    Esta acción no se puede deshacer.
                   </p>
                 )}
               </div>
@@ -747,14 +760,14 @@ export default function GalleryPage() {
               variant="outline"
               onClick={() => setIsDeleteImageOpen(false)}
             >
-              Cancel
+              Cancelar
             </Button>
             <Button
               variant="destructive"
               onClick={handleDeleteImage}
               disabled={currentImage?.usedIn && currentImage.usedIn.length > 0}
             >
-              Delete
+              Eliminar
             </Button>
           </DialogFooter>
         </DialogContent>

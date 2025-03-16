@@ -90,8 +90,8 @@ export default function TrackOrderPage({
         }
       } else {
         toast({
-          title: "Order not found",
-          description: "The order you're looking for doesn't exist",
+          title: "Pedido no encontrado",
+          description: "El pedido que estás buscando no existe",
           variant: "destructive",
         });
       }
@@ -195,7 +195,7 @@ export default function TrackOrderPage({
       <div className="container mx-auto px-4 py-6 max-w-md">
         <div className="flex items-center mb-6">
           <Button variant="ghost" size="icon" className="mr-2" asChild>
-            <Link href="/">
+            <Link href="/menu">
               <ArrowLeft className="h-5 w-5" />
             </Link>
           </Button>
@@ -245,19 +245,19 @@ export default function TrackOrderPage({
               <ArrowLeft className="h-5 w-5" />
             </Link>
           </Button>
-          <h1 className="text-2xl font-bold">Order Not Found</h1>
+          <h1 className="text-2xl font-bold">Pedido no encontrado</h1>
         </div>
 
         <Card>
           <CardContent className="p-6 text-center py-12">
             <X className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-            <h2 className="text-xl font-semibold mb-2">Order Not Found</h2>
+            <h2 className="text-xl font-semibold mb-2">Pedido no encontrado</h2>
             <p className="text-muted-foreground mb-6">
-              We couldn&apos;t find the order you&apos;re looking for. Please
-              check the order ID and try again.
+              No pudimos encontrar el pedido que estás buscando. Por favor,
+              verifica el ID del pedido y vuelve a intentarlo.
             </p>
             <Button asChild>
-              <Link href="/">Return to Restaurant</Link>
+              <Link href="/">Volver al restaurante</Link>
             </Button>
           </CardContent>
         </Card>
@@ -276,20 +276,20 @@ export default function TrackOrderPage({
             <ArrowLeft className="h-5 w-5" />
           </Link>
         </Button>
-        <h1 className="text-2xl font-bold">Track Order</h1>
+        <h1 className="text-2xl font-bold">Seguimiento de pedido</h1>
       </div>
 
       <Card className="mb-6">
         <CardContent className="p-6">
           <div className="flex justify-between items-start mb-4">
             <div>
-              <h2 className="font-semibold text-lg">Order #{order.id}</h2>
+              <h2 className="font-semibold text-lg">Pedido #{order.id}</h2>
               <p className="text-sm text-muted-foreground">
-                Placed on {new Date(order.createdAt).toLocaleString()}
+                Realizado el {new Date(order.createdAt).toLocaleString()}
               </p>
             </div>
             {order.status === "cancelled" ? (
-              <Badge variant="destructive">Cancelled</Badge>
+              <Badge variant="destructive">Cancelado</Badge>
             ) : (
               <Badge
                 variant={
@@ -304,14 +304,14 @@ export default function TrackOrderPage({
           {order.status !== "cancelled" && (
             <div className="mb-6">
               <div className="flex justify-between text-sm mb-2">
-                <span>Delivery Progress</span>
+                <span>Progreso de entrega</span>
                 {estimatedTime !== null && estimatedTime > 0 && (
                   <span className="font-medium">
                     ETA: {formatTime(estimatedTime)}
                   </span>
                 )}
                 {order.status === "delivered" && (
-                  <span className="font-medium text-green-600">Delivered</span>
+                  <span className="font-medium text-green-600">Entregado</span>
                 )}
               </div>
               <Progress value={deliveryProgress} className="h-2" />
@@ -340,9 +340,9 @@ export default function TrackOrderPage({
                 )}
               </div>
               <div>
-                <h3 className="font-medium">Order Received</h3>
+                <h3 className="font-medium">Pedido recibido</h3>
                 <p className="text-sm text-muted-foreground">
-                  Your order has been received by the restaurant
+                  Tu pedido ha sido recibido por el restaurante
                 </p>
               </div>
             </div>
@@ -368,9 +368,9 @@ export default function TrackOrderPage({
                 )}
               </div>
               <div>
-                <h3 className="font-medium">Order Confirmed</h3>
+                <h3 className="font-medium">Pedido confirmado</h3>
                 <p className="text-sm text-muted-foreground">
-                  Your order has been confirmed
+                  Tu pedido ha sido confirmado
                 </p>
               </div>
             </div>
@@ -396,9 +396,9 @@ export default function TrackOrderPage({
                 )}
               </div>
               <div>
-                <h3 className="font-medium">Preparing</h3>
+                <h3 className="font-medium">Preparando</h3>
                 <p className="text-sm text-muted-foreground">
-                  Your food is being prepared
+                  Tu pedido está siendo preparado
                 </p>
               </div>
             </div>
@@ -424,9 +424,9 @@ export default function TrackOrderPage({
                 )}
               </div>
               <div>
-                <h3 className="font-medium">Ready for Pickup/Delivery</h3>
+                <h3 className="font-medium">Listo para recoger/entregar</h3>
                 <p className="text-sm text-muted-foreground">
-                  Your order is ready and on its way
+                  Tu pedido está listo y en camino
                 </p>
               </div>
             </div>
@@ -450,9 +450,9 @@ export default function TrackOrderPage({
                 )}
               </div>
               <div>
-                <h3 className="font-medium">Delivered</h3>
+                <h3 className="font-medium">Entregado</h3>
                 <p className="text-sm text-muted-foreground">
-                  Your order has been delivered
+                  Tu pedido ha sido entregado
                 </p>
               </div>
             </div>
@@ -463,10 +463,10 @@ export default function TrackOrderPage({
               <div className="flex items-start">
                 <X className="h-5 w-5 mr-2 mt-0.5" />
                 <div>
-                  <p className="font-medium">Order Cancelled</p>
+                  <p className="font-medium">Pedido cancelado</p>
                   <p>
-                    This order has been cancelled. If you have any questions,
-                    please contact the restaurant.
+                    Este pedido ha sido cancelado. Si tienes alguna pregunta,
+                    por favor contacta al restaurante.
                   </p>
                 </div>
               </div>
@@ -477,7 +477,7 @@ export default function TrackOrderPage({
 
       <Card className="mb-6">
         <CardContent className="p-6">
-          <h2 className="font-semibold text-lg mb-4">Order Details</h2>
+          <h2 className="font-semibold text-lg mb-4">Detalles del pedido</h2>
 
           <div className="space-y-4">
             {order.items.map((item, index) => (
@@ -509,7 +509,7 @@ export default function TrackOrderPage({
               <span>${order.subtotal.toFixed(2)}</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span>Delivery Fee</span>
+              <span>Cuota de entrega</span>
               <span>${order.deliveryFee.toFixed(2)}</span>
             </div>
             <div className="flex justify-between font-bold mt-2">
@@ -522,13 +522,13 @@ export default function TrackOrderPage({
 
       <Card className="mb-6">
         <CardContent className="p-6">
-          <h2 className="font-semibold text-lg mb-4">Delivery Information</h2>
+          <h2 className="font-semibold text-lg mb-4">Información de entrega</h2>
 
           <div className="space-y-4">
             <div className="flex items-start gap-3">
               <MapPin className="h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
               <div>
-                <p className="font-medium">Delivery Address</p>
+                <p className="font-medium">Dirección de entrega</p>
                 <p className="text-sm text-muted-foreground">
                   {order.customerAddress}
                 </p>
@@ -538,7 +538,7 @@ export default function TrackOrderPage({
             <div className="flex items-start gap-3">
               <Phone className="h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
               <div>
-                <p className="font-medium">Contact</p>
+                <p className="font-medium">Contacto</p>
                 <p className="text-sm text-muted-foreground">
                   {order.customerPhone}
                 </p>
@@ -548,11 +548,11 @@ export default function TrackOrderPage({
             <div className="flex items-start gap-3">
               <ShoppingBag className="h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
               <div>
-                <p className="font-medium">Restaurant</p>
+                <p className="font-medium">Restaurante</p>
                 <p className="text-sm text-muted-foreground">
                   {branch
                     ? `${branch.name} - ${branch.address}`
-                    : "Unknown Branch"}
+                    : "Sucursal desconocida"}
                 </p>
               </div>
             </div>
@@ -562,12 +562,12 @@ export default function TrackOrderPage({
 
       <div className="flex gap-4">
         <Button className="flex-1" asChild>
-          <Link href="/">Return to Restaurant</Link>
+          <Link href="/menu">Volver al restaurante</Link>
         </Button>
         <Button variant="outline" className="flex-1" asChild>
           <a href={`tel:${order.customerPhone}`}>
             <Phone className="h-4 w-4 mr-2" />
-            Contact
+            Contactar
           </a>
         </Button>
       </div>

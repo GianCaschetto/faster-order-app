@@ -2,8 +2,8 @@ import RestaurantMenu from "@/components/restaurant-menu";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Restaurant Menu & Cart",
-  description: "Order delicious food from our restaurant",
+  title: "Menú del Restaurante",
+  description: "Ordena deliciosa comida de nuestro restaurante",
 };
 
 export default function Home() {

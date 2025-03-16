@@ -165,10 +165,10 @@ export default function OrdersPage() {
         }
 
         toast({
-          title: `${newOrders.length} New Order${
+          title: `${newOrders.length} Nuevo${
             newOrders.length > 1 ? "s" : ""
-          }!`,
-          description: "You have received new orders that need attention.",
+          } pedido${newOrders.length > 1 ? "s" : ""}!`,
+          description: "Has recibido nuevos pedidos que requieren atención.",
         });
       }
 
@@ -250,8 +250,8 @@ export default function OrdersPage() {
     }
 
     toast({
-      title: "Order status updated",
-      description: `Order #${orderId} status changed to ${newStatus}`,
+      title: "Estado del pedido actualizado",
+      description: `El pedido #${orderId} se ha actualizado a ${newStatus}`,
     });
   };
 
@@ -284,8 +284,8 @@ export default function OrdersPage() {
     }
 
     toast({
-      title: "Payment status updated",
-      description: `Order #${orderId} payment status changed to ${newStatus}`,
+      title: "Estado de pago actualizado",
+      description: `El pago del pedido #${orderId} se ha actualizado a ${newStatus}`,
     });
   };
 
@@ -301,40 +301,40 @@ export default function OrdersPage() {
       case "pending":
         return (
           <Badge variant="default" className="bg-yellow-500">
-            Pending
+            Pendiente
           </Badge>
         );
       case "confirmed":
         return (
           <Badge variant="default" className="bg-blue-500">
-            Confirmed
+            Confirmado
           </Badge>
         );
       case "preparing":
         return (
           <Badge variant="default" className="bg-purple-500">
-            Preparing
+            Preparando
           </Badge>
         );
       case "ready":
         return (
           <Badge variant="default" className="bg-green-500">
-            Ready
+            Listo
           </Badge>
         );
       case "delivered":
-        return <Badge variant="default">Delivered</Badge>;
+        return <Badge variant="default">Entregado</Badge>;
       case "cancelled":
-        return <Badge variant="destructive">Cancelled</Badge>;
+        return <Badge variant="destructive">Cancelado</Badge>;
     }
   };
 
   const getPaymentStatusBadge = (status: "pending" | "paid") => {
     return status === "paid" ? (
-      <Badge variant="default">Paid</Badge>
+      <Badge variant="default">Pagado</Badge>
     ) : (
       <Badge variant="default" className="bg-yellow-500">
-        Pending
+        Pendiente
       </Badge>
     );
   };
@@ -364,7 +364,7 @@ export default function OrdersPage() {
   if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <p>Loading...</p>
+        <p>Cargando...</p>
       </div>
     );
   }
@@ -381,7 +381,7 @@ export default function OrdersPage() {
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="flex items-center gap-2">
           <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
-            Orders Management
+            Gestión de pedidos
           </h2>
           {newOrdersCount > 0 && (
             <TooltipProvider>
@@ -417,9 +417,9 @@ export default function OrdersPage() {
             className="md:hidden"
           >
             <Filter className="h-4 w-4 mr-2" />
-            Filters
+            Filtros
           </Button>
-          <Button onClick={() => router.refresh()}>Refresh</Button>
+          <Button onClick={() => router.refresh()}>Actualizar</Button>
         </div>
       </div>
 
@@ -431,7 +431,7 @@ export default function OrdersPage() {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search orders..."
+            placeholder="Buscar pedidos..."
             className="pl-9 w-full"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -445,25 +445,25 @@ export default function OrdersPage() {
           }
         >
           <SelectTrigger className="w-full md:w-[180px]">
-            <SelectValue placeholder="All Statuses" />
+            <SelectValue placeholder="Todos los estados" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Statuses</SelectItem>
-            <SelectItem value="pending">Pending</SelectItem>
-            <SelectItem value="confirmed">Confirmed</SelectItem>
-            <SelectItem value="preparing">Preparing</SelectItem>
-            <SelectItem value="ready">Ready</SelectItem>
-            <SelectItem value="delivered">Delivered</SelectItem>
-            <SelectItem value="cancelled">Cancelled</SelectItem>
+            <SelectItem value="all">Todos los estados</SelectItem>
+            <SelectItem value="pending">Pendiente</SelectItem>
+            <SelectItem value="confirmed">Confirmado</SelectItem>
+            <SelectItem value="preparing">Preparando</SelectItem>
+            <SelectItem value="ready">Listo</SelectItem>
+            <SelectItem value="delivered">Entregado</SelectItem>
+            <SelectItem value="cancelled">Cancelado</SelectItem>
           </SelectContent>
         </Select>
 
         <Select value={branchFilter} onValueChange={setBranchFilter}>
           <SelectTrigger className="w-full md:w-[180px]">
-            <SelectValue placeholder="All Branches" />
+            <SelectValue placeholder="Todas las sucursales" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Branches</SelectItem>
+            <SelectItem value="all">Todas las sucursales</SelectItem>
             {branches.map((branch) => (
               <SelectItem key={branch.id} value={branch.id}>
                 {branch.name}
@@ -475,9 +475,9 @@ export default function OrdersPage() {
 
       <Tabs defaultValue="all">
         <TabsList className="flex overflow-x-auto pb-px">
-          <TabsTrigger value="all">All Orders</TabsTrigger>
+          <TabsTrigger value="all">Todos los pedidos</TabsTrigger>
           <TabsTrigger value="pending" className="relative">
-            Pending
+            Pendiente
             {orders.filter((o) => o.status === "pending" && o.isNew).length >
               0 && (
               <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
@@ -485,11 +485,11 @@ export default function OrdersPage() {
               </span>
             )}
           </TabsTrigger>
-          <TabsTrigger value="confirmed">Confirmed</TabsTrigger>
-          <TabsTrigger value="preparing">Preparing</TabsTrigger>
-          <TabsTrigger value="ready">Ready</TabsTrigger>
-          <TabsTrigger value="delivered">Delivered</TabsTrigger>
-          <TabsTrigger value="cancelled">Cancelled</TabsTrigger>
+          <TabsTrigger value="confirmed">Confirmado</TabsTrigger>
+          <TabsTrigger value="preparing">Preparando</TabsTrigger>
+          <TabsTrigger value="ready">Listo</TabsTrigger>
+          <TabsTrigger value="delivered">Entregado</TabsTrigger>
+          <TabsTrigger value="cancelled">Cancelado</TabsTrigger>
         </TabsList>
 
         <TabsContent value="all" className="mt-4">
@@ -528,25 +528,25 @@ export default function OrdersPage() {
           <DialogContent className="max-w-3xl">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
-                Order #{selectedOrder.id}
+                Pedido #{selectedOrder.id}
                 {getStatusBadge(selectedOrder.status)}
                 {selectedOrder.isNew && (
                   <Badge variant="default" className="bg-red-500 text-white">
-                    New
+                    Nuevo
                   </Badge>
                 )}
               </DialogTitle>
               <DialogDescription>
-                Placed on {formatDate(selectedOrder.createdAt)}
+                Colocado el {formatDate(selectedOrder.createdAt)}
               </DialogDescription>
             </DialogHeader>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h3 className="font-semibold mb-2">Customer Information</h3>
+                <h3 className="font-semibold mb-2">Información del cliente</h3>
                 <div className="space-y-1 text-sm">
                   <p>
-                    <span className="font-medium">Name:</span>{" "}
+                    <span className="font-medium">Nombre:</span>{" "}
                     {selectedOrder.customerName}
                   </p>
                   <p>
@@ -554,50 +554,51 @@ export default function OrdersPage() {
                     {selectedOrder.customerEmail}
                   </p>
                   <p>
-                    <span className="font-medium">Phone:</span>{" "}
+                    <span className="font-medium">Teléfono:</span>{" "}
                     {selectedOrder.customerPhone}
                   </p>
                   <p>
-                    <span className="font-medium">Address:</span>{" "}
+                    <span className="font-medium">Dirección:</span>{" "}
                     {selectedOrder.customerAddress}
                   </p>
                 </div>
 
-                <h3 className="font-semibold mt-4 mb-2">Payment Information</h3>
+                <h3 className="font-semibold mt-4 mb-2">Información de pago</h3>
                 <div className="space-y-1 text-sm">
                   <p className="flex items-center gap-2">
-                    <span className="font-medium">Method:</span>
+                    <span className="font-medium">Método:</span>
                     {selectedOrder.paymentMethod === "card" ? (
                       <span className="flex items-center">
-                        <CreditCard className="h-4 w-4 mr-1" /> Credit Card
+                        <CreditCard className="h-4 w-4 mr-1" /> Tarjeta de
+                        crédito
                       </span>
                     ) : (
-                      <span>Cash on Delivery</span>
+                      <span>Efectivo en entrega</span>
                     )}
                   </p>
                   <p className="flex items-center gap-2">
-                    <span className="font-medium">Status:</span>
+                    <span className="font-medium">Estado:</span>
                     {getPaymentStatusBadge(selectedOrder.paymentStatus)}
                   </p>
                 </div>
 
-                <h3 className="font-semibold mt-4 mb-2">Branch</h3>
+                <h3 className="font-semibold mt-4 mb-2">Sucursal</h3>
                 <p className="text-sm">
                   {branches.find(
                     (branch) => branch.id === selectedOrder.branchId
-                  )?.name || "Unknown Branch"}
+                  )?.name || "Sucursal desconocida"}
                 </p>
               </div>
 
               <div>
-                <h3 className="font-semibold mb-2">Order Items</h3>
+                <h3 className="font-semibold mb-2">Artículos del pedido</h3>
                 <div className="border rounded-md">
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead>Item</TableHead>
-                        <TableHead className="text-right">Qty</TableHead>
-                        <TableHead className="text-right">Price</TableHead>
+                        <TableHead>Artículo</TableHead>
+                        <TableHead className="text-right">Cantidad</TableHead>
+                        <TableHead className="text-right">Precio</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -633,7 +634,7 @@ export default function OrdersPage() {
                     <span>${selectedOrder.subtotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span>Delivery Fee</span>
+                    <span>Costo de entrega</span>
                     <span>${selectedOrder.deliveryFee.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between font-bold">
@@ -646,7 +647,9 @@ export default function OrdersPage() {
 
             <DialogFooter className="flex-col sm:flex-row gap-2">
               <div className="flex-1">
-                <h3 className="font-semibold mb-2">Update Order Status</h3>
+                <h3 className="font-semibold mb-2">
+                  Actualizar estado del pedido
+                </h3>
                 <div className="flex flex-wrap gap-2">
                   <Button
                     variant="outline"
@@ -659,7 +662,7 @@ export default function OrdersPage() {
                       selectedOrder.status === "pending" ? "bg-yellow-100" : ""
                     }
                   >
-                    <Clock className="h-4 w-4 mr-1" /> Pending
+                    <Clock className="h-4 w-4 mr-1" /> Pendiente
                   </Button>
                   <Button
                     variant="outline"
@@ -672,7 +675,7 @@ export default function OrdersPage() {
                       selectedOrder.status === "confirmed" ? "bg-blue-100" : ""
                     }
                   >
-                    <Check className="h-4 w-4 mr-1" /> Confirm
+                    <Check className="h-4 w-4 mr-1" /> Confirmado
                   </Button>
                   <Button
                     variant="outline"
@@ -687,7 +690,7 @@ export default function OrdersPage() {
                         : ""
                     }
                   >
-                    <Package className="h-4 w-4 mr-1" /> Preparing
+                    <Package className="h-4 w-4 mr-1" /> Preparando
                   </Button>
                   <Button
                     variant="outline"
@@ -700,7 +703,7 @@ export default function OrdersPage() {
                       selectedOrder.status === "ready" ? "bg-green-100" : ""
                     }
                   >
-                    <ShoppingBag className="h-4 w-4 mr-1" /> Ready
+                    <ShoppingBag className="h-4 w-4 mr-1" /> Listo
                   </Button>
                   <Button
                     variant="outline"
@@ -713,7 +716,7 @@ export default function OrdersPage() {
                       selectedOrder.status === "delivered" ? "bg-green-100" : ""
                     }
                   >
-                    <Truck className="h-4 w-4 mr-1" /> Delivered
+                    <Truck className="h-4 w-4 mr-1" /> Entregado
                   </Button>
                   <Button
                     variant="outline"
@@ -726,13 +729,13 @@ export default function OrdersPage() {
                       selectedOrder.status === "cancelled" ? "bg-red-100" : ""
                     }
                   >
-                    <X className="h-4 w-4 mr-1" /> Cancel
+                    <X className="h-4 w-4 mr-1" /> Cancelado
                   </Button>
                 </div>
               </div>
 
               <div>
-                <h3 className="font-semibold mb-2">Payment Status</h3>
+                <h3 className="font-semibold mb-2">Estado de pago</h3>
                 <div className="flex gap-2">
                   <Button
                     variant="outline"
@@ -747,7 +750,7 @@ export default function OrdersPage() {
                         : ""
                     }
                   >
-                    <Clock className="h-4 w-4 mr-1" /> Pending
+                    <Clock className="h-4 w-4 mr-1" /> Pendiente
                   </Button>
                   <Button
                     variant="outline"
@@ -762,7 +765,7 @@ export default function OrdersPage() {
                         : ""
                     }
                   >
-                    <CreditCard className="h-4 w-4 mr-1" /> Paid
+                    <CreditCard className="h-4 w-4 mr-1" /> Pagado
                   </Button>
                 </div>
               </div>
@@ -773,10 +776,10 @@ export default function OrdersPage() {
                 variant="outline"
                 onClick={() => setIsOrderDetailsOpen(false)}
               >
-                Close
+                Cerrar
               </Button>
               <Button variant="default" onClick={() => window.print()}>
-                <FileText className="h-4 w-4 mr-1" /> Print Invoice
+                <FileText className="h-4 w-4 mr-1" /> Imprimir factura
               </Button>
             </div>
           </DialogContent>
@@ -803,16 +806,16 @@ function OrdersTable({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Orders</CardTitle>
+        <CardTitle>Pedidos</CardTitle>
         <CardDescription>
-          Manage customer orders and update their status
+          Gestiona los pedidos de los clientes y actualiza su estado
         </CardDescription>
       </CardHeader>
       <CardContent>
         {orders.length === 0 ? (
           <div className="text-center py-6 text-muted-foreground">
             <ShoppingBag className="h-8 w-8 mx-auto mb-2" />
-            <p>No orders found</p>
+            <p>No se encontraron pedidos</p>
           </div>
         ) : (
           <div className="rounded-md border overflow-hidden">
@@ -820,20 +823,20 @@ function OrdersTable({
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Order ID</TableHead>
+                    <TableHead>ID de pedido</TableHead>
                     <TableHead className="hidden md:table-cell">
-                      Customer
+                      Cliente
                     </TableHead>
-                    <TableHead className="hidden md:table-cell">Date</TableHead>
                     <TableHead className="hidden md:table-cell">
-                      Branch
+                      Fecha
+                    </TableHead>
+                    <TableHead className="hidden md:table-cell">
+                      Sucursal
                     </TableHead>
                     <TableHead>Total</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="hidden md:table-cell">
-                      Payment
-                    </TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
+                    <TableHead>Estado</TableHead>
+                    <TableHead className="hidden md:table-cell">Pago</TableHead>
+                    <TableHead className="text-right">Acciones</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -852,7 +855,7 @@ function OrdersTable({
                               variant="default"
                               className="bg-red-500 text-white"
                             >
-                              New
+                              Nuevo
                             </Badge>
                           )}
                         </span>
@@ -879,7 +882,7 @@ function OrdersTable({
                             size="sm"
                             onClick={() => onViewOrder(order)}
                           >
-                            View
+                            Ver
                           </Button>
                           <div className="md:hidden">
                             <Select
@@ -892,19 +895,21 @@ function OrdersTable({
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="pending">Pending</SelectItem>
+                                <SelectItem value="pending">
+                                  Pendiente
+                                </SelectItem>
                                 <SelectItem value="confirmed">
-                                  Confirm
+                                  Confirmado
                                 </SelectItem>
                                 <SelectItem value="preparing">
-                                  Preparing
+                                  Preparando
                                 </SelectItem>
-                                <SelectItem value="ready">Ready</SelectItem>
+                                <SelectItem value="ready">Listo</SelectItem>
                                 <SelectItem value="delivered">
-                                  Delivered
+                                  Entregado
                                 </SelectItem>
                                 <SelectItem value="cancelled">
-                                  Cancel
+                                  Cancelado
                                 </SelectItem>
                               </SelectContent>
                             </Select>

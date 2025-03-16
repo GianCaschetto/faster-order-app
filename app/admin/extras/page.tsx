@@ -247,7 +247,7 @@ export default function ExtrasPage() {
     if (!newGroup.name) {
       toast({
         title: "Error",
-        description: "Group name is required",
+        description: "El nombre del grupo es requerido",
         variant: "destructive",
       });
       return;
@@ -272,8 +272,8 @@ export default function ExtrasPage() {
     setIsAddGroupOpen(false);
 
     toast({
-      title: "Success",
-      description: "Extra group added successfully",
+      title: "Excelente",
+      description: "Grupo de extra agregado exitosamente",
     });
   };
 
@@ -288,8 +288,8 @@ export default function ExtrasPage() {
     setIsEditGroupOpen(false);
 
     toast({
-      title: "Success",
-      description: "Extra group updated successfully",
+      title: "Excelente",
+      description: "Grupo de extra actualizado exitosamente",
     });
   };
 
@@ -300,8 +300,8 @@ export default function ExtrasPage() {
     setIsDeleteGroupOpen(false);
 
     toast({
-      title: "Success",
-      description: "Extra group deleted successfully",
+      title: "Excelente",
+      description: "Grupo de extra eliminado exitosamente",
     });
   };
 
@@ -310,7 +310,7 @@ export default function ExtrasPage() {
     if (!newExtra.name || typeof newExtra.price !== "number") {
       toast({
         title: "Error",
-        description: "Name and price are required",
+        description: "El nombre y el precio son requeridos",
         variant: "destructive",
       });
       return;
@@ -349,8 +349,8 @@ export default function ExtrasPage() {
     setIsAddExtraOpen(false);
 
     toast({
-      title: "Success",
-      description: "Extra added successfully",
+      title: "Excelente",
+      description: "Extra agregado exitosamente",
     });
   };
 
@@ -375,8 +375,8 @@ export default function ExtrasPage() {
     setIsEditExtraOpen(false);
 
     toast({
-      title: "Success",
-      description: "Extra updated successfully",
+      title: "Excelente",
+      description: "Extra actualizado exitosamente",
     });
   };
 
@@ -401,8 +401,8 @@ export default function ExtrasPage() {
     setIsDeleteExtraOpen(false);
 
     toast({
-      title: "Success",
-      description: "Extra deleted successfully",
+      title: "Excelente",
+      description: "Extra eliminado exitosamente",
     });
   };
 
@@ -417,8 +417,9 @@ export default function ExtrasPage() {
 
     if (matchingProducts.length === 0) {
       toast({
-        title: "No matching products",
-        description: "No products found in the selected categories",
+        title: "No hay productos coincidentes",
+        description:
+          "No se encontraron productos en las categorías seleccionadas",
         variant: "destructive",
       });
       return;
@@ -427,13 +428,13 @@ export default function ExtrasPage() {
     // Show confirmation dialog
     if (
       confirm(
-        `Apply ${group.extras.length} extras to ${matchingProducts.length} products?`
+        `Aplicar ${group.extras.length} extras a ${matchingProducts.length} productos?`
       )
     ) {
       // In a real app, you would update the products in the database
       toast({
-        title: "Success",
-        description: `Applied extras to ${matchingProducts.length} products`,
+        title: "Excelente",
+        description: `Extras aplicados a ${matchingProducts.length} productos`,
       });
     }
   };
@@ -464,7 +465,7 @@ export default function ExtrasPage() {
       <div className="grid gap-4 py-4">
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="group-name" className="text-right">
-            Name
+            Nombre
           </Label>
           <Input
             id="group-name"
@@ -476,7 +477,7 @@ export default function ExtrasPage() {
 
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="group-description" className="text-right">
-            Description
+            Descripción
           </Label>
           <Input
             id="group-description"
@@ -489,7 +490,7 @@ export default function ExtrasPage() {
         </div>
 
         <div className="grid grid-cols-4 items-start gap-4">
-          <Label className="text-right pt-2">Applicable Categories</Label>
+          <Label className="text-right pt-2">Categorías aplicables</Label>
           <div className="col-span-3 space-y-2">
             {categories.map((category) => (
               <div key={category.id} className="flex items-center space-x-2">
@@ -531,7 +532,7 @@ export default function ExtrasPage() {
       <div className="grid gap-4 py-4">
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="extra-name" className="text-right">
-            Name
+            Nombre
           </Label>
           <Input
             id="extra-name"
@@ -543,7 +544,7 @@ export default function ExtrasPage() {
 
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="extra-price" className="text-right">
-            Price (USD)
+            Precio (USD)
           </Label>
           <div className="col-span-3 flex items-center">
             <DollarSign className="h-4 w-4 mr-2 text-muted-foreground" />
@@ -562,7 +563,7 @@ export default function ExtrasPage() {
 
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="extra-min" className="text-right">
-            Minimum Quantity
+            Cantidad mínima
           </Label>
           <Input
             id="extra-min"
@@ -585,7 +586,7 @@ export default function ExtrasPage() {
 
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="extra-max" className="text-right">
-            Maximum Quantity
+            Cantidad máxima
           </Label>
           <Input
             id="extra-max"
@@ -601,7 +602,7 @@ export default function ExtrasPage() {
 
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="extra-required" className="text-right">
-            Required
+            Requerido
           </Label>
           <div className="flex flex-row items-center space-x-3 space-y-0 col-span-3">
             <Switch
@@ -617,7 +618,7 @@ export default function ExtrasPage() {
               }}
             />
             <Label htmlFor="extra-required" className="text-sm font-normal">
-              Customer must select this extra
+              El cliente debe seleccionar este extra
             </Label>
           </div>
         </div>
@@ -626,10 +627,10 @@ export default function ExtrasPage() {
           <div className="col-span-4 bg-yellow-50 p-3 rounded-md text-yellow-800 text-sm flex items-start">
             <AlertCircle className="h-4 w-4 mr-2 mt-0.5" />
             <div>
-              <p className="font-medium">Required Extra</p>
+              <p className="font-medium">Extra requerido</p>
               <p>
-                When an extra is required, the minimum quantity must be at least
-                1.
+                Cuando un extra es requerido, la cantidad mínima debe ser al
+                menos 1.
               </p>
             </div>
           </div>
@@ -643,10 +644,10 @@ export default function ExtrasPage() {
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">
-            Extras Management
+            Gestión de extras
           </h1>
           <p className="text-muted-foreground">
-            Create and manage reusable extras for your menu items
+            Crea y administra extras reutilizables para tus productos
           </p>
         </div>
 
@@ -654,12 +655,12 @@ export default function ExtrasPage() {
           <DialogTrigger asChild>
             <Button>
               <Plus className="h-4 w-4 mr-2" />
-              Add Extra Group
+              Agregar grupo de extra
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
-              <DialogTitle>Add New Extra Group</DialogTitle>
+              <DialogTitle>Agregar nuevo grupo de extras</DialogTitle>
             </DialogHeader>
             <GroupForm />
             <DialogFooter>
@@ -667,9 +668,9 @@ export default function ExtrasPage() {
                 variant="outline"
                 onClick={() => setIsAddGroupOpen(false)}
               >
-                Cancel
+                Cancelar
               </Button>
-              <Button onClick={handleAddGroup}>Save Group</Button>
+              <Button onClick={handleAddGroup}>Guardar grupo</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -680,7 +681,7 @@ export default function ExtrasPage() {
           <div className="relative flex-1">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search extras..."
+              placeholder="Buscar extras..."
               className="pl-8"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -691,12 +692,12 @@ export default function ExtrasPage() {
             <DropdownMenuTrigger asChild>
               <Button variant="outline">
                 <Filter className="h-4 w-4 mr-2" />
-                Filter
+                Filtrar
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
               <div className="p-2">
-                <div className="font-medium mb-1">Category</div>
+                <div className="font-medium mb-1">Categoría</div>
                 <div className="space-y-1">
                   <div className="flex items-center">
                     <Checkbox
@@ -708,7 +709,7 @@ export default function ExtrasPage() {
                       htmlFor="all-categories"
                       className="ml-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
-                      All Categories
+                      Todas las categorías
                     </label>
                   </div>
 
@@ -737,7 +738,7 @@ export default function ExtrasPage() {
       {categoryFilter && (
         <div className="mb-4 flex items-center">
           <span className="text-sm text-muted-foreground mr-2">
-            Filtered by:
+            Filtrado por:
           </span>
           <Badge variant="secondary" className="flex items-center gap-1">
             {categories.find((c) => c.id === categoryFilter)?.name}
@@ -755,7 +756,7 @@ export default function ExtrasPage() {
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="mb-4">
-          <TabsTrigger value="all">All Groups</TabsTrigger>
+          <TabsTrigger value="all">Todos los grupos</TabsTrigger>
           {categories.map((category) => (
             <TabsTrigger key={category.id} value={category.id}>
               {category.name}
@@ -769,11 +770,11 @@ export default function ExtrasPage() {
               <div className="col-span-full text-center py-12">
                 <Tag className="h-12 w-12 mx-auto text-muted-foreground" />
                 <h3 className="mt-4 text-lg font-medium">
-                  No extra groups found
+                  No se encontraron grupos de extras
                 </h3>
                 <p className="text-muted-foreground mt-2">
-                  Try adjusting your search or filter to find what you&apos;re
-                  looking for.
+                  Intenta ajustar tu búsqueda o filtro para encontrar lo que
+                  buscas.
                 </p>
                 <Button
                   className="mt-4"
@@ -782,7 +783,7 @@ export default function ExtrasPage() {
                     setCategoryFilter(null);
                   }}
                 >
-                  Reset filters
+                  Reiniciar filtros
                 </Button>
               </div>
             ) : (
@@ -823,7 +824,7 @@ export default function ExtrasPage() {
                             }}
                           >
                             <Edit className="h-4 w-4 mr-2" />
-                            Edit Group
+                            Editar grupo
                           </DropdownMenuItem>
                           <DropdownMenuItem
                             onClick={() => {
@@ -832,13 +833,13 @@ export default function ExtrasPage() {
                             }}
                           >
                             <Plus className="h-4 w-4 mr-2" />
-                            Add Extra
+                            Agregar extra
                           </DropdownMenuItem>
                           <DropdownMenuItem
                             onClick={() => applyExtrasToProducts(group.id)}
                           >
                             <Save className="h-4 w-4 mr-2" />
-                            Apply to Products
+                            Aplicar a productos
                           </DropdownMenuItem>
                           <DropdownMenuItem
                             className="text-destructive"
@@ -848,7 +849,7 @@ export default function ExtrasPage() {
                             }}
                           >
                             <Trash2 className="h-4 w-4 mr-2" />
-                            Delete Group
+                            Eliminar grupo
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
@@ -874,7 +875,7 @@ export default function ExtrasPage() {
                     </div>
                     {group.extras.length === 0 ? (
                       <p className="text-sm text-muted-foreground">
-                        No extras added yet
+                        No hay extras agregados aún
                       </p>
                     ) : (
                       <div className="space-y-2">
@@ -893,7 +894,7 @@ export default function ExtrasPage() {
                                     variant="outline"
                                     className="ml-2 text-xs"
                                   >
-                                    Required
+                                    Requerido
                                   </Badge>
                                 )}
                               </div>
@@ -945,7 +946,7 @@ export default function ExtrasPage() {
                       }}
                     >
                       <Plus className="h-4 w-4 mr-2" />
-                      Add Extra
+                      Agregar extra
                     </Button>
                   </CardContent>
                 </Card>
@@ -996,7 +997,7 @@ export default function ExtrasPage() {
                               }}
                             >
                               <Edit className="h-4 w-4 mr-2" />
-                              Edit Group
+                              Editar grupo
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               onClick={() => {
@@ -1005,13 +1006,13 @@ export default function ExtrasPage() {
                               }}
                             >
                               <Plus className="h-4 w-4 mr-2" />
-                              Add Extra
+                              Agregar extra
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               onClick={() => applyExtrasToProducts(group.id)}
                             >
                               <Save className="h-4 w-4 mr-2" />
-                              Apply to Products
+                              Aplicar a productos
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               className="text-destructive"
@@ -1021,7 +1022,7 @@ export default function ExtrasPage() {
                               }}
                             >
                               <Trash2 className="h-4 w-4 mr-2" />
-                              Delete Group
+                              Eliminar grupo
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
@@ -1050,7 +1051,7 @@ export default function ExtrasPage() {
                       </div>
                       {group.extras.length === 0 ? (
                         <p className="text-sm text-muted-foreground">
-                          No extras added yet
+                          No hay extras agregados aún
                         </p>
                       ) : (
                         <div className="space-y-2">
@@ -1069,7 +1070,7 @@ export default function ExtrasPage() {
                                       variant="outline"
                                       className="ml-2 text-xs"
                                     >
-                                      Required
+                                      Requerido
                                     </Badge>
                                   )}
                                 </div>
@@ -1121,7 +1122,7 @@ export default function ExtrasPage() {
                         }}
                       >
                         <Plus className="h-4 w-4 mr-2" />
-                        Add Extra
+                        Agregar extra
                       </Button>
                     </CardContent>
                   </Card>
@@ -1135,14 +1136,14 @@ export default function ExtrasPage() {
       <Dialog open={isEditGroupOpen} onOpenChange={setIsEditGroupOpen}>
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
-            <DialogTitle>Edit Extra Group</DialogTitle>
+            <DialogTitle>Editar grupo de extra</DialogTitle>
           </DialogHeader>
           <GroupForm isEdit />
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsEditGroupOpen(false)}>
               Cancel
             </Button>
-            <Button onClick={handleEditGroup}>Save Changes</Button>
+            <Button onClick={handleEditGroup}>Guardar cambios</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -1151,16 +1152,16 @@ export default function ExtrasPage() {
       <Dialog open={isDeleteGroupOpen} onOpenChange={setIsDeleteGroupOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Delete Extra Group</DialogTitle>
+            <DialogTitle>Eliminar grupo de extra</DialogTitle>
           </DialogHeader>
           <div className="py-4">
             <p>
-              Are you sure you want to delete{" "}
+              ¿Estás seguro de querer eliminar{" "}
               <strong>{currentGroup?.name}</strong>?
             </p>
             <p className="text-sm text-muted-foreground mt-2">
-              This will delete all extras in this group. This action cannot be
-              undone.
+              Esto eliminará todos los extras en este grupo. Esta acción no se
+              puede deshacer.
             </p>
           </div>
           <DialogFooter>
@@ -1168,10 +1169,10 @@ export default function ExtrasPage() {
               variant="outline"
               onClick={() => setIsDeleteGroupOpen(false)}
             >
-              Cancel
+              Cancelar
             </Button>
             <Button variant="destructive" onClick={handleDeleteGroup}>
-              Delete
+              Eliminar
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -1181,14 +1182,14 @@ export default function ExtrasPage() {
       <Dialog open={isAddExtraOpen} onOpenChange={setIsAddExtraOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Add Extra to {currentGroup?.name}</DialogTitle>
+            <DialogTitle>Agregar extra a {currentGroup?.name}</DialogTitle>
           </DialogHeader>
           <ExtraForm />
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsAddExtraOpen(false)}>
               Cancel
             </Button>
-            <Button onClick={handleAddExtra}>Add Extra</Button>
+            <Button onClick={handleAddExtra}>Agregar extra</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -1197,14 +1198,14 @@ export default function ExtrasPage() {
       <Dialog open={isEditExtraOpen} onOpenChange={setIsEditExtraOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Edit Extra</DialogTitle>
+            <DialogTitle>Editar extra</DialogTitle>
           </DialogHeader>
           <ExtraForm isEdit />
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsEditExtraOpen(false)}>
               Cancel
             </Button>
-            <Button onClick={handleEditExtra}>Save Changes</Button>
+            <Button onClick={handleEditExtra}>Guardar cambios</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -1213,15 +1214,15 @@ export default function ExtrasPage() {
       <Dialog open={isDeleteExtraOpen} onOpenChange={setIsDeleteExtraOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Delete Extra</DialogTitle>
+            <DialogTitle>Eliminar extra</DialogTitle>
           </DialogHeader>
           <div className="py-4">
             <p>
-              Are you sure you want to delete{" "}
+              ¿Estás seguro de querer eliminar{" "}
               <strong>{currentExtra?.name}</strong>?
             </p>
             <p className="text-sm text-muted-foreground mt-2">
-              This action cannot be undone.
+              Esta acción no se puede deshacer.
             </p>
           </div>
           <DialogFooter>
@@ -1232,7 +1233,7 @@ export default function ExtrasPage() {
               Cancel
             </Button>
             <Button variant="destructive" onClick={handleDeleteExtra}>
-              Delete
+              Eliminar
             </Button>
           </DialogFooter>
         </DialogContent>

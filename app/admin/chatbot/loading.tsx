@@ -9,7 +9,7 @@ export default function ChatbotLoading() {
         <CardHeader className="bg-primary/5">
           <CardTitle className="flex items-center gap-2 text-xl">
             <Bot className="h-6 w-6" />
-            Restaurant Assistant
+            Asistente de Restaurante
           </CardTitle>
         </CardHeader>
         <CardContent className="p-0">

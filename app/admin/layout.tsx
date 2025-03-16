@@ -42,7 +42,7 @@ export default function AdminLayout({
   if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <p>Loading...</p>
+        <p>Cargando...</p>
       </div>
     );
   }
@@ -61,18 +61,22 @@ export default function AdminLayout({
       <div className="flex flex-col shrink">
         <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-muted/40 px-6">
           <div className="w-full flex-1">
-            <h1 className="text-lg font-semibold">Admin Dashboard</h1>
+            <h1 className="text-lg font-semibold">Panel de Administración</h1>
           </div>
           <div>
             <ThemeToggle />
           </div>
           <Button variant="outline" size="sm" className="lg:hidden">
-            Menu
+            Menú
           </Button>
           {/* Go to home page */}
-          <Button variant="outline" size="sm" onClick={() => router.push("/")}>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => router.push("/menu")}
+          >
             <HomeIcon className="mr-2 h-4 w-4" />
-            Catalog
+            Catálogo
           </Button>
           <Button
             variant="outline"
@@ -81,7 +85,7 @@ export default function AdminLayout({
             className="hidden lg:flex"
           >
             <LogOut className="mr-2 h-4 w-4" />
-            Logout
+            Cerrar Sesión
           </Button>
         </header>
         {children}

@@ -12,7 +12,7 @@ export function SiteFooter() {
               className="flex items-center space-x-2 transition-transform hover:scale-105"
             >
               <Image
-                src="/placeholder.svg?height=32&width=32"
+                src="/logo/fasterorder-logo.png"
                 alt="FasterOrder Logo"
                 width={32}
                 height={32}

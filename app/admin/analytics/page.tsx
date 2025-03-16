@@ -280,16 +280,16 @@ export default function AnalyticsPage() {
         <div>
           <h2 className="text-3xl font-bold tracking-tight">Analytics</h2>
           <p className="text-muted-foreground">
-            Track your restaurant&apos;s performance and insights
+            Rastrea el rendimiento y las perspectivas de tu restaurante
           </p>
         </div>
         <div className="flex items-center gap-2 flex-wrap justify-end">
           <Select value={selectedBranch} onValueChange={setSelectedBranch}>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select branch" />
+              <SelectValue placeholder="Seleccionar sucursal" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Branches</SelectItem>
+              <SelectItem value="all">Todas las sucursales</SelectItem>
               {branches.map((branch) => (
                 <SelectItem key={branch.id} value={branch.id}>
                   {branch.name}
@@ -299,13 +299,13 @@ export default function AnalyticsPage() {
           </Select>
           <Select value={timeRange} onValueChange={setTimeRange}>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select time range" />
+              <SelectValue placeholder="Seleccionar rango de tiempo" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="7days">Last 7 days</SelectItem>
-              <SelectItem value="30days">Last 30 days</SelectItem>
-              <SelectItem value="90days">Last 90 days</SelectItem>
-              <SelectItem value="year">Last year</SelectItem>
+              <SelectItem value="7days">Últimos 7 días</SelectItem>
+              <SelectItem value="30days">Últimos 30 días</SelectItem>
+              <SelectItem value="90days">Últimos 90 días</SelectItem>
+              <SelectItem value="year">Último año</SelectItem>
             </SelectContent>
           </Select>
           <Button variant="outline" size="icon">
@@ -318,9 +318,9 @@ export default function AnalyticsPage() {
       {selectedBranch !== "all" && (
         <div className="bg-muted/50 p-2 rounded-md text-center">
           <p className="text-sm font-medium">
-            Showing data for:{" "}
+            Mostrando datos de:{" "}
             {branches.find((b) => b.id === selectedBranch)?.name ||
-              "Unknown Branch"}
+              "Sucursal Desconocida"}
           </p>
         </div>
       )}
@@ -329,7 +329,9 @@ export default function AnalyticsPage() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Ingresos Totales
+            </CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -344,26 +346,26 @@ export default function AnalyticsPage() {
                   100 -
                 100
               ).toFixed(1)}
-              % from average
+              % desde el promedio
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Orders</CardTitle>
+            <CardTitle className="text-sm font-medium">Pedidos</CardTitle>
             <ShoppingBag className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{totalOrders}</div>
             <p className="text-xs text-muted-foreground">
-              {salesData[salesData.length - 1]?.orders} orders today
+              {salesData[salesData.length - 1]?.orders} pedidos hoy
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Average Order Value
+              Valor Promedio de Pedido
             </CardTitle>
             <CreditCard className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
@@ -372,19 +374,19 @@ export default function AnalyticsPage() {
               {formatCurrency(averageOrderValue)}
             </div>
             <p className="text-xs text-muted-foreground">
-              {totalOrders} total orders
+              {totalOrders} pedidos totales
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Customers</CardTitle>
+            <CardTitle className="text-sm font-medium">Clientes</CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{totalCustomers}</div>
             <p className="text-xs text-muted-foreground">
-              {vipCustomers} VIP customers
+              {vipCustomers} clientes VIP
             </p>
           </CardContent>
         </Card>
@@ -392,12 +394,14 @@ export default function AnalyticsPage() {
 
       <Tabs defaultValue="overview">
         <TabsList className="flex flex-wrap">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="sales">Sales</TabsTrigger>
-          <TabsTrigger value="products">Products</TabsTrigger>
-          <TabsTrigger value="customers">Customers</TabsTrigger>
+          <TabsTrigger value="overview">Resumen</TabsTrigger>
+          <TabsTrigger value="sales">Ventas</TabsTrigger>
+          <TabsTrigger value="products">Productos</TabsTrigger>
+          <TabsTrigger value="customers">Clientes</TabsTrigger>
           {selectedBranch === "all" && (
-            <TabsTrigger value="branches">Branch Comparison</TabsTrigger>
+            <TabsTrigger value="branches">
+              Comparación de sucursales
+            </TabsTrigger>
           )}
         </TabsList>
 
@@ -406,11 +410,11 @@ export default function AnalyticsPage() {
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
             <Card className="lg:col-span-4">
               <CardHeader>
-                <CardTitle>Sales Overview</CardTitle>
+                <CardTitle>Resumen de Ventas</CardTitle>
                 <CardDescription>
                   {selectedBranch === "all"
-                    ? "Daily sales and order volume across all branches"
-                    : `Daily sales and order volume for ${
+                    ? "Ventas diarias y volumen de pedidos en todas las sucursales"
+                    : `Ventas diarias y volumen de pedidos para ${
                         branches.find((b) => b.id === selectedBranch)?.name
                       }`}
                 </CardDescription>
@@ -465,11 +469,11 @@ export default function AnalyticsPage() {
 
             <Card className="lg:col-span-3">
               <CardHeader>
-                <CardTitle>Sales by Category</CardTitle>
+                <CardTitle>Ventas por Categoría</CardTitle>
                 <CardDescription>
                   {selectedBranch === "all"
-                    ? "Revenue distribution across menu categories"
-                    : `Revenue distribution for ${
+                    ? "Distribución de ingresos por categorías del menú"
+                    : `Distribución de ingresos por categorías del menú para ${
                         branches.find((b) => b.id === selectedBranch)?.name
                       }`}
                 </CardDescription>
@@ -513,9 +517,9 @@ export default function AnalyticsPage() {
             {selectedBranch === "all" && (
               <Card className="lg:col-span-3">
                 <CardHeader>
-                  <CardTitle>Branch Performance</CardTitle>
+                  <CardTitle>Rendimiento de Sucursales</CardTitle>
                   <CardDescription>
-                    Sales and order comparison across branches
+                    Comparación de ventas y pedidos entre sucursales
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="h-[300px]">
@@ -548,11 +552,11 @@ export default function AnalyticsPage() {
               }`}
             >
               <CardHeader>
-                <CardTitle>Payment Methods</CardTitle>
+                <CardTitle>Métodos de Pago</CardTitle>
                 <CardDescription>
                   {selectedBranch === "all"
-                    ? "Distribution of payment methods"
-                    : `Payment methods for ${
+                    ? "Distribución de métodos de pago"
+                    : `Métodos de pago para ${
                         branches.find((b) => b.id === selectedBranch)?.name
                       }`}
                 </CardDescription>
@@ -592,11 +596,11 @@ export default function AnalyticsPage() {
               }`}
             >
               <CardHeader>
-                <CardTitle>Customer Status</CardTitle>
+                <CardTitle>Estado de Clientes</CardTitle>
                 <CardDescription>
                   {selectedBranch === "all"
-                    ? "Distribution of customer statuses"
-                    : `Customer statuses for ${
+                    ? "Distribución de estados de clientes"
+                    : `Estados de clientes para ${
                         branches.find((b) => b.id === selectedBranch)?.name
                       }`}
                 </CardDescription>
@@ -633,11 +637,11 @@ export default function AnalyticsPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Hourly Order Distribution</CardTitle>
+              <CardTitle>Distribución de Pedidos por Hora</CardTitle>
               <CardDescription>
                 {selectedBranch === "all"
-                  ? "Number of orders by hour of day"
-                  : `Hourly orders for ${
+                  ? "Número de pedidos por hora del día"
+                  : `Pedidos por hora para ${
                       branches.find((b) => b.id === selectedBranch)?.name
                     }`}
               </CardDescription>
@@ -667,11 +671,11 @@ export default function AnalyticsPage() {
         <TabsContent value="sales" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Sales Trends</CardTitle>
+              <CardTitle>Análisis de Ventas</CardTitle>
               <CardDescription>
                 {selectedBranch === "all"
-                  ? "Detailed sales analysis over time"
-                  : `Sales trends for ${
+                  ? "Análisis detallado de ventas a lo largo del tiempo"
+                  : `Tendencias de ventas para ${
                       branches.find((b) => b.id === selectedBranch)?.name
                     }`}
               </CardDescription>
@@ -718,11 +722,11 @@ export default function AnalyticsPage() {
           <div className="grid gap-4 md:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle>Order Volume</CardTitle>
+                <CardTitle>Volumen de Pedidos</CardTitle>
                 <CardDescription>
                   {selectedBranch === "all"
-                    ? "Number of orders over time"
-                    : `Order volume for ${
+                    ? "Número de pedidos a lo largo del tiempo"
+                    : `Volumen de pedidos para ${
                         branches.find((b) => b.id === selectedBranch)?.name
                       }`}
                 </CardDescription>
@@ -758,11 +762,11 @@ export default function AnalyticsPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Average Order Value</CardTitle>
+                <CardTitle>Valor Promedio de Pedido</CardTitle>
                 <CardDescription>
                   {selectedBranch === "all"
-                    ? "Average order value over time"
-                    : `Average order value for ${
+                    ? "Valor promedio de pedido a lo largo del tiempo"
+                    : `Valor promedio de pedido para ${
                         branches.find((b) => b.id === selectedBranch)?.name
                       }`}
                 </CardDescription>
@@ -815,11 +819,11 @@ export default function AnalyticsPage() {
           <div className="grid gap-4 md:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle>Sales by Category</CardTitle>
+                <CardTitle>Ventas por Categoría</CardTitle>
                 <CardDescription>
                   {selectedBranch === "all"
-                    ? "Revenue distribution across menu categories"
-                    : `Category sales for ${
+                    ? "Distribución de ingresos por categorías del menú"
+                    : `Ventas por categoría para ${
                         branches.find((b) => b.id === selectedBranch)?.name
                       }`}
                 </CardDescription>
@@ -860,11 +864,11 @@ export default function AnalyticsPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Top Selling Items</CardTitle>
+                <CardTitle>Productos Más Vendidos</CardTitle>
                 <CardDescription>
                   {selectedBranch === "all"
-                    ? "Most popular menu items by order count"
-                    : `Top items for ${
+                    ? "Productos más populares por cantidad de pedidos"
+                    : `Productos más populares para ${
                         branches.find((b) => b.id === selectedBranch)?.name
                       }`}
                 </CardDescription>
@@ -897,11 +901,11 @@ export default function AnalyticsPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Product Performance</CardTitle>
+              <CardTitle>Rendimiento de Productos</CardTitle>
               <CardDescription>
                 {selectedBranch === "all"
-                  ? "Sales and order metrics for top products"
-                  : `Product performance for ${
+                  ? "Métricas de ventas y pedidos para los productos principales"
+                  : `Rendimiento de productos para ${
                       branches.find((b) => b.id === selectedBranch)?.name
                     }`}
               </CardDescription>
@@ -911,11 +915,13 @@ export default function AnalyticsPage() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b bg-muted/50">
-                      <th className="p-2 text-left font-medium">Product</th>
-                      <th className="p-2 text-left font-medium">Category</th>
-                      <th className="p-2 text-right font-medium">Orders</th>
-                      <th className="p-2 text-right font-medium">Revenue</th>
-                      <th className="p-2 text-right font-medium">Avg. Price</th>
+                      <th className="p-2 text-left font-medium">Producto</th>
+                      <th className="p-2 text-left font-medium">Categoría</th>
+                      <th className="p-2 text-right font-medium">Pedidos</th>
+                      <th className="p-2 text-right font-medium">Ingresos</th>
+                      <th className="p-2 text-right font-medium">
+                        Precio Promedio
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -950,11 +956,11 @@ export default function AnalyticsPage() {
           <div className="grid gap-4 md:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle>Customer Status Distribution</CardTitle>
+                <CardTitle>Distribución de Estados de Clientes</CardTitle>
                 <CardDescription>
                   {selectedBranch === "all"
-                    ? "Breakdown of customer statuses"
-                    : `Customer statuses for ${
+                    ? "Desglose de estados de clientes"
+                    : `Estados de clientes para ${
                         branches.find((b) => b.id === selectedBranch)?.name
                       }`}
                 </CardDescription>
@@ -990,11 +996,11 @@ export default function AnalyticsPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Customer Spending</CardTitle>
+                <CardTitle>Gastos de Clientes</CardTitle>
                 <CardDescription>
                   {selectedBranch === "all"
-                    ? "Average spending per customer type"
-                    : `Customer spending for ${
+                    ? "Gastos promedio por tipo de cliente"
+                    : `Gastos de clientes para ${
                         branches.find((b) => b.id === selectedBranch)?.name
                       }`}
                 </CardDescription>
@@ -1069,11 +1075,11 @@ export default function AnalyticsPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Top Customers</CardTitle>
+              <CardTitle>Clientes con Mayor Gastos</CardTitle>
               <CardDescription>
                 {selectedBranch === "all"
-                  ? "Customers with highest spending"
-                  : `Top customers for ${
+                  ? "Clientes con mayor gasto"
+                  : `Clientes con mayor gasto para ${
                       branches.find((b) => b.id === selectedBranch)?.name
                     }`}
               </CardDescription>
@@ -1083,13 +1089,15 @@ export default function AnalyticsPage() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b bg-muted/50">
-                      <th className="p-2 text-left font-medium">Customer</th>
-                      <th className="p-2 text-left font-medium">Status</th>
-                      <th className="p-2 text-right font-medium">Orders</th>
+                      <th className="p-2 text-left font-medium">Cliente</th>
+                      <th className="p-2 text-left font-medium">Estado</th>
+                      <th className="p-2 text-right font-medium">Pedidos</th>
                       <th className="p-2 text-right font-medium">
-                        Total Spent
+                        Total Gastado
                       </th>
-                      <th className="p-2 text-right font-medium">Avg. Order</th>
+                      <th className="p-2 text-right font-medium">
+                        Promedio de Pedido
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1141,9 +1149,9 @@ export default function AnalyticsPage() {
           <TabsContent value="branches" className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle>Branch Revenue Comparison</CardTitle>
+                <CardTitle>Comparación de Ingresos por Sucursal</CardTitle>
                 <CardDescription>
-                  Total revenue by branch for the selected time period
+                  Ingresos totales por sucursal para el período seleccionado
                 </CardDescription>
               </CardHeader>
               <CardContent className="h-[400px]">
@@ -1171,9 +1179,9 @@ export default function AnalyticsPage() {
             <div className="grid gap-4 md:grid-cols-2">
               <Card>
                 <CardHeader>
-                  <CardTitle>Order Volume by Branch</CardTitle>
+                  <CardTitle>Volumen de Pedidos por Sucursal</CardTitle>
                   <CardDescription>
-                    Number of orders processed by each branch
+                    Cantidad de pedidos procesados por cada sucursal
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="h-[300px]">
@@ -1195,9 +1203,9 @@ export default function AnalyticsPage() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Average Order Value by Branch</CardTitle>
+                  <CardTitle>Valor Promedio de Pedido por Sucursal</CardTitle>
                   <CardDescription>
-                    Average order value comparison across branches
+                    Comparación del valor promedio de pedido entre sucursales
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="h-[300px]">
@@ -1233,9 +1241,10 @@ export default function AnalyticsPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Branch Performance Metrics</CardTitle>
+                <CardTitle>Métricas de Rendimiento por Sucursal</CardTitle>
                 <CardDescription>
-                  Detailed comparison of key metrics across all branches
+                  Comparación detallada de las métricas clave entre todas las
+                  sucursales
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -1243,15 +1252,13 @@ export default function AnalyticsPage() {
                   <table className="w-full">
                     <thead>
                       <tr className="border-b bg-muted/50">
-                        <th className="p-2 text-left font-medium">Branch</th>
-                        <th className="p-2 text-right font-medium">Revenue</th>
-                        <th className="p-2 text-right font-medium">Orders</th>
+                        <th className="p-2 text-left font-medium">Sucursal</th>
+                        <th className="p-2 text-right font-medium">Ingresos</th>
+                        <th className="p-2 text-right font-medium">Pedidos</th>
                         <th className="p-2 text-right font-medium">
-                          Avg. Order Value
+                          Valor Promedio de Pedido
                         </th>
-                        <th className="p-2 text-right font-medium">
-                          Customers
-                        </th>
+                        <th className="p-2 text-right font-medium">Clientes</th>
                       </tr>
                     </thead>
                     <tbody>

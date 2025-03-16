@@ -1,105 +1,154 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 interface AdminCurrencyDisplayProps {
   amount: number;
-  showAllRates?: boolean;
+  showSymbol?: boolean;
   className?: string;
+}
+
+interface CurrencySettings {
+  enableVenezuelanBs: boolean;
+  bcvRate: number;
+  parallelRate: number;
+  customRate: number;
+  preferredRateSource: "bcv" | "parallel" | "custom";
 }
 
 export default function AdminCurrencyDisplay({
   amount,
-  showAllRates = true,
+  showSymbol = true,
   className = "",
 }: AdminCurrencyDisplayProps) {
-  const [currencySettings, setCurrencySettings] = useState({
-    showBs: false,
-    bcv: 0,
-    parallel: 0,
-    custom: 0,
-    preferredRate: "bcv",
-  });
+  const [showBs, setShowBs] = useState(false);
+  const [bcvRate, setBcvRate] = useState(0);
+  const [parallelRate, setParallelRate] = useState(0);
+  const [customRate, setCustomRate] = useState(0);
+  const [preferredRateSource, setPreferredRateSource] = useState<string>("bcv");
+  const [currencySymbol, setCurrencySymbol] = useState("$");
 
   useEffect(() => {
-    // Load settings from localStorage
-    const settings = localStorage.getItem("currency-settings");
-    if (settings) {
-      setCurrencySettings(JSON.parse(settings));
+    // Load payment settings from localStorage
+    const paymentSettings = localStorage.getItem("restaurantPaymentSettings");
+    if (paymentSettings) {
+      try {
+        const parsedSettings = JSON.parse(paymentSettings) as CurrencySettings;
+        setShowBs(parsedSettings.enableVenezuelanBs || false);
+        setBcvRate(parsedSettings.bcvRate || 0);
+        setParallelRate(parsedSettings.parallelRate || 0);
+        setCustomRate(parsedSettings.customRate || 0);
+        setPreferredRateSource(parsedSettings.preferredRateSource || "bcv");
+      } catch (error) {
+        console.error("Error parsing payment settings:", error);
+      }
     }
+
+    // Load general settings to get the currency symbol
+    const generalSettings = localStorage.getItem("restaurantGeneralSettings");
+    if (generalSettings) {
+      try {
+        const parsedGeneralSettings = JSON.parse(generalSettings);
+        if (parsedGeneralSettings.currency === "USD") {
+          setCurrencySymbol("$");
+        } else if (parsedGeneralSettings.currency === "EUR") {
+          setCurrencySymbol("€");
+        } else if (parsedGeneralSettings.currency === "GBP") {
+          setCurrencySymbol("£");
+        } else if (parsedGeneralSettings.currency === "CAD") {
+          setCurrencySymbol("C$");
+        } else if (parsedGeneralSettings.currency === "AUD") {
+          setCurrencySymbol("A$");
+        } else {
+          setCurrencySymbol("$"); // Default to $ if currency not recognized
+        }
+      } catch (error) {
+        console.error("Error parsing general settings:", error);
+      }
+    }
+
+    // Listen for storage changes to update in real-time
+    const handleStorageChange = () => {
+      const updatedPaymentSettings = localStorage.getItem(
+        "restaurantPaymentSettings"
+      );
+      if (updatedPaymentSettings) {
+        try {
+          const parsedSettings = JSON.parse(
+            updatedPaymentSettings
+          ) as CurrencySettings;
+          setShowBs(parsedSettings.enableVenezuelanBs || false);
+          setBcvRate(parsedSettings.bcvRate || 0);
+          setParallelRate(parsedSettings.parallelRate || 0);
+          setCustomRate(parsedSettings.customRate || 0);
+          setPreferredRateSource(parsedSettings.preferredRateSource || "bcv");
+        } catch (error) {
+          console.error("Error parsing updated payment settings:", error);
+        }
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
-  if (!currencySettings.showBs) {
-    return <span className={className}>${amount.toFixed(2)}</span>;
-  }
-
-  // Calculate amounts using different rates
-  const bcvAmount = amount * currencySettings.bcv;
-  const parallelAmount = amount * currencySettings.parallel;
-  const customAmount = amount * currencySettings.custom;
-
-  // Get the preferred rate amount
-  const preferredAmount =
-    amount *
-    (currencySettings[
-      currencySettings.preferredRate as keyof typeof currencySettings
-    ] as number);
-
-  if (!showAllRates) {
+  if (!showBs) {
     return (
       <span className={className}>
-        ${amount.toFixed(2)}
-        <span className="text-muted-foreground text-sm ml-1">
-          ({preferredAmount.toFixed(2)} Bs)
-        </span>
+        {showSymbol ? currencySymbol : ""}
+        {amount.toFixed(2)}
       </span>
     );
   }
 
+  // Get the current exchange rate based on preferred source
+  const getCurrentRate = () => {
+    switch (preferredRateSource) {
+      case "bcv":
+        return bcvRate;
+      case "parallel":
+        return parallelRate;
+      case "custom":
+        return customRate;
+      default:
+        return 0;
+    }
+  };
+
+  const exchangeRate = getCurrentRate();
+  if (exchangeRate <= 0) {
+    return (
+      <span className={className}>
+        {showSymbol ? currencySymbol : ""}
+        {amount.toFixed(2)}
+      </span>
+    );
+  }
+
+  // Calculate the amount in Bs
+  const bsAmount = amount * exchangeRate;
+
+  // Get rate source label
+  const getRateLabel = () => {
+    switch (preferredRateSource) {
+      case "bcv":
+        return "BCV";
+      case "parallel":
+        return "Paralelo";
+      case "custom":
+        return "Personalizado";
+      default:
+        return "";
+    }
+  };
+
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <span className={`cursor-help ${className}`}>
-            ${amount.toFixed(2)}
-            <span className="text-muted-foreground text-sm ml-1">
-              ({preferredAmount.toFixed(2)} Bs)
-            </span>
-          </span>
-        </TooltipTrigger>
-        <TooltipContent className="w-60">
-          <div className="space-y-1">
-            <div className="font-medium">Exchange Rates</div>
-            {currencySettings.bcv > 0 && (
-              <div className="flex justify-between text-sm">
-                <span>BCV Official:</span>
-                <span>{bcvAmount.toFixed(2)} Bs</span>
-              </div>
-            )}
-            {currencySettings.parallel > 0 && (
-              <div className="flex justify-between text-sm">
-                <span>Parallel Market:</span>
-                <span>{parallelAmount.toFixed(2)} Bs</span>
-              </div>
-            )}
-            {currencySettings.custom > 0 && (
-              <div className="flex justify-between text-sm">
-                <span>Custom Rate:</span>
-                <span>{customAmount.toFixed(2)} Bs</span>
-              </div>
-            )}
-            <div className="text-xs text-muted-foreground pt-1">
-              Using {currencySettings.preferredRate.toUpperCase()} rate
-            </div>
-          </div>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <span className={className}>
+      {showSymbol ? currencySymbol : ""}
+      {amount.toFixed(2)}
+      <span className="text-muted-foreground text-sm ml-1">
+        ({bsAmount.toFixed(2)} Bs - {getRateLabel()})
+      </span>
+    </span>
   );
 }

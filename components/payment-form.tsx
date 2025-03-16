@@ -24,24 +24,26 @@ const formSchema = z.object({
     .string()
     .optional()
     .refine((val) => !val || /^\d{16}$/.test(val), {
-      message: "Card number must be 16 digits",
+      message: "El número de tarjeta debe tener 16 dígitos",
     }),
   cardName: z.string().optional(),
   expiryDate: z
     .string()
     .optional()
     .refine((val) => !val || /^(0[1-9]|1[0-2])\/\d{2}$/.test(val), {
-      message: "Expiry date must be in MM/YY format",
+      message: "La fecha de expiración debe estar en el formato MM/YY",
     }),
   cvv: z
     .string()
     .optional()
     .refine((val) => !val || /^\d{3,4}$/.test(val), {
-      message: "CVV must be 3 or 4 digits",
+      message: "El CVV debe tener 3 o 4 dígitos",
     }),
   verificationCode: z
     .string()
-    .min(6, { message: "Verification code must be at least 6 characters" }),
+    .min(6, {
+      message: "El código de verificación debe tener al menos 6 caracteres",
+    }),
 });
 
 interface PaymentFormProps {
@@ -83,7 +85,9 @@ export default function PaymentForm({
         setIsVerified(true);
         onComplete();
       } else {
-        setVerificationError("Invalid verification code. Please try again.");
+        setVerificationError(
+          "Código de verificación inválido. Por favor, inténtalo de nuevo."
+        );
       }
     }, 1500);
   };
@@ -101,7 +105,7 @@ export default function PaymentForm({
             name="paymentMethod"
             render={({ field }) => (
               <FormItem className="space-y-3">
-                <FormLabel>Payment Method</FormLabel>
+                <FormLabel>Método de pago</FormLabel>
                 <FormControl>
                   <RadioGroup
                     onValueChange={field.onChange}
@@ -112,12 +116,12 @@ export default function PaymentForm({
                       <RadioGroupItem value="card" id="card" />
                       <Label htmlFor="card" className="flex items-center gap-2">
                         <CreditCard className="h-4 w-4" />
-                        Credit/Debit Card
+                        Tarjeta de crédito/débito
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="cash" id="cash" />
-                      <Label htmlFor="cash">Cash on Delivery</Label>
+                      <Label htmlFor="cash">Efectivo en entrega</Label>
                     </div>
                   </RadioGroup>
                 </FormControl>
@@ -133,7 +137,7 @@ export default function PaymentForm({
                 name="cardNumber"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Card Number</FormLabel>
+                    <FormLabel>Número de tarjeta</FormLabel>
                     <FormControl>
                       <Input placeholder="1234 5678 9012 3456" {...field} />
                     </FormControl>
@@ -147,7 +151,7 @@ export default function PaymentForm({
                 name="cardName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Name on Card</FormLabel>
+                    <FormLabel>Nombre en la tarjeta</FormLabel>
                     <FormControl>
                       <Input placeholder="John Doe" {...field} />
                     </FormControl>
@@ -162,7 +166,7 @@ export default function PaymentForm({
                   name="expiryDate"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Expiry Date</FormLabel>
+                      <FormLabel>Fecha de expiración</FormLabel>
                       <FormControl>
                         <Input placeholder="MM/YY" {...field} />
                       </FormControl>
@@ -190,10 +194,11 @@ export default function PaymentForm({
         </div>
 
         <div className="border-t pt-4">
-          <h3 className="font-medium mb-2">Order Verification</h3>
+          <h3 className="font-medium mb-2">Verificación de pedido</h3>
           <p className="text-sm text-muted-foreground mb-4">
-            For security purposes, please enter the verification code sent to
-            your phone. (Use &quot;123456&quot; for this demo)
+            Para propósitos de seguridad, por favor ingrese el código de
+            verificación enviado a su teléfono. (Use &quot;123456&quot; para
+            este demo)
           </p>
 
           {verificationError && (
@@ -207,7 +212,7 @@ export default function PaymentForm({
             name="verificationCode"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Verification Code</FormLabel>
+                <FormLabel>Código de verificación</FormLabel>
                 <FormControl>
                   <Input placeholder="Enter code" {...field} />
                 </FormControl>
@@ -223,7 +228,7 @@ export default function PaymentForm({
             <span>${cartTotal.toFixed(2)}</span>
           </div>
           <div className="flex justify-between mb-2">
-            <span>Delivery Fee</span>
+            <span>Cuota de entrega</span>
             <span>$3.99</span>
           </div>
           <div className="flex justify-between font-bold">
@@ -234,14 +239,14 @@ export default function PaymentForm({
 
         {isVerifying && (
           <div className="flex items-center justify-center p-2 bg-blue-50 text-blue-600 rounded-md">
-            Verifying payment information...
+            Verificando información de pago...
           </div>
         )}
 
         {isVerified && (
           <div className="flex items-center justify-center p-2 bg-green-50 text-green-600 rounded-md">
             <Check className="h-5 w-5 mr-2" />
-            Verification successful! Ready to confirm your order.
+            Verificación exitosa! Listo para confirmar tu pedido.
           </div>
         )}
       </form>

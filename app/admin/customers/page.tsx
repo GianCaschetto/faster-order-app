@@ -187,8 +187,8 @@ export default function CustomersPage() {
     }
 
     toast({
-      title: "Customer status updated",
-      description: `Customer status changed to ${newStatus}`,
+      title: "Estado del cliente actualizado",
+      description: `El estado del cliente se ha cambiado a ${newStatus}`,
     });
   };
 
@@ -206,8 +206,8 @@ export default function CustomersPage() {
     setIsCustomerDetailsOpen(false);
 
     toast({
-      title: "Customer deleted",
-      description: "The customer has been deleted successfully",
+      title: "Cliente eliminado",
+      description: "El cliente se ha eliminado correctamente",
     });
   };
 
@@ -216,13 +216,13 @@ export default function CustomersPage() {
       case "active":
         return (
           <Badge variant="default" className="bg-green-500">
-            Active
+            Activo
           </Badge>
         );
       case "inactive":
         return (
           <Badge variant="default" className="bg-gray-500">
-            Inactive
+            Inactivo
           </Badge>
         );
       case "vip":
@@ -256,10 +256,10 @@ export default function CustomersPage() {
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
-            Customer Management
+            Gestión de Clientes
           </h2>
           <p className="text-muted-foreground">
-            Manage your restaurant customers and their information
+            Gestiona tus clientes y su información
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -270,11 +270,11 @@ export default function CustomersPage() {
             className="md:hidden"
           >
             <Filter className="h-4 w-4 mr-2" />
-            Filters
+            Filtros
           </Button>
           <Button>
             <UserPlus className="h-4 w-4 mr-2" />
-            Add Customer
+            Agregar Cliente
           </Button>
         </div>
       </div>
@@ -287,7 +287,7 @@ export default function CustomersPage() {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search customers..."
+            placeholder="Buscar clientes..."
             className="pl-9 w-full"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -301,12 +301,12 @@ export default function CustomersPage() {
           }
         >
           <SelectTrigger className="w-full md:w-[180px]">
-            <SelectValue placeholder="All Statuses" />
+            <SelectValue placeholder="Todos los estados" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Statuses</SelectItem>
-            <SelectItem value="active">Active</SelectItem>
-            <SelectItem value="inactive">Inactive</SelectItem>
+            <SelectItem value="all">Todos los estados</SelectItem>
+            <SelectItem value="active">Activo</SelectItem>
+            <SelectItem value="inactive">Inactivo</SelectItem>
             <SelectItem value="vip">VIP</SelectItem>
           </SelectContent>
         </Select>
@@ -314,10 +314,10 @@ export default function CustomersPage() {
 
       <Tabs defaultValue="all">
         <TabsList className="flex overflow-x-auto pb-px">
-          <TabsTrigger value="all">All Customers</TabsTrigger>
-          <TabsTrigger value="active">Active</TabsTrigger>
+          <TabsTrigger value="all">Todos los clientes</TabsTrigger>
+          <TabsTrigger value="active">Activo</TabsTrigger>
           <TabsTrigger value="vip">VIP</TabsTrigger>
-          <TabsTrigger value="inactive">Inactive</TabsTrigger>
+          <TabsTrigger value="inactive">Inactivo</TabsTrigger>
         </TabsList>
 
         <TabsContent value="all" className="mt-4">
@@ -352,24 +352,26 @@ export default function CustomersPage() {
           <DialogContent className="max-w-3xl">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
-                Customer Details
+                Detalles del cliente
                 {getStatusBadge(selectedCustomer.status)}
               </DialogTitle>
               <DialogDescription>
-                View and manage customer information
+                Ver y gestionar la información del cliente
               </DialogDescription>
             </DialogHeader>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h3 className="font-semibold mb-2">Personal Information</h3>
+                <h3 className="font-semibold mb-2">Información personal</h3>
                 <div className="space-y-3 text-sm">
                   <div className="flex items-start gap-2">
-                    <span className="font-medium min-w-24">Name:</span>
+                    <span className="font-medium min-w-24">Nombre:</span>
                     <span>{selectedCustomer.name}</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="font-medium min-w-24">Email:</span>
+                    <span className="font-medium min-w-24">
+                      Correo electrónico:
+                    </span>
                     <div className="flex items-center gap-1">
                       <Mail className="h-4 w-4 text-muted-foreground" />
                       <a
@@ -381,7 +383,7 @@ export default function CustomersPage() {
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="font-medium min-w-24">Phone:</span>
+                    <span className="font-medium min-w-24">Teléfono:</span>
                     <div className="flex items-center gap-1">
                       <Phone className="h-4 w-4 text-muted-foreground" />
                       <a
@@ -393,16 +395,14 @@ export default function CustomersPage() {
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="font-medium min-w-24">Address:</span>
+                    <span className="font-medium min-w-24">Dirección:</span>
                     <div className="flex items-start gap-1">
                       <MapPin className="h-4 w-4 text-muted-foreground mt-0.5" />
                       <span>{selectedCustomer.address}</span>
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="font-medium min-w-24">
-                      Customer since:
-                    </span>
+                    <span className="font-medium min-w-24">Cliente desde:</span>
                     <div className="flex items-center gap-1">
                       <Calendar className="h-4 w-4 text-muted-foreground" />
                       <span>{formatDate(selectedCustomer.createdAt)}</span>
@@ -410,35 +410,39 @@ export default function CustomersPage() {
                   </div>
                 </div>
 
-                <h3 className="font-semibold mt-6 mb-2">Notes</h3>
+                <h3 className="font-semibold mt-6 mb-2">Notas</h3>
                 <p className="text-sm text-muted-foreground">
                   {selectedCustomer.notes ||
-                    "No notes available for this customer."}
+                    "No hay notas disponibles para este cliente."}
                 </p>
               </div>
 
               <div>
-                <h3 className="font-semibold mb-2">Order History</h3>
+                <h3 className="font-semibold mb-2">Historial de pedidos</h3>
                 <div className="space-y-3 text-sm">
                   <div className="flex items-start gap-2">
-                    <span className="font-medium min-w-24">Total Orders:</span>
+                    <span className="font-medium min-w-24">
+                      Total de pedidos:
+                    </span>
                     <div className="flex items-center gap-1">
                       <ShoppingBag className="h-4 w-4 text-muted-foreground" />
                       <span>{selectedCustomer.totalOrders}</span>
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="font-medium min-w-24">Total Spent:</span>
+                    <span className="font-medium min-w-24">Total gastado:</span>
                     <span className="font-medium">
                       ${selectedCustomer.totalSpent.toFixed(2)}
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="font-medium min-w-24">Last Order:</span>
+                    <span className="font-medium min-w-24">Último pedido:</span>
                     <span>{formatDate(selectedCustomer.lastOrderDate)}</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="font-medium min-w-24">Average Order:</span>
+                    <span className="font-medium min-w-24">
+                      Promedio de pedido:
+                    </span>
                     <span>
                       $
                       {selectedCustomer.totalOrders > 0
@@ -452,12 +456,12 @@ export default function CustomersPage() {
                 </div>
 
                 <div className="mt-6 border rounded-md p-4">
-                  <h3 className="font-semibold mb-2">Recent Orders</h3>
+                  <h3 className="font-semibold mb-2">Pedidos recientes</h3>
                   {selectedCustomer.totalOrders > 0 ? (
                     <div className="space-y-2">
                       <div className="flex justify-between text-sm">
                         <span className="text-muted-foreground">
-                          Order #ORD-5123
+                          Pedido #ORD-5123
                         </span>
                         <span>
                           {formatDate(selectedCustomer.lastOrderDate)}
@@ -465,7 +469,7 @@ export default function CustomersPage() {
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className="text-muted-foreground">
-                          Order #ORD-5089
+                          Pedido #ORD-5089
                         </span>
                         <span>
                           {formatDate(
@@ -480,7 +484,7 @@ export default function CustomersPage() {
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className="text-muted-foreground">
-                          Order #ORD-4967
+                          Pedido #ORD-4967
                         </span>
                         <span>
                           {formatDate(
@@ -498,12 +502,12 @@ export default function CustomersPage() {
                         size="sm"
                         className="w-full mt-2"
                       >
-                        View All Orders
+                        Ver todos los pedidos
                       </Button>
                     </div>
                   ) : (
                     <p className="text-sm text-muted-foreground">
-                      No order history available.
+                      No hay historial de pedidos disponible.
                     </p>
                   )}
                 </div>
@@ -512,7 +516,7 @@ export default function CustomersPage() {
 
             <div className="flex flex-col sm:flex-row gap-4 mt-4">
               <div className="flex-1">
-                <h3 className="font-semibold mb-2">Update Status</h3>
+                <h3 className="font-semibold mb-2">Actualizar estado</h3>
                 <div className="flex flex-wrap gap-2">
                   <Button
                     variant="outline"
@@ -525,7 +529,7 @@ export default function CustomersPage() {
                       selectedCustomer.status === "active" ? "bg-green-100" : ""
                     }
                   >
-                    Active
+                    Activo
                   </Button>
                   <Button
                     variant="outline"
@@ -540,7 +544,7 @@ export default function CustomersPage() {
                         : ""
                     }
                   >
-                    Inactive
+                    Inactivo
                   </Button>
                   <Button
                     variant="outline"
@@ -564,17 +568,17 @@ export default function CustomersPage() {
                 variant="destructive"
                 onClick={() => setIsDeleteDialogOpen(true)}
               >
-                <Trash2 className="h-4 w-4 mr-1" /> Delete Customer
+                <Trash2 className="h-4 w-4 mr-1" /> Eliminar cliente
               </Button>
               <div className="flex gap-2">
                 <Button
                   variant="outline"
                   onClick={() => setIsCustomerDetailsOpen(false)}
                 >
-                  Close
+                  Cerrar
                 </Button>
                 <Button variant="default">
-                  <Edit className="h-4 w-4 mr-1" /> Edit Customer
+                  <Edit className="h-4 w-4 mr-1" /> Editar cliente
                 </Button>
               </div>
             </DialogFooter>
@@ -587,15 +591,15 @@ export default function CustomersPage() {
         <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
           <DialogContent className="max-w-md">
             <DialogHeader>
-              <DialogTitle>Delete Customer</DialogTitle>
+              <DialogTitle>Eliminar cliente</DialogTitle>
               <DialogDescription>
-                Are you sure you want to delete this customer? This action
-                cannot be undone.
+                Estás seguro de querer eliminar este cliente? Esta acción no se
+                puede deshacer.
               </DialogDescription>
             </DialogHeader>
             <div className="py-4">
               <p className="text-sm font-medium">
-                You are about to delete the customer:{" "}
+                Estás a punto de eliminar el cliente:{" "}
                 <span className="font-bold">{selectedCustomer.name}</span>
               </p>
             </div>
@@ -604,13 +608,13 @@ export default function CustomersPage() {
                 variant="outline"
                 onClick={() => setIsDeleteDialogOpen(false)}
               >
-                Cancel
+                Cancelar
               </Button>
               <Button
                 variant="destructive"
                 onClick={() => handleDeleteCustomer(selectedCustomer.id)}
               >
-                Delete
+                Eliminar
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -634,16 +638,16 @@ function CustomersTable({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Customers</CardTitle>
+        <CardTitle>Clientes</CardTitle>
         <CardDescription>
-          View and manage your restaurant customers
+          Ver y gestionar tus clientes del restaurante
         </CardDescription>
       </CardHeader>
       <CardContent>
         {customers.length === 0 ? (
           <div className="text-center py-6 text-muted-foreground">
             <UserPlus className="h-8 w-8 mx-auto mb-2" />
-            <p>No customers found</p>
+            <p>No se encontraron clientes</p>
           </div>
         ) : (
           <div className="rounded-md border overflow-hidden">
@@ -651,21 +655,21 @@ function CustomersTable({
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Name</TableHead>
+                    <TableHead>Nombre</TableHead>
                     <TableHead className="hidden md:table-cell">
-                      Email
+                      Correo electrónico
                     </TableHead>
                     <TableHead className="hidden md:table-cell">
-                      Phone
+                      Teléfono
                     </TableHead>
                     <TableHead className="hidden md:table-cell">
-                      Orders
+                      Pedidos
                     </TableHead>
                     <TableHead className="hidden md:table-cell">
-                      Total Spent
+                      Total gastado
                     </TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
+                    <TableHead>Estado</TableHead>
+                    <TableHead className="text-right">Acciones</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -692,22 +696,22 @@ function CustomersTable({
                           <DropdownMenuTrigger asChild>
                             <Button variant="ghost" size="sm">
                               <MoreHorizontal className="h-4 w-4" />
-                              <span className="sr-only">Open menu</span>
+                              <span className="sr-only">Abrir menú</span>
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuLabel>Acciones</DropdownMenuLabel>
                             <DropdownMenuItem
                               onClick={() => onViewCustomer(customer)}
                             >
-                              View details
+                              Ver detalles
                             </DropdownMenuItem>
-                            <DropdownMenuItem>Edit customer</DropdownMenuItem>
+                            <DropdownMenuItem>Editar cliente</DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>View orders</DropdownMenuItem>
+                            <DropdownMenuItem>Ver pedidos</DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem className="text-red-600">
-                              Delete customer
+                              Eliminar cliente
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>

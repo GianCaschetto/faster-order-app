@@ -350,9 +350,9 @@ export default function ProductsPage() {
     <div className="container mx-auto py-6">
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Products</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Productos</h1>
           <p className="text-muted-foreground">
-            Manage your restaurant&apos;s menu items
+            Administra tus productos del menú
           </p>
         </div>
 
@@ -360,12 +360,12 @@ export default function ProductsPage() {
           <DialogTrigger asChild>
             <Button>
               <Plus className="h-4 w-4 mr-2" />
-              Add Product
+              Agregar Producto
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
-              <DialogTitle>Add New Product</DialogTitle>
+              <DialogTitle>Agregar Nuevo Producto</DialogTitle>
             </DialogHeader>
             <ProductForm />
             <DialogFooter>
@@ -373,9 +373,9 @@ export default function ProductsPage() {
                 variant="outline"
                 onClick={() => setIsAddProductOpen(false)}
               >
-                Cancel
+                Cancelar
               </Button>
-              <Button onClick={handleAddProduct}>Save Product</Button>
+              <Button onClick={handleAddProduct}>Guardar Producto</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -388,7 +388,7 @@ export default function ProductsPage() {
               <div className="relative flex-1">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
-                  placeholder="Search products..."
+                  placeholder="Buscar productos..."
                   className="pl-8"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -399,12 +399,12 @@ export default function ProductsPage() {
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline">
                     <Filter className="h-4 w-4 mr-2" />
-                    Filter
+                    Filtrar
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
                   <div className="p-2">
-                    <div className="font-medium mb-1">Category</div>
+                    <div className="font-medium mb-1">Categoría</div>
                     <div className="space-y-1">
                       <div className="flex items-center">
                         <Checkbox
@@ -416,7 +416,7 @@ export default function ProductsPage() {
                           htmlFor="all-categories"
                           className="ml-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         >
-                          All Categories
+                          Todas las categorías
                         </label>
                       </div>
 
@@ -446,7 +446,7 @@ export default function ProductsPage() {
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline">
                     <ArrowUpDown className="h-4 w-4 mr-2" />
-                    Sort
+                    Ordenar
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
@@ -459,7 +459,7 @@ export default function ProductsPage() {
                       )
                     }
                   >
-                    Name (A-Z)
+                    Nombre (A-Z)
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() =>
@@ -470,7 +470,7 @@ export default function ProductsPage() {
                       )
                     }
                   >
-                    Name (Z-A)
+                    Nombre (Z-A)
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() =>
@@ -479,7 +479,7 @@ export default function ProductsPage() {
                       )
                     }
                   >
-                    Price (Low to High)
+                    Precio (Bajo a Alto)
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() =>
@@ -488,7 +488,7 @@ export default function ProductsPage() {
                       )
                     }
                   >
-                    Price (High to Low)
+                    Precio (Alto a Bajo)
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -545,7 +545,7 @@ export default function ProductsPage() {
           {categoryFilter && (
             <div className="mb-4 flex items-center">
               <span className="text-sm text-muted-foreground mr-2">
-                Filtered by:
+                Filtrado por:
               </span>
               <Badge variant="secondary" className="flex items-center gap-1">
                 {categories.find((c) => c.id === categoryFilter)?.name}
@@ -564,10 +564,12 @@ export default function ProductsPage() {
           {filteredProducts.length === 0 ? (
             <div className="text-center py-12">
               <Package className="h-12 w-12 mx-auto text-muted-foreground" />
-              <h3 className="mt-4 text-lg font-medium">No products found</h3>
+              <h3 className="mt-4 text-lg font-medium">
+                No se encontraron productos
+              </h3>
               <p className="text-muted-foreground mt-2">
-                Try adjusting your search or filter to find what you&apos;re
-                looking for.
+                Intenta ajustar tu búsqueda o filtro para encontrar lo que
+                buscas.
               </p>
               <Button
                 className="mt-4"
@@ -576,7 +578,7 @@ export default function ProductsPage() {
                   setCategoryFilter(null);
                 }}
               >
-                Reset filters
+                Restablecer filtros
               </Button>
             </div>
           ) : viewMode === "grid" ? (
@@ -628,10 +630,7 @@ export default function ProductsPage() {
                         </p>
                       </div>
                       <div className="text-right">
-                        <AdminCurrencyDisplay
-                          amount={product.price}
-                          showAllRates={false}
-                        />
+                        <AdminCurrencyDisplay amount={product.price} />
                       </div>
                     </div>
                     <div className="mt-2 flex items-center justify-between">
@@ -652,11 +651,11 @@ export default function ProductsPage() {
           ) : (
             <div className="border rounded-md">
               <div className="grid grid-cols-12 gap-4 p-4 font-medium text-sm border-b">
-                <div className="col-span-5">Product</div>
-                <div className="col-span-2">Category</div>
-                <div className="col-span-2">Price</div>
+                <div className="col-span-5">Producto</div>
+                <div className="col-span-2">Categoría</div>
+                <div className="col-span-2">Precio</div>
                 <div className="col-span-1">Extras</div>
-                <div className="col-span-2 text-right">Actions</div>
+                <div className="col-span-2 text-right">Acciones</div>
               </div>
               {filteredProducts.map((product) => (
                 <div
@@ -688,17 +687,14 @@ export default function ProductsPage() {
                     </Badge>
                   </div>
                   <div className="col-span-2">
-                    <AdminCurrencyDisplay
-                      amount={product.price}
-                      showAllRates={false}
-                    />
+                    <AdminCurrencyDisplay amount={product.price} />
                   </div>
                   <div className="col-span-1">
                     {product.extras && product.extras.length > 0 ? (
                       <Badge variant="secondary">{product.extras.length}</Badge>
                     ) : (
                       <span className="text-sm text-muted-foreground">
-                        None
+                        Ninguno
                       </span>
                     )}
                   </div>
@@ -736,7 +732,7 @@ export default function ProductsPage() {
       <Dialog open={isEditProductOpen} onOpenChange={setIsEditProductOpen}>
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
-            <DialogTitle>Edit Product</DialogTitle>
+            <DialogTitle>Editar Producto</DialogTitle>
           </DialogHeader>
           <ProductForm isEdit />
           <DialogFooter>
@@ -744,9 +740,9 @@ export default function ProductsPage() {
               variant="outline"
               onClick={() => setIsEditProductOpen(false)}
             >
-              Cancel
+              Cancelar
             </Button>
-            <Button onClick={handleEditProduct}>Save Changes</Button>
+            <Button onClick={handleEditProduct}>Guardar Cambios</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -755,15 +751,15 @@ export default function ProductsPage() {
       <Dialog open={isDeleteProductOpen} onOpenChange={setIsDeleteProductOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Delete Product</DialogTitle>
+            <DialogTitle>Eliminar Producto</DialogTitle>
           </DialogHeader>
           <div className="py-4">
             <p>
-              Are you sure you want to delete{" "}
+              ¿Estás seguro de querer eliminar{" "}
               <strong>{currentProduct?.name}</strong>?
             </p>
             <p className="text-sm text-muted-foreground mt-2">
-              This action cannot be undone.
+              Esta acción no se puede deshacer.
             </p>
           </div>
           <DialogFooter>
@@ -771,10 +767,10 @@ export default function ProductsPage() {
               variant="outline"
               onClick={() => setIsDeleteProductOpen(false)}
             >
-              Cancel
+              Cancelar
             </Button>
             <Button variant="destructive" onClick={handleDeleteProduct}>
-              Delete
+              Eliminar
             </Button>
           </DialogFooter>
         </DialogContent>

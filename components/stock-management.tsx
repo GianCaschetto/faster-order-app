@@ -250,7 +250,7 @@ export const defaultStock: StockItem[] = [
 ];
 
 const formSchema = z.object({
-  branch: z.string().min(1, { message: "Please select a branch" }),
+  branch: z.string().min(1, { message: "Por favor, seleccione una sucursal" }),
   search: z.string().optional(),
 });
 
@@ -370,8 +370,8 @@ export default function StockManagement({
     localStorage.setItem("restaurantStock", JSON.stringify(stock));
 
     toast({
-      title: "Stock updated",
-      description: "The inventory has been updated successfully.",
+      title: "Inventario actualizado",
+      description: "El inventario se ha actualizado correctamente.",
     });
 
     setIsLoading(false);
@@ -385,7 +385,7 @@ export default function StockManagement({
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">
-            Inventory Management
+            Gestión de inventario
           </h2>
           <Badge variant="outline" className="mt-1 flex items-center gap-1">
             <Store className="h-3 w-3 mr-1" />
@@ -394,15 +394,16 @@ export default function StockManagement({
         </div>
         <Button onClick={handleSaveStock} disabled={isLoading}>
           <Save className="mr-2 h-4 w-4" />
-          Save Changes
+          Guardar cambios
         </Button>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Branch Inventory</CardTitle>
+          <CardTitle>Inventario de sucursales</CardTitle>
           <CardDescription>
-            Manage stock levels for each product across all branches
+            Administra los niveles de stock para cada producto en todas las
+            sucursales
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -413,7 +414,7 @@ export default function StockManagement({
                 name="branch"
                 render={({ field }) => (
                   <FormItem className="flex-1">
-                    <FormLabel>Branch</FormLabel>
+                    <FormLabel>Sucursal</FormLabel>
                     <Select
                       value={field.value}
                       onValueChange={field.onChange}
@@ -421,12 +422,14 @@ export default function StockManagement({
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select branch" />
+                          <SelectValue placeholder="Seleccionar sucursal" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         {selectedBranchId === "all" && (
-                          <SelectItem value="all">All Branches</SelectItem>
+                          <SelectItem value="all">
+                            Todas las sucursales
+                          </SelectItem>
                         )}
                         {branches.map((branch) => (
                           <SelectItem key={branch.id} value={branch.id}>
@@ -445,11 +448,11 @@ export default function StockManagement({
                 name="search"
                 render={({ field }) => (
                   <FormItem className="flex-1">
-                    <FormLabel>Search Products</FormLabel>
+                    <FormLabel>Buscar productos</FormLabel>
                     <div className="relative">
                       <FormControl>
                         <Input
-                          placeholder="Search by product name..."
+                          placeholder="Buscar por nombre de producto..."
                           {...field}
                           className="pl-9"
                         />
@@ -467,10 +470,10 @@ export default function StockManagement({
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Product</TableHead>
-                  <TableHead>Branch</TableHead>
-                  <TableHead className="text-right">Quantity</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                  <TableHead>Producto</TableHead>
+                  <TableHead>Sucursal</TableHead>
+                  <TableHead className="text-right">Cantidad</TableHead>
+                  <TableHead className="text-right">Acciones</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -482,7 +485,7 @@ export default function StockManagement({
                     >
                       <div className="flex flex-col items-center justify-center">
                         <Package2 className="h-8 w-8 mb-2" />
-                        <p>No inventory items found</p>
+                        <p>No se encontraron productos en el inventario</p>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -557,10 +560,10 @@ export default function StockManagement({
         </CardContent>
         <CardFooter className="flex justify-between">
           <p className="text-sm text-muted-foreground">
-            {filteredStock.length} items displayed
+            {filteredStock.length} productos mostrados
           </p>
           <Button onClick={handleSaveStock} disabled={isLoading}>
-            Save Changes
+            Guardar cambios
           </Button>
         </CardFooter>
       </Card>

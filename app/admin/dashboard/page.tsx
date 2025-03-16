@@ -22,6 +22,7 @@ import { branches } from "@/components/restaurant-menu";
 import { defaultStock } from "@/components/stock-management";
 import type { Order } from "@/app/admin/orders/page";
 import AdminCurrencyDisplay from "@/components/admin-currency-display";
+import { Badge } from "@/components/ui/badge";
 
 // Mock data for the dashboard
 const recentOrders = [
@@ -192,7 +193,9 @@ export default function AdminDashboard() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Pedidos Totales
+            </CardTitle>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -217,7 +220,7 @@ export default function AdminDashboard() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Orders</CardTitle>
+            <CardTitle className="text-sm font-medium">Pedidos</CardTitle>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -243,26 +246,26 @@ export default function AdminDashboard() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Pending Orders
+              Pedidos Pendientes
             </CardTitle>
             <ShoppingBag className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{pendingOrders}</div>
-            <p className="text-xs text-muted-foreground">Require attention</p>
+            <p className="text-xs text-muted-foreground">Requiere atención</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Low Stock Items
+              Productos Bajos en Stock
             </CardTitle>
             <Database className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{lowStockCount}</div>
             <p className="text-xs text-muted-foreground">
-              Items need restocking
+              Artículos necesitan reposición
             </p>
           </CardContent>
         </Card>
@@ -271,7 +274,7 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card>
           <CardHeader>
-            <CardTitle>Today&apos;s Schedule</CardTitle>
+            <CardTitle>Horario de hoy</CardTitle>
           </CardHeader>
           <CardContent>
             <RestaurantSchedule schedule={schedule} />
@@ -280,21 +283,21 @@ export default function AdminDashboard() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Low Stock Alerts</CardTitle>
+            <CardTitle>Alertas de inventario</CardTitle>
           </CardHeader>
           <CardContent>
             {stockAlerts.length === 0 ? (
               <p className="text-center py-6 text-muted-foreground">
-                No low stock alerts
+                No hay alertas de inventario
               </p>
             ) : (
               <div className="rounded-md border">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Product</TableHead>
-                      <TableHead>Branch</TableHead>
-                      <TableHead className="text-right">Quantity</TableHead>
+                      <TableHead>Producto</TableHead>
+                      <TableHead>Sucursal</TableHead>
+                      <TableHead className="text-right">Cantidad</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -327,29 +330,29 @@ export default function AdminDashboard() {
 
       <Tabs defaultValue="orders">
         <TabsList>
-          <TabsTrigger value="orders">Recent Orders</TabsTrigger>
-          <TabsTrigger value="products">Popular Items</TabsTrigger>
-          <TabsTrigger value="branches">Branch Performance</TabsTrigger>
+          <TabsTrigger value="orders">Pedidos Recientes</TabsTrigger>
+          <TabsTrigger value="products">Productos Populares</TabsTrigger>
+          <TabsTrigger value="branches">Rendimiento de sucursales</TabsTrigger>
         </TabsList>
         <TabsContent value="orders" className="border rounded-md p-4">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">Recent Orders</h2>
+            <h2 className="text-lg font-semibold mb-4">Pedidos Recientes</h2>
             <Button
               variant="outline"
               size="sm"
               onClick={() => router.push("/admin/orders")}
             >
-              View All
+              Ver todos
             </Button>
           </div>
           <div className="border rounded-md">
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Order ID</TableHead>
-                  <TableHead>Customer</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Status</TableHead>
+                  <TableHead>ID de pedido</TableHead>
+                  <TableHead>Cliente</TableHead>
+                  <TableHead>Fecha</TableHead>
+                  <TableHead>Estado</TableHead>
                   <TableHead className="text-right">Total</TableHead>
                 </TableRow>
               </TableHeader>
@@ -360,17 +363,18 @@ export default function AdminDashboard() {
                     <TableCell>{order.customer}</TableCell>
                     <TableCell>{order.date}</TableCell>
                     <TableCell>
-                      <span
-                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                      <Badge
+                        variant="outline"
+                        className={`${
                           order.status === "Delivered"
-                            ? "bg-green-100 text-green-800"
+                            ? "bg-green-50 text-green-600"
                             : order.status === "Processing"
-                            ? "bg-blue-100 text-blue-800"
-                            : "bg-red-100 text-red-800"
+                            ? "bg-blue-50 text-blue-600"
+                            : "bg-red-50 text-red-600"
                         }`}
                       >
                         {order.status}
-                      </span>
+                      </Badge>
                     </TableCell>
                     <TableCell className="text-right">
                       <AdminCurrencyDisplay amount={order.total} />
@@ -383,9 +387,9 @@ export default function AdminDashboard() {
         </TabsContent>
         <TabsContent value="products" className="border rounded-md p-4">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">Popular Items</h2>
+            <h2 className="text-lg font-semibold mb-4">Productos Populares</h2>
             <Button variant="outline" size="sm">
-              View All
+              Ver todos
             </Button>
           </div>
           <div className="border rounded-md">
@@ -394,8 +398,8 @@ export default function AdminDashboard() {
                 <TableRow>
                   <TableHead>Item</TableHead>
                   <TableHead>Category</TableHead>
-                  <TableHead className="text-right">Orders</TableHead>
-                  <TableHead className="text-right">Revenue</TableHead>
+                  <TableHead className="text-right">Pedidos</TableHead>
+                  <TableHead className="text-right">Ingresos</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -415,18 +419,18 @@ export default function AdminDashboard() {
         </TabsContent>
         <TabsContent value="branches" className="border rounded-md p-4">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">Branch Performance</h2>
+            <h2 className="text-lg font-semibold">Rendimiento de sucursales</h2>
             <Button variant="outline" size="sm">
-              View All
+              Ver todos
             </Button>
           </div>
           <div className="border rounded-md">
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Branch</TableHead>
-                  <TableHead className="text-right">Orders</TableHead>
-                  <TableHead className="text-right">Revenue</TableHead>
+                  <TableHead>Sucursal</TableHead>
+                  <TableHead className="text-right">Pedidos</TableHead>
+                  <TableHead className="text-right">Ingresos</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
