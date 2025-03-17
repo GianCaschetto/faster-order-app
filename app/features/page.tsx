@@ -1,11 +1,9 @@
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import {
-  ArrowRight,
   CheckCircle,
   CreditCard,
   Smartphone,
-  Zap,
+  Zap
 } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
