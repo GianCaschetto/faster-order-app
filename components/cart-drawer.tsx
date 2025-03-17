@@ -116,14 +116,14 @@ export default function CartDrawer({
         <SheetHeader className="p-4 border-b">
           <div className="flex items-center justify-between">
             <SheetTitle>
-              {currentStep === "cart" && "Your Cart"}
-              {currentStep === "userInfo" && "Your Information"}
-              {currentStep === "payment" && "Payment"}
-              {currentStep === "confirmation" && "Order Confirmation"}
+              {currentStep === "cart" && "Tu Carrito"}
+              {currentStep === "userInfo" && "Tu Información"}
+              {currentStep === "payment" && "Pago"}
+              {currentStep === "confirmation" && "Confirmación de Pedido"}
             </SheetTitle>
             <Button variant="ghost" size="icon" onClick={handleClose}>
               <X className="h-4 w-4" />
-              <span className="sr-only">Close</span>
+              <span className="sr-only">Cerrar</span>
             </Button>
           </div>
 
@@ -170,7 +170,7 @@ export default function CartDrawer({
               </div>
             </div>
             <div className="text-sm text-muted-foreground">
-              Step{" "}
+              Paso{" "}
               {currentStep === "cart"
                 ? "1"
                 : currentStep === "userInfo"
@@ -178,7 +178,7 @@ export default function CartDrawer({
                 : currentStep === "payment"
                 ? "3"
                 : "4"}{" "}
-              of 4
+              de 4
             </div>
           </div>
         </SheetHeader>
@@ -189,24 +189,25 @@ export default function CartDrawer({
               {isCartEmpty ? (
                 <div className="flex flex-col items-center justify-center h-full py-8">
                   <p className="text-muted-foreground mb-4">
-                    Your cart is empty
+                    Tu carrito está vacío
                   </p>
                   <Button variant="outline" onClick={handleClose}>
-                    Continue Shopping
+                    Continuar Comprando
                   </Button>
                 </div>
               ) : (
                 <div className="space-y-4">
                   {!selectedBranch && (
                     <div className="bg-yellow-50 p-3 rounded-md text-yellow-800 text-sm mb-4">
-                      Please select a restaurant branch before checkout.
+                      Por favor, seleccione una sucursal de restaurante antes de
+                      finalizar la compra.
                     </div>
                   )}
 
                   {!isRestaurantOpen && (
                     <div className="bg-yellow-50 p-3 rounded-md text-yellow-800 text-sm mb-4">
-                      The restaurant is currently closed. Your order will be
-                      processed when we reopen.
+                      El restaurante está actualmente cerrado. Su pedido será
+                      procesado cuando volvamos a abrir.
                     </div>
                   )}
 
@@ -237,7 +238,7 @@ export default function CartDrawer({
                             className="h-8 w-8 text-muted-foreground"
                           >
                             <Trash2 className="h-4 w-4" />
-                            <span className="sr-only">Remove</span>
+                            <span className="sr-only">Eliminar</span>
                           </Button>
                         </div>
                         {/* Replace the item price display in the cart items section: */}
@@ -271,7 +272,7 @@ export default function CartDrawer({
                             }
                           >
                             <Minus className="h-3 w-3" />
-                            <span className="sr-only">Decrease</span>
+                            <span className="sr-only">Disminuir</span>
                           </Button>
                           <span className="w-8 text-center">
                             {item.quantity}
@@ -285,7 +286,7 @@ export default function CartDrawer({
                             }
                           >
                             <Plus className="h-3 w-3" />
-                            <span className="sr-only">Increase</span>
+                            <span className="sr-only">Aumentar</span>
                           </Button>
                           <div className="ml-auto font-medium">
                             <CurrencyDisplay
