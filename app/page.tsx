@@ -1,13 +1,18 @@
+"use client";
+
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle, Globe, Laptop, Zap } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 import { FadeIn } from "@/components/animations";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import CallToAction from "@/components/call-to-action";
 
-export default function Home() {
+  export default function HomePage() {
+    const router = useRouter();
+
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
@@ -18,7 +23,7 @@ export default function Home() {
               <FadeIn className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                    Soluciones de Software Potentes para tu Negocio
+                    Soluciones de Software Potentes para tu Negocio. 
                   </h1>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl">
                     Nuestro software innovador optimiza tu flujo de trabajo,
@@ -26,15 +31,19 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                  <Button className="px-4 sm:px-8 transition-transform hover:scale-105">
-                    Prueba gratis <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
                   <Button
+                    className="px-4 sm:px-8 transition-transform hover:scale-105"
+                    onClick={() => router.push("/menu")}
+                  >
+                    Probar demo <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                    <Button
                     variant="outline"
                     className="transition-colors hover:bg-primary/10"
-                  >
+                    onClick={() => router.push("/product")}
+                    >
                     Saber más
-                  </Button>
+                    </Button>
                 </div>
               </FadeIn>
               <FadeIn
@@ -181,7 +190,10 @@ export default function Home() {
                     </div>
                   </li>
                 </ul>
-                <Button className="w-full sm:w-auto transition-transform hover:scale-105">
+                <Button
+                  className="w-full sm:w-auto transition-transform hover:scale-105"
+                  onClick={() => router.push("/menu")}
+                >
                   Probar el software <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </FadeIn>
@@ -237,7 +249,6 @@ export default function Home() {
                       width={600}
                       height={600}
                       alt="Software interface 3"
-                      className="object-cover"
                     />
                   </div>
                   <div className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105">
@@ -285,9 +296,12 @@ export default function Home() {
                   </li>
                 </ul>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                  <Button className="px-4 sm:px-8 transition-transform hover:scale-105">
-                    Prueba gratis <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
+                    <Button
+                    className="px-4 sm:px-8 transition-transform hover:scale-105"
+                    onClick={() => router.push("/menu")}
+                    >
+                    Probar Demo <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
                   <Button
                     variant="outline"
                     className="transition-colors hover:bg-primary/10"

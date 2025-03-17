@@ -42,27 +42,27 @@ type GalleryImage = {
 const sampleImages: GalleryImage[] = [
   {
     id: "img-1",
-    url: "/placeholder.svg?height=200&width=200",
+    url: "/public/pictures/2151431747.jpg",
     name: "Sample Image 1",
     uploadedAt: new Date().toISOString(),
     size: "12 KB",
     dimensions: "200x200",
-    type: "SVG",
+    type: "JPG",
     usedIn: [],
   },
   {
     id: "img-2",
-    url: "/placeholder.svg?height=300&width=300&text=Pizza",
+    url: "/faster-order-app/app/admin/public/pictures/2151431747.jpg",
     name: "Pizza Image",
     uploadedAt: new Date().toISOString(),
     size: "15 KB",
     dimensions: "300x300",
-    type: "SVG",
+    type: "jpg",
     usedIn: ["3"], // Used in Margherita Pizza
   },
   {
     id: "img-3",
-    url: "/placeholder.svg?height=300&width=300&text=Pasta",
+    url: "/public/pictures/2151431747.jpg",
     name: "Pasta Image",
     uploadedAt: new Date().toISOString(),
     size: "14 KB",
@@ -72,7 +72,7 @@ const sampleImages: GalleryImage[] = [
   },
   {
     id: "img-4",
-    url: "/placeholder.svg?height=300&width=300&text=Dessert",
+    url: "/app/admin/public/pictures/2151431747.jpg",
     name: "Dessert Image",
     uploadedAt: new Date().toISOString(),
     size: "13 KB",
@@ -82,7 +82,7 @@ const sampleImages: GalleryImage[] = [
   },
   {
     id: "img-5",
-    url: "/placeholder.svg?height=300&width=300&text=Drink",
+    url: "/app/admin/public/pictures/2151431747.jpg",
     name: "Drink Image",
     uploadedAt: new Date().toISOString(),
     size: "12 KB",

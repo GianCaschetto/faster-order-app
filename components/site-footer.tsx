@@ -21,8 +21,7 @@ export function SiteFooter() {
               <span className="inline-block font-bold">FasterOrder</span>
             </Link>
             <p className="text-sm text-muted-foreground">
-              Optimizando pedidos para un servicio más rápido y un mejor
-              negocio.
+              Hazlo rapido, hazlo con FasterOrder.
             </p>
           </div>
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
