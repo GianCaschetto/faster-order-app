@@ -87,8 +87,7 @@ export default function PricingPage() {
                     </div>
                     <CardTitle>Profesional</CardTitle>
                     <CardDescription>
-                      Ideal para negocios en crecimiento con volumen moderado de
-                      pedidos.
+                      Ideal para negocios en crecimiento con volumen de pedidos.
                     </CardDescription>
                     <div className="mt-4 flex items-baseline text-5xl font-bold">
                       $79
@@ -363,7 +362,7 @@ export default function PricingPage() {
           </div>
         </section>
 
-<CallToAction />
+        <CallToAction />
       </main>
       <SiteFooter />
     </div>
