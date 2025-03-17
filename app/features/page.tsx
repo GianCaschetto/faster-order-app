@@ -1,10 +1,5 @@
 import Image from "next/image";
-import {
-  CheckCircle,
-  CreditCard,
-  Smartphone,
-  Zap
-} from "lucide-react";
+import { CheckCircle, CreditCard, Smartphone, Zap } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { FadeIn } from "@/components/animations";

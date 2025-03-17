@@ -5,24 +5,36 @@ import type { Product } from "@/components/restaurant-menu"
 // Mock orders data
 export const mockOrders: Order[] = [
   {
-    id: "ORD-31474-A",
-    customerName: "John Doe",
-    customerEmail: "john@example.com",
-    customerPhone: "(123) 456-7890",
-    customerAddress: "123 Main St, Downtown",
-    branchId: "1",
+    id: "ORD-5123",
+    customerName: "Juan Pérez",
+    customerEmail: "juan@ejemplo.com",
+    customerPhone: "+34 612 345 678",
+    customerAddress: "Calle Principal 123, Madrid",
+    branchId: "branch-1",
     items: [
-      { id: "1", productName: "Margherita Pizza", quantity: 2, price: 12.99 },
-      { id: "2", productName: "Garlic Bread", quantity: 1, price: 5.99, extras: ["Extra Cheese"] },
+      {
+        id: "1",
+        productName: "Pan de Ajo",
+        quantity: 2,
+        price: 5.99,
+        extras: ["Queso Extra", "Hierbas Italianas"],
+      },
+      {
+        id: "2",
+        productName: "Ensalada César",
+        quantity: 1,
+        price: 8.99,
+        extras: ["Pollo a la Parrilla"],
+      },
     ],
-    subtotal: 31.97,
+    subtotal: 20.97,
     deliveryFee: 3.99,
-    total: 35.96,
+    total: 24.96,
     status: "delivered",
     paymentMethod: "card",
     paymentStatus: "paid",
-    createdAt: "2023-05-15T14:30:00Z",
-    updatedAt: "2023-05-15T15:45:00Z",
+    createdAt: "2024-03-15T10:30:00Z",
+    updatedAt: "2024-03-15T11:15:00Z",
   },
   {
     id: "ORD-31474-B",
@@ -130,30 +142,28 @@ export const mockOrders: Order[] = [
 // Mock customers data
 export const mockCustomers: Customer[] = [
   {
-    id: "CUST-1001",
-    name: "John Doe",
-    email: "john@example.com",
-    phone: "(123) 456-7890",
-    address: "123 Main St, Downtown",
-    status: "active",
+    id: "1",
+    name: "María García",
+    email: "maria@ejemplo.com",
+    phone: "+34 623 456 789",
+    address: "Avenida Central 456, Barcelona",
     totalOrders: 12,
-    totalSpent: 432.85,
-    lastOrderDate: "2023-05-15T14:30:00Z",
-    createdAt: "2022-01-15T10:30:00Z",
-    notes: "Prefers delivery during evening hours. Allergic to nuts.",
+    totalSpent: 458.50,
+    status: "vip",
+    lastOrderDate: "2024-03-14",
+    createdAt: "2022-08-05T09:20:00Z",
   },
   {
-    id: "CUST-1002",
-    name: "Jane Smith",
-    email: "jane@example.com",
-    phone: "(234) 567-8901",
-    address: "456 High St, Uptown",
-    status: "vip",
-    totalOrders: 28,
-    totalSpent: 1245.5,
-    lastOrderDate: "2023-05-15T16:45:00Z",
-    createdAt: "2021-11-20T14:15:00Z",
-    notes: "Regular customer. Prefers vegetarian options. Birthday on November 14.",
+    id: "2",
+    name: "Carlos Rodríguez",
+    email: "carlos@ejemplo.com",
+    phone: "+34 634 567 890",
+    address: "Plaza Mayor 789, Valencia",
+    totalOrders: 5,
+    totalSpent: 187.25,
+    status: "active",
+    lastOrderDate: "2024-03-10",
+    createdAt: "2022-08-05T09:20:00Z",
   },
   {
     id: "CUST-1003",
@@ -261,35 +271,35 @@ export const mockCustomers: Customer[] = [
 export const products: Product[] = [
   {
     id: "1",
-    name: "Garlic Bread",
-    description: "Freshly baked bread with garlic butter",
+    name: "Pan de Ajo",
+    description: "Pan recién horneado con mantequilla de ajo",
     price: 5.99,
-    image: "/placeholder.svg?height=100&width=100",
+    image: "/placeholder.svg",
     categoryId: "starters",
-    stockId: "garlic-bread",
+    stockId: "pan-ajo",
     extras: [
-      { id: "extra-cheese", name: "Extra Cheese", price: 1.5 },
-      { id: "herbs", name: "Italian Herbs", price: 0.75 },
+      { id: "extra-queso", name: "Queso Extra", price: 1.5, min: 0, max: 3 },
+      { id: "hierbas", name: "Hierbas Italianas", price: 0.75, min: 0, max: 2 },
     ],
   },
   {
     id: "2",
-    name: "Caesar Salad",
-    description: "Fresh romaine lettuce with Caesar dressing",
+    name: "Ensalada César",
+    description: "Lechuga romana fresca con aderezo César",
     price: 8.99,
-    image: "/placeholder.svg?height=100&width=100",
+    image: "/placeholder.svg",
     categoryId: "starters",
-    stockId: "caesar-salad",
+    stockId: "ensalada-cesar",
     extras: [
-      { id: "chicken", name: "Grilled Chicken", price: 2.5 },
-      { id: "croutons", name: "Extra Croutons", price: 0.5 },
-      { id: "parmesan", name: "Parmesan Cheese", price: 1.0 },
+      { id: "pollo", name: "Pollo a la Parrilla", price: 2.5, min: 0, max: 2 },
+      { id: "crutones", name: "Crutones Extra", price: 0.5, min: 0, max: 2 },
+      { id: "parmesano", name: "Queso Parmesano", price: 1.0, min: 0, max: 2 },
     ],
   },
   {
     id: "3",
-    name: "Margherita Pizza",
-    description: "Classic pizza with tomato sauce and mozzarella",
+    name: "Pizza Margarita",
+    description: "Pizza clásica con salsa de tomate y mozzarella",
     price: 12.99,
     image: "/placeholder.svg?height=100&width=100",
     categoryId: "mains",
@@ -303,8 +313,8 @@ export const products: Product[] = [
   },
   {
     id: "4",
-    name: "Spaghetti Bolognese",
-    description: "Spaghetti with rich meat sauce",
+    name: "Spaghetti Boloñesa",
+    description: "Spaghetti con salsa de carne rica",
     price: 14.99,
     image: "/placeholder.svg?height=100&width=100",
     categoryId: "mains",
@@ -317,8 +327,8 @@ export const products: Product[] = [
   },
   {
     id: "5",
-    name: "Grilled Salmon",
-    description: "Fresh salmon fillet with lemon butter",
+    name: "Salmón a la Parrilla",
+    description: "Salmón fresco con mantequilla de limón",
     price: 18.99,
     image: "/placeholder.svg?height=100&width=100",
     categoryId: "mains",
@@ -331,22 +341,22 @@ export const products: Product[] = [
   },
   {
     id: "6",
-    name: "Chocolate Cake",
-    description: "Rich chocolate cake with ganache",
+    name: "Pastel de Chocolate",
+    description: "Pastel de chocolate con ganache",
     price: 6.99,
     image: "/placeholder.svg?height=100&width=100",
     categoryId: "desserts",
-    stockId: "chocolate-cake",
+    stockId: "pastel-chocolate",
     extras: [
-      { id: "ice-cream", name: "Vanilla Ice Cream", price: 1.99 },
-      { id: "whipped-cream", name: "Whipped Cream", price: 0.75 },
-      { id: "chocolate-sauce", name: "Extra Chocolate Sauce", price: 0.5 },
+      { id: "ice-cream", name: "Helado de Vainilla", price: 1.99 },
+      { id: "whipped-cream", name: "Crema Batida", price: 0.75 },
+      { id: "chocolate-sauce", name: "Salsa de Chocolate Extra", price: 0.5 },
     ],
   },
   {
     id: "7",
     name: "Tiramisu",
-    description: "Classic Italian dessert with coffee and mascarpone",
+    description: "Postre italiano clásico con café y mascarpone",
     price: 7.99,
     image: "/placeholder.svg?height=100&width=100",
     categoryId: "desserts",
@@ -358,12 +368,12 @@ export const products: Product[] = [
   },
   {
     id: "8",
-    name: "Soft Drink",
-    description: "Choice of cola, lemon-lime, or orange",
+    name: "Refresco",
+    description: "Coca-Cola, Limonada o Naranja",
     price: 2.99,
     image: "/placeholder.svg?height=100&width=100",
     categoryId: "drinks",
-    stockId: "soft-drink",
+    stockId: "refresco",
     extras: [
       { id: "ice", name: "Extra Ice", price: 0.0 },
       { id: "lemon", name: "Lemon Slice", price: 0.25 },
@@ -371,16 +381,44 @@ export const products: Product[] = [
   },
   {
     id: "9",
-    name: "Fresh Juice",
-    description: "Freshly squeezed orange or apple juice",
+    name: "Jugo Fresco",
+    description: "Jugo de naranja o manzana recién exprimido",
     price: 4.99,
     image: "/placeholder.svg?height=100&width=100",
     categoryId: "drinks",
-    stockId: "fresh-juice",
+    stockId: "jugo-fresco",
     extras: [
       { id: "ginger", name: "Ginger", price: 0.5 },
       { id: "mint", name: "Fresh Mint", price: 0.5 },
     ],
   },
+]
+
+// Mock categories
+export const categories = [
+  { id: "starters", name: "Entrantes" },
+  { id: "mains", name: "Platos Principales" },
+  { id: "desserts", name: "Postres" },
+  { id: "drinks", name: "Bebidas" },
+  { id: "sides", name: "Guarniciones" },
+  { id: "specials", name: "Especiales" },
+]
+
+// Mock stock data
+export const defaultStock = {
+  "pan-ajo": { quantity: 50, minQuantity: 10 },
+  "ensalada-cesar": { quantity: 25, minQuantity: 5 },
+  // ... otros items de stock
+}
+
+// Mock schedule data
+export const defaultSchedule = [
+  { dayOfWeek: 0, hours: "12:00 - 22:00", isOpen: true }, // Domingo
+  { dayOfWeek: 1, hours: "11:00 - 23:00", isOpen: true }, // Lunes
+  { dayOfWeek: 2, hours: "11:00 - 23:00", isOpen: true }, // Martes
+  { dayOfWeek: 3, hours: "11:00 - 23:00", isOpen: true }, // Miércoles
+  { dayOfWeek: 4, hours: "11:00 - 23:00", isOpen: true }, // Jueves
+  { dayOfWeek: 5, hours: "11:00 - 00:00", isOpen: true }, // Viernes
+  { dayOfWeek: 6, hours: "11:00 - 00:00", isOpen: true }, // Sábado
 ]
 

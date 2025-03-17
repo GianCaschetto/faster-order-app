@@ -1,14 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Minus,
-  Plus,
-  Trash2,
-  X,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Minus, Plus, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -121,10 +114,6 @@ export default function CartDrawer({
               {currentStep === "payment" && "Pago"}
               {currentStep === "confirmation" && "Confirmación de Pedido"}
             </SheetTitle>
-            <Button variant="ghost" size="icon" onClick={handleClose}>
-              <X className="h-4 w-4" />
-              <span className="sr-only">Cerrar</span>
-            </Button>
           </div>
 
           <div className="flex justify-between items-center mt-2">

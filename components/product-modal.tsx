@@ -3,7 +3,7 @@
 import type React from "react";
 
 import { useState, useEffect } from "react";
-import { X, Plus, Minus } from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
@@ -233,15 +233,6 @@ export default function ProductModal({
       <DialogContent className="sm:max-w-[425px] md:max-w-[600px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-xl">{product.name}</DialogTitle>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute right-4 top-4"
-            onClick={handleClose}
-          >
-            <X className="h-4 w-4" />
-            <span className="sr-only">Cerrar</span>
-          </Button>
         </DialogHeader>
 
         <div className="grid gap-4">
