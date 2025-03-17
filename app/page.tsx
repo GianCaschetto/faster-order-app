@@ -5,6 +5,7 @@ import { ArrowRight, CheckCircle, Globe, Laptop, Zap } from "lucide-react";
 import { FadeIn } from "@/components/animations";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import CallToAction from "@/components/call-to-action";
 
 export default function Home() {
   return (
@@ -299,36 +300,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <FadeIn className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-                  ¿Listo para transformar tu negocio?
-                </h2>
-                <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Únete a miles de clientes satisfechos que han mejorado su
-                  flujo de trabajo con nuestro software.
-                </p>
-              </div>
-              <div className="justify-center flex flex-col w-full max-w-md gap-2 min-[400px]:flex-row">
-                <Button
-                  size="lg"
-                  className="w-full min-[400px]:w-auto px-4 sm:px-8 transition-transform hover:scale-105"
-                >
-                  Contáctanos
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="w-full min-[400px]:w-auto transition-colors hover:bg-primary/10"
-                >
-                  Probar Demo
-                </Button>
-              </div>
-            </FadeIn>
-          </div>
-        </section>
+        <CallToAction />
       </main>
       <SiteFooter />
     </div>

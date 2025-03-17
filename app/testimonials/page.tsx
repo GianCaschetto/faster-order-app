@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { FadeIn } from "@/components/animations";
+import CallToAction from "@/components/call-to-action";
 
 export default function TestimonialsPage() {
   return (
@@ -294,37 +295,7 @@ export default function TestimonialsPage() {
           </div>
         </section>
 
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
-          <div className="container px-4 md:px-6">
-            <FadeIn className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                  Únete a Nuestros Clientes Satisfechos
-                </h2>
-                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Experimenta la diferencia que FasterOrder puede hacer para tu
-                  negocio.
-                </p>
-              </div>
-              <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Button
-                  size="lg"
-                  className="px-8 transition-transform hover:scale-105"
-                >
-                  Comienza tu prueba gratuita{" "}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="transition-colors hover:bg-primary/10"
-                >
-                  Programa una demo
-                </Button>
-              </div>
-            </FadeIn>
-          </div>
-        </section>
+        <CallToAction />
       </main>
       <SiteFooter />
     </div>
