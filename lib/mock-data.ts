@@ -1,6 +1,6 @@
 import type { Order } from "@/app/admin/orders/page"
 import type { Customer } from "@/app/admin/customers/page"
-import type { Product } from "@/components/restaurant-menu"
+import type { Branch, Product } from "@/components/restaurant-menu"
 
 // Mock orders data
 export const mockOrders: Order[] = [
@@ -138,6 +138,13 @@ export const mockOrders: Order[] = [
     updatedAt: "2023-05-13T20:15:00Z",
   },
 ]
+
+// Default branches - will be used if no branches are found in localStorage
+export const defaultBranches: Branch[] = [
+  { id: "1", name: "Downtown", address: "123 Main St, Downtown" },
+  { id: "2", name: "Uptown", address: "456 High St, Uptown" },
+  { id: "3", name: "Westside", address: "789 West Blvd, Westside" },
+];
 
 // Mock customers data
 export const mockCustomers: Customer[] = [

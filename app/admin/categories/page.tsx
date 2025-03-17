@@ -50,43 +50,44 @@ type Category = {
 const initialCategories: Category[] = [
   {
     id: "starters",
-    name: "Starters",
-    description: "Appetizers and small plates to start your meal",
+    name: "Entrantes",
+    description: "Entrantes y platos pequeños para empezar tu comida",
     productCount: 0,
     color: "#f97316", // orange
   },
   {
     id: "mains",
-    name: "Main Courses",
-    description: "Hearty main dishes including pizzas, pastas, and entrees",
+    name: "Platos Principales",
+    description:
+      "Platos principales ricos y abundantes, incluyendo pizzas, pastas y entrantes",
     productCount: 0,
     color: "#ef4444", // red
   },
   {
     id: "desserts",
-    name: "Desserts",
-    description: "Sweet treats to finish your meal",
+    name: "Postres",
+    description: "Postres dulces para terminar tu comida",
     productCount: 0,
     color: "#ec4899", // pink
   },
   {
     id: "drinks",
-    name: "Drinks",
-    description: "Beverages including soft drinks, coffee, and juices",
+    name: "Bebidas",
+    description: "Bebidas incluyendo soft drinks, café y jugos",
     productCount: 0,
     color: "#3b82f6", // blue
   },
   {
     id: "sides",
-    name: "Side Dishes",
-    description: "Accompaniments to complement your main course",
+    name: "Guarniciones",
+    description: "Acompañamientos para complementar tu plato principal",
     productCount: 0,
     color: "#84cc16", // lime
   },
   {
     id: "specials",
-    name: "Specials",
-    description: "Limited time and seasonal offerings",
+    name: "Especiales",
+    description: "Ofertas limitadas y temporales",
     productCount: 0,
     color: "#a855f7", // purple
   },

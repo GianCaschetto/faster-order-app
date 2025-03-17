@@ -24,7 +24,7 @@ import RestaurantSchedule, {
 import { type StockItem, defaultStock } from "./stock-management";
 import FloatingCartButton from "./floating-cart-button";
 import { SiteFooter } from "./site-footer";
-import { products } from "@/lib/mock-data";
+import { categories, defaultBranches, products } from "@/lib/mock-data";
 
 // Types
 export type Extra = {
@@ -71,21 +71,6 @@ export type Branch = {
   name: string;
   address: string;
 };
-
-// Sample data
-const categories: Category[] = [
-  { id: "starters", name: "Starters" },
-  { id: "mains", name: "Main Courses" },
-  { id: "desserts", name: "Desserts" },
-  { id: "drinks", name: "Drinks" },
-];
-
-// Default branches - will be used if no branches are found in localStorage
-export const defaultBranches: Branch[] = [
-  { id: "1", name: "Downtown", address: "123 Main St, Downtown" },
-  { id: "2", name: "Uptown", address: "456 High St, Uptown" },
-  { id: "3", name: "Westside", address: "789 West Blvd, Westside" },
-];
 
 // Function to get branches from localStorage or use defaults
 export function getBranches(): Branch[] {
