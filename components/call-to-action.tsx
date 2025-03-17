@@ -26,7 +26,7 @@ export default function CallToAction() {
               size="lg"
               className="px-8 transition-transform hover:scale-105"
             >
-              Comienza tu prueba gratuita{" "}
+              contactanos{" "}
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
             <Button
