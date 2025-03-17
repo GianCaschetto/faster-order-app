@@ -577,7 +577,7 @@ export default function RestaurantMenu() {
       <div className="space-y-6">
         <div className="flex flex-col gap-4">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold">Demo</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold">Demo Restaurante</h1>
             <p className="text-muted-foreground">
               Ordena con facilidad y rapidez
             </p>
@@ -586,7 +586,7 @@ export default function RestaurantMenu() {
           <div className="flex flex-col sm:flex-row gap-4 w-full">
             <Select value={selectedBranch} onValueChange={setSelectedBranch}>
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select branch" />
+                <SelectValue placeholder="Seleccionar sucursal" />
               </SelectTrigger>
               <SelectContent>
                 {availableBranches.map((branch) => (
@@ -602,7 +602,7 @@ export default function RestaurantMenu() {
               className="w-full sm:w-auto flex gap-2"
             >
               <ShoppingCart className="h-5 w-5" />
-              <span>Cart ({cartItemCount})</span>
+              <span>Carrito ({cartItemCount})</span>
             </Button>
           </div>
         </div>
