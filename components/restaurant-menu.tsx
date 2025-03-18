@@ -21,10 +21,10 @@ import RestaurantSchedule, {
   type WeekSchedule,
   type BranchSchedule,
 } from "./restaurant-schedule";
-import { type StockItem, defaultStock } from "./stock-management";
+import { type StockItem } from "./stock-management";
 import FloatingCartButton from "./floating-cart-button";
 import { SiteFooter } from "./site-footer";
-import { categories, products } from "@/lib/mock-data";
+import { categories, defaultStock, products } from "@/lib/mock-data";
 
 // Types
 export type Extra = {

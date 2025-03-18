@@ -1,6 +1,9 @@
 import type { Order } from "@/app/admin/orders/page"
 import type { Customer } from "@/app/admin/customers/page"
 import type { Branch, Product } from "@/components/restaurant-menu"
+import { ExtraGroup } from "@/app/admin/extras/page";
+import { GalleryImage } from "@/app/admin/gallery/page";
+import { StockItem } from "@/components/stock-management";
 
 // Mock orders data
 export const mockOrders: Order[] = [
@@ -411,12 +414,7 @@ export const categories = [
   { id: "specials", name: "Especiales" },
 ]
 
-// Mock stock data
-export const defaultStock = {
-  "pan-ajo": { quantity: 50, minQuantity: 10 },
-  "ensalada-cesar": { quantity: 25, minQuantity: 5 },
-  // ... otros items de stock
-}
+
 
 // Mock schedule data
 export const defaultSchedule = [
@@ -429,3 +427,357 @@ export const defaultSchedule = [
   { dayOfWeek: 6, hours: "11:00 - 00:00", isOpen: true }, // Sábado
 ]
 
+export const initialExtraGroups: ExtraGroup[] = [
+  {
+    id: "ingredientes-pizza",
+    name: "Ingredientes de Pizza",
+    description: "Ingredientes adicionales para pizzas",
+    categoryIds: ["mains"],
+    extras: [
+      { id: "queso-extra", name: "Queso Extra", price: 2.0, min: 0, max: 3 },
+      { id: "champiñones", name: "Champiñones", price: 1.5, min: 0, max: 2 },
+      { id: "pepperoni", name: "Pepperoni", price: 2.0, min: 0, max: 2 },
+      { id: "aceitunas", name: "Aceitunas", price: 1.0, min: 0, max: 2 },
+      { id: "tocino", name: "Tocino", price: 2.5, min: 0, max: 2 },
+    ],
+  },
+  {
+    id: "acompañamientos",
+    name: "Opciones de Acompañamiento",
+    description: "Acompañamientos adicionales para platos principales",
+    categoryIds: ["mains", "starters"],
+    extras: [
+      { id: "papas-fritas", name: "Papas Fritas", price: 3.99, min: 0, max: 1 },
+      { id: "ensalada", name: "Ensalada", price: 4.99, min: 0, max: 1 },
+      {
+        id: "pure-papas",
+        name: "Puré de Papas",
+        price: 3.99,
+        min: 0,
+        max: 1,
+      },
+      { id: "pan-ajo", name: "Pan de Ajo", price: 3.99, min: 0, max: 1 },
+    ],
+  },
+  {
+    id: "adiciones-bebidas",
+    name: "Adiciones para Bebidas",
+    description: "Complementos para bebidas",
+    categoryIds: ["drinks"],
+    extras: [
+      { id: "hielo", name: "Hielo Extra", price: 0.0, min: 0, max: 1 },
+      { id: "limon", name: "Rodaja de Limón", price: 0.25, min: 0, max: 2 },
+      { id: "menta", name: "Menta Fresca", price: 0.5, min: 0, max: 1 },
+      {
+        id: "crema-batida",
+        name: "Crema Batida",
+        price: 1.0,
+        min: 0,
+        max: 1,
+      },
+      {
+        id: "shot-espresso",
+        name: "Shot de Espresso",
+        price: 1.5,
+        min: 0,
+        max: 2,
+      },
+    ],
+  },
+  {
+    id: "toppings-postres",
+    name: "Toppings para Postres",
+    description: "Toppings para postres",
+    categoryIds: ["desserts"],
+    extras: [
+      {
+        id: "salsa-chocolate",
+        name: "Salsa de Chocolate",
+        price: 0.75,
+        min: 0,
+        max: 3,
+        required: false,
+      },
+      {
+        id: "salsa-caramelo",
+        name: "Salsa de Caramelo",
+        price: 0.75,
+        min: 0,
+        max: 3,
+      },
+      {
+        id: "salsa-fresa",
+        name: "Salsa de Fresa",
+        price: 0.75,
+        min: 0,
+        max: 3,
+      },
+      { id: "nueces", name: "Nueces Mixtas", price: 1.25, min: 0, max: 1 },
+      {
+        id: "crema-batida-postre",
+        name: "Crema Batida",
+        price: 0.75,
+        min: 0,
+        max: 1,
+      },
+      {
+        id: "helado-vainilla",
+        name: "Helado de Vainilla",
+        price: 1.99,
+        min: 1,
+        max: 2,
+        required: true,
+      },
+    ],
+  },
+];
+
+export const sampleImages: GalleryImage[] = [
+  {
+    id: "img-1",
+    url: "/public/pictures/2151431747.jpg",
+    name: "Sample Image 1",
+    uploadedAt: new Date().toISOString(),
+    size: "12 KB",
+    dimensions: "200x200",
+    type: "JPG",
+    usedIn: [],
+  },
+  {
+    id: "img-2",
+    url: "/faster-order-app/app/admin/public/pictures/2151431747.jpg",
+    name: "Pizza Image",
+    uploadedAt: new Date().toISOString(),
+    size: "15 KB",
+    dimensions: "300x300",
+    type: "jpg",
+    usedIn: ["3"], // Used in Margherita Pizza
+  },
+  {
+    id: "img-3",
+    url: "/public/pictures/2151431747.jpg",
+    name: "Pasta Image",
+    uploadedAt: new Date().toISOString(),
+    size: "14 KB",
+    dimensions: "300x300",
+    type: "SVG",
+    usedIn: ["4"], // Used in Spaghetti Bolognese
+  },
+  {
+    id: "img-4",
+    url: "/app/admin/public/pictures/2151431747.jpg",
+    name: "Dessert Image",
+    uploadedAt: new Date().toISOString(),
+    size: "13 KB",
+    dimensions: "300x300",
+    type: "SVG",
+    usedIn: ["6", "7"], // Used in desserts
+  },
+  {
+    id: "img-5",
+    url: "/app/admin/public/pictures/2151431747.jpg",
+    name: "Drink Image",
+    uploadedAt: new Date().toISOString(),
+    size: "12 KB",
+    dimensions: "300x300",
+    type: "SVG",
+    usedIn: ["8", "9"], // Used in drinks
+  },
+];
+
+export const defaultStock: StockItem[] = [
+  // Downtown branch
+  {
+    id: "1-pan-ajo",
+    productId: "pan-ajo",
+    productName: "Pan de Ajo",
+    branchId: "1",
+    quantity: 25,
+  },
+  {
+    id: "1-ensalada-cesar",
+    productId: "ensalada-cesar",
+    productName: "Ensalada César",
+    branchId: "1",
+    quantity: 15,
+  },
+  {
+    id: "1-pizza-margarita",
+    productId: "pizza-margarita",
+    productName: "Pizza Margarita",
+    branchId: "1",
+    quantity: 20,
+  },
+  {
+    id: "1-espagueti-bolonesa",
+    productId: "espagueti-bolonesa",
+    productName: "Espagueti a la Boloñesa",
+    branchId: "1",
+    quantity: 18,
+  },
+  {
+    id: "1-salmon-asado",
+    productId: "salmon-asado",
+    productName: "Salmón Asado",
+    branchId: "1",
+    quantity: 12,
+  },
+  {
+    id: "1-pastel-chocolate",
+    productId: "pastel-chocolate",
+    productName: "Pastel de Chocolate",
+    branchId: "1",
+    quantity: 10,
+  },
+  {
+    id: "1-tiramisu",
+    productId: "tiramisu",
+    productName: "Tiramisú",
+    branchId: "1",
+    quantity: 8,
+  },
+  {
+    id: "1-refresco",
+    productId: "refresco",
+    productName: "Refresco",
+    branchId: "1",
+    quantity: 50,
+  },
+  {
+    id: "1-jugo-natural",
+    productId: "jugo-natural",
+    productName: "Jugo Natural",
+    branchId: "1",
+    quantity: 20,
+  },
+
+  // Uptown branch
+  {
+    id: "2-pan-ajo",
+    productId: "pan-ajo",
+    productName: "Pan de Ajo",
+    branchId: "2",
+    quantity: 18,
+  },
+  {
+    id: "2-ensalada-cesar",
+    productId: "ensalada-cesar",
+    productName: "Ensalada César",
+    branchId: "2",
+    quantity: 12,
+  },
+  {
+    id: "2-pizza-margarita",
+    productId: "pizza-margarita",
+    productName: "Pizza Margarita",
+    branchId: "2",
+    quantity: 15,
+  },
+  {
+    id: "2-espagueti-bolonesa",
+    productId: "espagueti-bolonesa",
+    productName: "Espagueti a la Boloñesa",
+    branchId: "2",
+    quantity: 10,
+  },
+  {
+    id: "2-salmon-asado",
+    productId: "salmon-asado",
+    productName: "Salmón Asado",
+    branchId: "2",
+    quantity: 8,
+  },
+  {
+    id: "2-pastel-chocolate",
+    productId: "pastel-chocolate",
+    productName: "Pastel de Chocolate",
+    branchId: "2",
+    quantity: 15,
+  },
+  {
+    id: "2-tiramisu",
+    productId: "tiramisu",
+    productName: "Tiramisú",
+    branchId: "2",
+    quantity: 12,
+  },
+  {
+    id: "2-refresco",
+    productId: "refresco",
+    productName: "Refresco",
+    branchId: "2",
+    quantity: 40,
+  },
+  {
+    id: "2-jugo-natural",
+    productId: "jugo-natural",
+    productName: "Jugo Natural",
+    branchId: "2",
+    quantity: 15,
+  },
+
+  // Westside branch
+  {
+    id: "3-pan-ajo",
+    productId: "pan-ajo",
+    productName: "Pan de Ajo",
+    branchId: "3",
+    quantity: 22,
+  },
+  {
+    id: "3-ensalada-cesar",
+    productId: "ensalada-cesar",
+    productName: "Ensalada César",
+    branchId: "3",
+    quantity: 10,
+  },
+  {
+    id: "3-pizza-margarita",
+    productId: "pizza-margarita",
+    productName: "Pizza Margarita",
+    branchId: "3",
+    quantity: 18,
+  },
+  {
+    id: "3-espagueti-bolonesa",
+    productId: "espagueti-bolonesa",
+    productName: "Espagueti a la Boloñesa",
+    branchId: "3",
+    quantity: 15,
+  },
+  {
+    id: "3-salmon-asado",
+    productId: "salmon-asado",
+    productName: "Salmón Asado",
+    branchId: "3",
+    quantity: 10,
+  },
+  {
+    id: "3-pastel-chocolate",
+    productId: "pastel-chocolate",
+    productName: "Pastel de Chocolate",
+    branchId: "3",
+    quantity: 12,
+  },
+  {
+    id: "3-tiramisu",
+    productId: "tiramisu",
+    productName: "Tiramisú",
+    branchId: "3",
+    quantity: 10,
+  },
+  {
+    id: "3-refresco",
+    productId: "refresco",
+    productName: "Refresco",
+    branchId: "3",
+    quantity: 45,
+  },
+  {
+    id: "3-jugo-natural",
+    productId: "jugo-natural",
+    productName: "Jugo Natural",
+    branchId: "3",
+    quantity: 18,
+  },
+];

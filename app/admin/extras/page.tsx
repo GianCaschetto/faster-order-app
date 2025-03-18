@@ -46,11 +46,11 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "@/components/ui/use-toast";
-import { products as mockProducts } from "@/lib/mock-data";
+import { categories, initialExtraGroups, products as mockProducts } from "@/lib/mock-data";
 import type { Product, Extra } from "@/components/restaurant-menu";
 
 // Extra group types
-type ExtraGroup = {
+export type ExtraGroup = {
   id: string;
   name: string;
   description: string;
@@ -58,121 +58,10 @@ type ExtraGroup = {
   extras: Extra[];
 };
 
-// Product categories
-const categories = [
-  { id: "starters", name: "Entradas" },
-  { id: "mains", name: "Platos Principales" },
-  { id: "desserts", name: "Postres" },
-  { id: "drinks", name: "Bebidas" },
-  { id: "sides", name: "Acompañamientos" },
-  { id: "specials", name: "Especiales" },
-];
 
-// Sample extra groups
-const initialExtraGroups: ExtraGroup[] = [
-  {
-    id: "ingredientes-pizza",
-    name: "Ingredientes de Pizza",
-    description: "Ingredientes adicionales para pizzas",
-    categoryIds: ["mains"],
-    extras: [
-      { id: "queso-extra", name: "Queso Extra", price: 2.0, min: 0, max: 3 },
-      { id: "champiñones", name: "Champiñones", price: 1.5, min: 0, max: 2 },
-      { id: "pepperoni", name: "Pepperoni", price: 2.0, min: 0, max: 2 },
-      { id: "aceitunas", name: "Aceitunas", price: 1.0, min: 0, max: 2 },
-      { id: "tocino", name: "Tocino", price: 2.5, min: 0, max: 2 },
-    ],
-  },
-  {
-    id: "acompañamientos",
-    name: "Opciones de Acompañamiento",
-    description: "Acompañamientos adicionales para platos principales",
-    categoryIds: ["mains", "starters"],
-    extras: [
-      { id: "papas-fritas", name: "Papas Fritas", price: 3.99, min: 0, max: 1 },
-      { id: "ensalada", name: "Ensalada", price: 4.99, min: 0, max: 1 },
-      {
-        id: "pure-papas",
-        name: "Puré de Papas",
-        price: 3.99,
-        min: 0,
-        max: 1,
-      },
-      { id: "pan-ajo", name: "Pan de Ajo", price: 3.99, min: 0, max: 1 },
-    ],
-  },
-  {
-    id: "adiciones-bebidas",
-    name: "Adiciones para Bebidas",
-    description: "Complementos para bebidas",
-    categoryIds: ["drinks"],
-    extras: [
-      { id: "hielo", name: "Hielo Extra", price: 0.0, min: 0, max: 1 },
-      { id: "limon", name: "Rodaja de Limón", price: 0.25, min: 0, max: 2 },
-      { id: "menta", name: "Menta Fresca", price: 0.5, min: 0, max: 1 },
-      {
-        id: "crema-batida",
-        name: "Crema Batida",
-        price: 1.0,
-        min: 0,
-        max: 1,
-      },
-      {
-        id: "shot-espresso",
-        name: "Shot de Espresso",
-        price: 1.5,
-        min: 0,
-        max: 2,
-      },
-    ],
-  },
-  {
-    id: "toppings-postres",
-    name: "Toppings para Postres",
-    description: "Toppings para postres",
-    categoryIds: ["desserts"],
-    extras: [
-      {
-        id: "salsa-chocolate",
-        name: "Salsa de Chocolate",
-        price: 0.75,
-        min: 0,
-        max: 3,
-        required: false,
-      },
-      {
-        id: "salsa-caramelo",
-        name: "Salsa de Caramelo",
-        price: 0.75,
-        min: 0,
-        max: 3,
-      },
-      {
-        id: "salsa-fresa",
-        name: "Salsa de Fresa",
-        price: 0.75,
-        min: 0,
-        max: 3,
-      },
-      { id: "nueces", name: "Nueces Mixtas", price: 1.25, min: 0, max: 1 },
-      {
-        id: "crema-batida-postre",
-        name: "Crema Batida",
-        price: 0.75,
-        min: 0,
-        max: 1,
-      },
-      {
-        id: "helado-vainilla",
-        name: "Helado de Vainilla",
-        price: 1.99,
-        min: 1,
-        max: 2,
-        required: true,
-      },
-    ],
-  },
-];
+
+
+
 
 export default function ExtrasPage() {
   const [extraGroups, setExtraGroups] = useState<ExtraGroup[]>([]);
