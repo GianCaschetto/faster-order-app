@@ -43,7 +43,7 @@ export default function ProductPage() {
           <div className="container px-4 md:px-6">
             <FadeIn className="mx-auto max-w-5xl">
               <Tabs defaultValue="overview" className="w-full">
-                <TabsList className="grid w-full grid-cols-3 mb-8">
+                <TabsList className="scroll-m-0 grid w-full grid-cols-3 mb-8 data-[orientation=horizontal]:overflow-x-auto data-[orientation=horizontal]:scrollbar-none">
                   <TabsTrigger
                     value="overview"
                     className="transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
@@ -54,7 +54,7 @@ export default function ProductPage() {
                     value="features"
                     className="transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
                   >
-                    Características Clave
+                    Características
                   </TabsTrigger>
                   <TabsTrigger
                     value="integrations"
@@ -120,7 +120,7 @@ export default function ProductPage() {
                 >
                   <div className="space-y-4">
                     <h2 className="text-2xl font-bold">
-                      Características Clave
+                      Características
                     </h2>
                     <p>
                       FasterOrder viene repleto de características diseñadas
@@ -263,62 +263,62 @@ export default function ProductPage() {
 
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
-            <div className="grid gap-10 lg:grid-cols-2 lg:gap-16 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 lg:gap-16 items-center">
               <FadeIn
-                delay={150}
-                direction="right"
-                className="transition-transform hover:scale-[1.02]"
+          delay={150}
+          direction="right"
+          className="w-full transition-transform hover:scale-[1.02]"
               >
-                <Image
-                  src="/placeholder.svg?height=720&width=1280"
-                  width={1280}
-                  height={720}
-                  alt="FasterOrder mobile app"
-                  className="rounded-lg border shadow-lg"
-                />
+          <Image
+            src="/placeholder.svg?height=720&width=1280"
+            width={1280}
+            height={720}
+            alt="FasterOrder mobile app"
+            className="w-full h-auto rounded-lg border shadow-lg"
+          />
               </FadeIn>
-              <FadeIn delay={300} direction="left" className="space-y-6">
-                <h2 className="text-3xl font-bold">
-                  Lleva Tu Negocio a Cualquier Lugar
-                </h2>
-                <p className="text-muted-foreground">
-                  Con la aplicación móvil de FasterOrder, puedes gestionar tu
-                  negocio desde cualquier lugar. Procesa pedidos, comprueba el
-                  inventario y visualiza informes sobre la marcha.
-                </p>
-                <ul className="space-y-2">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-primary" />
-                    <span>Disponible para iOS y Android</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-primary" />
-                    <span>
-                      Sincronización en tiempo real con la plataforma web
-                    </span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-primary" />
-                    <span>
-                      Modo sin conexión para un servicio ininterrumpido
-                    </span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-primary" />
-                    <span>Notificaciones push para nuevos pedidos</span>
-                  </li>
-                </ul>
-                <div className="flex flex-col gap-2 min-[400px]:flex-row pt-4">
-                  <Button className="px-8 transition-transform hover:scale-105">
-                    Descargar la app <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="transition-colors hover:bg-primary/10"
-                  >
-                    Saber más
-                  </Button>
-                </div>
+              <FadeIn
+          delay={300}
+          direction="left"
+          className="space-y-6 text-center lg:text-left"
+              >
+          <h2 className="text-3xl font-bold">
+            Lleva Tu Negocio a Cualquier Lugar
+          </h2>
+          <p className="text-muted-foreground">
+            Con la aplicación móvil de FasterOrder, puedes gestionar tu
+            negocio desde cualquier lugar. Procesa pedidos, comprueba el
+            inventario y visualiza informes sobre la marcha.
+          </p>
+          <ul className="space-y-2">
+            <li className="flex items-center gap-2 justify-center lg:justify-start">
+              <CheckCircle className="h-5 w-5 text-primary" />
+              <span>Disponible para iOS y Android</span>
+            </li>
+            <li className="flex items-center gap-2 justify-center lg:justify-start">
+              <CheckCircle className="h-5 w-5 text-primary" />
+              <span>Sincronización en tiempo real con la plataforma web</span>
+            </li>
+            <li className="flex items-center gap-2 justify-center lg:justify-start">
+              <CheckCircle className="h-5 w-5 text-primary" />
+              <span>Modo sin conexión para un servicio ininterrumpido</span>
+            </li>
+            <li className="flex items-center gap-2 justify-center lg:justify-start">
+              <CheckCircle className="h-5 w-5 text-primary" />
+              <span>Notificaciones push para nuevos pedidos</span>
+            </li>
+          </ul>
+          <div className="flex flex-col gap-2 sm:flex-row pt-4 justify-center lg:justify-start">
+            <Button className="px-8 transition-transform hover:scale-105">
+              Descargar la app <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              className="transition-colors hover:bg-primary/10"
+            >
+              Saber más
+            </Button>
+          </div>
               </FadeIn>
             </div>
           </div>

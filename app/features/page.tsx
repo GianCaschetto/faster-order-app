@@ -30,92 +30,92 @@ export default function FeaturesPage() {
           <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-3 lg:gap-12">
               <FadeIn
-                delay={150}
-                className="flex flex-col items-center space-y-4 rounded-lg border bg-background p-6 shadow-sm transition-transform hover:scale-[1.02]"
+          delay={150}
+          className="flex flex-col items-center space-y-4 rounded-lg border bg-background p-6 shadow-sm transition-transform hover:scale-[1.02]"
               >
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                  <Zap className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold">
-                  Procesamiento Ultra Rápido
-                </h3>
-                <p className="text-center text-muted-foreground">
-                  Procesa pedidos en segundos, no en minutos. Nuestro sistema
-                  optimizado asegura que tu personal pueda manejar las horas
-                  punta con facilidad.
-                </p>
-                <ul className="mt-2 space-y-2 text-sm">
-                  <li className="flex items-center">
-                    <CheckCircle className="mr-2 h-4 w-4 text-primary" />
-                    <span>Confirmación instantánea de pedidos</span>
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="mr-2 h-4 w-4 text-primary" />
-                    <span>Capacidades de procesamiento por lotes</span>
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="mr-2 h-4 w-4 text-primary" />
-                    <span>Actualizaciones de inventario en tiempo real</span>
-                  </li>
-                </ul>
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+            <Zap className="h-8 w-8 text-primary" />
+          </div>
+          <h3 className="text-xl font-bold text-center">
+            Procesamiento Ultra Rápido
+          </h3>
+          <p className="text-center text-muted-foreground">
+            Procesa pedidos en segundos, no en minutos. Nuestro sistema
+            optimizado asegura que tu personal pueda manejar las horas
+            punta con facilidad.
+          </p>
+          <ul className="mt-2 space-y-2 text-sm">
+            <li className="flex items-center">
+              <CheckCircle className="mr-2 h-4 w-4 text-primary" />
+              <span>Confirmación instantánea de pedidos</span>
+            </li>
+            <li className="flex items-center">
+              <CheckCircle className="mr-2 h-4 w-4 text-primary" />
+              <span>Capacidades de procesamiento por lotes</span>
+            </li>
+            <li className="flex items-center">
+              <CheckCircle className="mr-2 h-4 w-4 text-primary" />
+              <span>Actualizaciones de inventario en tiempo real</span>
+            </li>
+          </ul>
               </FadeIn>
               <FadeIn
-                delay={300}
-                className="flex flex-col items-center space-y-4 rounded-lg border bg-background p-6 shadow-sm transition-transform hover:scale-[1.02]"
+          delay={300}
+          className="flex flex-col items-center space-y-4 rounded-lg border bg-background p-6 shadow-sm transition-transform hover:scale-[1.02]"
               >
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                  <Smartphone className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold">Soporte Multiplataforma</h3>
-                <p className="text-center text-muted-foreground">
-                  Toma pedidos desde cualquier lugar con nuestras aplicaciones
-                  web, móviles y para tablets. Sincronización perfecta entre
-                  todos los dispositivos.
-                </p>
-                <ul className="mt-2 space-y-2 text-sm">
-                  <li className="flex items-center">
-                    <CheckCircle className="mr-2 h-4 w-4 text-primary" />
-                    <span>Aplicaciones para iOS y Android</span>
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="mr-2 h-4 w-4 text-primary" />
-                    <span>Interfaz web responsive</span>
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="mr-2 h-4 w-4 text-primary" />
-                    <span>Capacidades de modo sin conexión</span>
-                  </li>
-                </ul>
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+            <Smartphone className="h-8 w-8 text-primary" />
+          </div>
+          <h3 className="text-xl font-bold text-center">Soporte Multiplataforma</h3>
+          <p className="text-center text-muted-foreground">
+            Toma pedidos desde cualquier lugar con nuestras aplicaciones
+            web, móviles y para tablets. Sincronización perfecta entre
+            todos los dispositivos.
+          </p>
+          <ul className="mt-2 space-y-2 text-sm">
+            <li className="flex items-center">
+              <CheckCircle className="mr-2 h-4 w-4 text-primary" />
+              <span>Aplicaciones para iOS y Android</span>
+            </li>
+            <li className="flex items-center">
+              <CheckCircle className="mr-2 h-4 w-4 text-primary" />
+              <span>Interfaz web responsive</span>
+            </li>
+            <li className="flex items-center">
+              <CheckCircle className="mr-2 h-4 w-4 text-primary" />
+              <span>Capacidades de modo sin conexión</span>
+            </li>
+          </ul>
               </FadeIn>
               <FadeIn
-                delay={450}
-                className="flex flex-col items-center space-y-4 rounded-lg border bg-background p-6 shadow-sm transition-transform hover:scale-[1.02]"
+          delay={450}
+          className="flex flex-col items-center space-y-4 rounded-lg border bg-background p-6 shadow-sm transition-transform hover:scale-[1.02]"
               >
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                  <CreditCard className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold">
-                  Procesamiento de Pagos Seguro
-                </h3>
-                <p className="text-center text-muted-foreground">
-                  Acepta todos los métodos de pago principales con nuestro
-                  sistema de procesamiento de pagos compatible con PCI. Mantén
-                  los datos de tus clientes seguros.
-                </p>
-                <ul className="mt-2 space-y-2 text-sm">
-                  <li className="flex items-center">
-                    <CheckCircle className="mr-2 h-4 w-4 text-primary" />
-                    <span>Procesamiento de tarjetas de crédito/débito</span>
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="mr-2 h-4 w-4 text-primary" />
-                    <span>Integración con monederos digitales</span>
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="mr-2 h-4 w-4 text-primary" />
-                    <span>Opciones de facturación por suscripción</span>
-                  </li>
-                </ul>
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+            <CreditCard className="h-8 w-8 text-primary" />
+          </div>
+          <h3 className="text-xl font-bold text-center">
+            Procesamiento de Pagos Seguro
+          </h3>
+          <p className="text-center text-muted-foreground">
+            Acepta todos los métodos de pago principales con nuestro
+            sistema de procesamiento de pagos compatible con PCI. Mantén
+            los datos de tus clientes seguros.
+          </p>
+          <ul className="mt-2 space-y-2 text-sm">
+            <li className="flex items-center">
+              <CheckCircle className="mr-2 h-4 w-4 text-primary" />
+              <span>Procesamiento de tarjetas de crédito/débito</span>
+            </li>
+            <li className="flex items-center">
+              <CheckCircle className="mr-2 h-4 w-4 text-primary" />
+              <span>Integración con monederos digitales</span>
+            </li>
+            <li className="flex items-center">
+              <CheckCircle className="mr-2 h-4 w-4 text-primary" />
+              <span>Opciones de facturación por suscripción</span>
+            </li>
+          </ul>
               </FadeIn>
             </div>
           </div>
@@ -123,7 +123,7 @@ export default function FeaturesPage() {
 
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
-            <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+            <div className="grid gap-10 grid-cols-1 lg:grid-cols-2 lg:gap-16">
               <FadeIn
                 delay={150}
                 direction="right"
@@ -191,7 +191,7 @@ export default function FeaturesPage() {
 
         <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
           <div className="container px-4 md:px-6">
-            <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+            <div className="grid gap-10 grid-cols-1 lg:grid-cols-2 lg:gap-16">
               <FadeIn
                 delay={150}
                 direction="right"

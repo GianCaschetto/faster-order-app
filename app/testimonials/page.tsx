@@ -254,42 +254,45 @@ export default function TestimonialsPage() {
           <div className="container px-4 md:px-6">
             <div className="grid gap-10 lg:grid-cols-2 lg:gap-16 items-center">
               <FadeIn
-                delay={150}
-                direction="right"
-                className="transition-transform hover:scale-[1.02]"
+          delay={150}
+          direction="right"
+          className="transition-transform hover:scale-[1.02] order-2 lg:order-1"
               >
-                <Image
-                  src="/placeholder.svg?height=720&width=1280"
-                  width={1280}
-                  height={720}
-                  alt="Customer success story"
-                  className="rounded-lg border shadow-lg"
-                />
+          <Image
+            src="/placeholder.svg?height=720&width=1280"
+            width={1280}
+            height={720}
+            alt="Customer success story"
+            className="rounded-lg border shadow-lg w-full h-auto"
+          />
               </FadeIn>
-              <FadeIn delay={300} direction="left" className="space-y-6">
-                <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
-                  Historia de Éxito
-                </div>
-                <h2 className="text-3xl font-bold">
-                  Cómo Café Delight Aumentó sus Ingresos en un 35%
-                </h2>
-                <p className="text-muted-foreground">
-                  Sarah Johnson, propietaria de Café Delight, estaba luchando
-                  con largas filas y errores en los pedidos durante las horas
-                  punta. Después de implementar FasterOrder, su equipo pudo
-                  procesar pedidos de manera más eficiente, lo que llevó a
-                  tiempos de espera más cortos y clientes más felices.
-                </p>
-                <blockquote className="border-l-4 border-primary pl-4 italic text-muted-foreground">
-                  &quot;En solo tres meses de usar FasterOrder, vimos un aumento
-                  del 35% en los ingresos. Podemos atender a más clientes
-                  durante las horas punta, y nuestro personal está menos
-                  estresado. Ha sido un cambio radical para nuestro
-                  negocio.&quot;
-                </blockquote>
-                <Button className="mt-4 transition-transform hover:scale-105">
-                  Leer el caso completo <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+              <FadeIn
+          delay={300}
+          direction="left"
+          className="space-y-6 order-1 lg:order-2 text-center lg:text-left"
+              >
+          <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
+            Historia de Éxito
+          </div>
+          <h2 className="text-3xl font-bold">
+            Cómo Café Delight Aumentó sus Ingresos en un 35%
+          </h2>
+          <p className="text-muted-foreground">
+            Sarah Johnson, propietaria de Café Delight, estaba luchando
+            con largas filas y errores en los pedidos durante las horas
+            punta. Después de implementar FasterOrder, su equipo pudo
+            procesar pedidos de manera más eficiente, lo que llevó a
+            tiempos de espera más cortos y clientes más felices.
+          </p>
+          <blockquote className="border-l-4 border-primary pl-4 italic text-muted-foreground">
+            &quot;En solo tres meses de usar FasterOrder, vimos un aumento
+            del 35% en los ingresos. Podemos atender a más clientes
+            durante las horas punta, y nuestro personal está menos
+            estresado. Ha sido un cambio radical para nuestro negocio.&quot;
+          </blockquote>
+          <Button className="mt-4 transition-transform hover:scale-105">
+            Leer el caso completo <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
               </FadeIn>
             </div>
           </div>
