@@ -284,7 +284,7 @@ export const products: Product[] = [
     name: "Pan de Ajo",
     description: "Pan recién horneado con mantequilla de ajo",
     price: 5.99,
-    image: "/placeholder.svg",
+    image: "/pictures/pan-de-ajo.webp",
     categoryId: "starters",
     stockId: "pan-ajo",
     extras: [
@@ -400,6 +400,20 @@ export const products: Product[] = [
     extras: [
       { id: "ginger", name: "Ginger", price: 0.5 },
       { id: "mint", name: "Fresh Mint", price: 0.5 },
+    ],
+  },
+  {
+    id: "10",
+    name: "Hamburguesa de carne",
+    description: "Hamburguesa de carne con queso y lechuga",
+    price: 7.99,
+    image: "/pictures/burguer.webp",
+    categoryId: "mains",
+    stockId: "brguer",
+    extras: [
+      { id: "extra-cheese-burguer", name: "Extra Cheese", price: 1.0 },
+      { id: "bacon", name: "Bacon", price: 1.5 },
+      { id: "onion", name: "Onion Rings", price: 1.0 },
     ],
   },
 ]

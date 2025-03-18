@@ -9,6 +9,7 @@ import { FadeIn } from "@/components/animations";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import CallToAction from "@/components/call-to-action";
+import TrackLottie from "@/components/track-lottie";
 
   export default function HomePage() {
     const router = useRouter();
@@ -51,14 +52,14 @@ import CallToAction from "@/components/call-to-action";
                 direction="left"
                 className="flex items-center justify-center"
               >
-                <div className="relative aspect-video overflow-hidden rounded-xl border bg-background shadow-lg transition-transform hover:scale-[1.02]">
-                  <Image
-                    src="/logo/fasterorder-logo.png"
-                    width={1280}
-                    height={720}
-                    alt="Product screenshot"
-                    className="object-cover"
-                  />
+                <div className="relative aspect-video  transition-transform hover:scale-[1.02]">
+                 {/* <TrackLottie /> */}
+                 <Image 
+                  src="/fasterorder-logo.png"
+                  width={600}
+                  height={600}
+                  alt="Software interface"
+                 />
                 </div>
               </FadeIn>
             </div>

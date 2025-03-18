@@ -25,6 +25,7 @@ import { type StockItem } from "./stock-management";
 import FloatingCartButton from "./floating-cart-button";
 import { SiteFooter } from "./site-footer";
 import { categories, defaultStock, products } from "@/lib/mock-data";
+import { SiteHeader } from "./site-header";
 
 // Types
 export type Extra = {
@@ -97,6 +98,7 @@ export default function RestaurantMenu() {
   const [activeCategory, setActiveCategory] = useState(categories[0].id);
   const [availableBranches, setAvailableBranches] =
     useState<Branch[]>(branches);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // First effect - Load schedules, stock, and branches from localStorage only once on component mount
   useEffect(() => {
@@ -367,11 +369,13 @@ export default function RestaurantMenu() {
     setIsCartOpen(true);
   };
 
+
   return (
     <>
+      <SiteHeader isMenu setIsMobileMenuOpen={setIsMobileMenuOpen} />
       <div className="space-y-6">
         <div className="flex flex-col gap-4">
-          <div>
+          <div className="mt-4">
             <h1 className="text-2xl sm:text-3xl font-bold">Demo Restaurante</h1>
             <p className="text-muted-foreground">
               Ordena con facilidad y rapidez
@@ -479,7 +483,7 @@ export default function RestaurantMenu() {
         />
 
         {/* Add the floating cart button for mobile */}
-        <FloatingCartButton cartItems={cartItems} openCart={openCart} />
+        {!isMobileMenuOpen && <FloatingCartButton cartItems={cartItems} openCart={openCart} />}
       </div>
       <SiteFooter />
     </>

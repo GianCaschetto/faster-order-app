@@ -11,8 +11,15 @@ import { cn } from "@/lib/utils";
 
 import { useEffect, useState } from "react";
 import { ThemeToggle } from "./theme-toggle";
+import { set } from "react-hook-form";
 
-export function SiteHeader() {
+
+interface SiteHeaderProps {
+  isMenu?: boolean;
+  setIsMobileMenuOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export function SiteHeader({isMenu = false, setIsMobileMenuOpen}: SiteHeaderProps) {
   const router = useRouter();
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -32,6 +39,8 @@ export function SiteHeader() {
   // Cerrar el menú al cambiar de ruta
   useEffect(() => {
     setMobileMenuOpen(false);
+    setIsMobileMenuOpen?.(false);
+
   }, [pathname]);
 
   const routes = [
@@ -50,7 +59,10 @@ export function SiteHeader() {
             variant="ghost"
             size="icon"
             className="md:hidden"
-            onClick={() => setMobileMenuOpen(true)}
+            onClick={() => {
+              setMobileMenuOpen(true);
+              setIsMobileMenuOpen?.(true);
+            }}
           >
             <Menu className="h-6 w-6" />
             <span className="sr-only">Abrir menú</span>
@@ -93,7 +105,8 @@ export function SiteHeader() {
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-2">
             <ThemeToggle />
-            <Button
+            {!isMenu && (
+              <Button
               size="sm"
               className="transition-transform hover:scale-105"
               onClick={() => router.push("/menu")}
@@ -101,13 +114,14 @@ export function SiteHeader() {
               <span className="hidden sm:inline-block">Probar Demo</span>
               <span className="sm:hidden">Prueba</span>
             </Button>
+            )}
           </nav>
         </div>
       </div>
 
       {/* Menú móvil - implementación simplificada */}
       <div
-        className={`fixed inset-0 bg-background z-50 transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-0 bg-background z-50 transition-transform duration-300 ease-in-out md:hidden ${
           mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
         style={{ height: "100dvh" }} // Usar dvh para ajustarse al viewport dinámico
@@ -118,7 +132,10 @@ export function SiteHeader() {
             <Link
               href="/"
               className="flex items-center space-x-2"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => {
+                setMobileMenuOpen(false);
+                setIsMobileMenuOpen?.(false);
+              }}
             >
               <Image
                 src="/logo/fasterorder-logo.png"
@@ -132,7 +149,10 @@ export function SiteHeader() {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => {
+                setMobileMenuOpen(false);
+                setIsMobileMenuOpen?.(false);
+              }}
               className="h-10 w-10 rounded-full hover:bg-muted"
             >
               <X className="h-5 w-5" />
@@ -147,7 +167,10 @@ export function SiteHeader() {
                 <Link
                   key={route.href}
                   href={route.href}
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    setIsMobileMenuOpen?.(false);
+                  }}
                   className={cn(
                     "flex items-center py-3 px-4 text-lg font-medium rounded-md transition-colors",
                     pathname === route.href
@@ -171,7 +194,10 @@ export function SiteHeader() {
             </div>
             <Button
               className="w-full justify-center bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-200 hover:scale-[1.02] py-6 text-base"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => {
+                setMobileMenuOpen(false);
+                setIsMobileMenuOpen?.(false);
+              }}
             >
               Prueba gratis
             </Button>
