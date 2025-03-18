@@ -25,15 +25,16 @@ export default function CallToAction() {
             <Button
               size="lg"
               className="px-8 transition-transform hover:scale-105"
+              onClick={() => window.location.href = "mailto:fasterorderve@gmail.com"}
             >
-              contactanos{" "}
+              Contáctanos
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
             <Button
               size="lg"
               variant="outline"
               className="transition-colors hover:bg-primary/10"
-              onClick={() => router.push("/demo")}
+              onClick={() => router.push("/menu")}
             >
               Probar Demo
             </Button>

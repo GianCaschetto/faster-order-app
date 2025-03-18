@@ -21,10 +21,10 @@ import RestaurantSchedule, {
   type WeekSchedule,
   type BranchSchedule,
 } from "./restaurant-schedule";
-import { type StockItem, defaultStock } from "./stock-management";
+import { type StockItem } from "./stock-management";
 import FloatingCartButton from "./floating-cart-button";
 import { SiteFooter } from "./site-footer";
-import { categories, defaultBranches, products } from "@/lib/mock-data";
+import { categories, defaultStock, products } from "@/lib/mock-data";
 
 // Types
 export type Extra = {
@@ -73,17 +73,13 @@ export type Branch = {
 };
 
 // Function to get branches from localStorage or use defaults
-export function getBranches(): Branch[] {
-  try {
-    const savedBranches = localStorage.getItem("restaurantBranches");
-    if (savedBranches) {
-      return JSON.parse(savedBranches);
-    }
-  } catch (error) {
-    console.error("Error loading branches from localStorage:", error);
-  }
-  return defaultBranches;
-}
+export const defaultBranches = [
+  { id: "1", name: "Centro", address: "123 Calle Principal" },
+  { id: "2", name: "Norte", address: "456 Calle Elm" },
+  { id: "3", name: "Oeste", address: "789 Calle Oak" },
+];
+
+export const getBranches = () => defaultBranches;
 
 // Export branches for use in other components
 export const branches = getBranches();

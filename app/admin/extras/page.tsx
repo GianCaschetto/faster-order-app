@@ -46,11 +46,11 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "@/components/ui/use-toast";
-import { products as mockProducts } from "@/lib/mock-data";
+import { categories, initialExtraGroups, products as mockProducts } from "@/lib/mock-data";
 import type { Product, Extra } from "@/components/restaurant-menu";
 
 // Extra group types
-type ExtraGroup = {
+export type ExtraGroup = {
   id: string;
   name: string;
   description: string;
@@ -58,121 +58,10 @@ type ExtraGroup = {
   extras: Extra[];
 };
 
-// Product categories
-const categories = [
-  { id: "starters", name: "Starters" },
-  { id: "mains", name: "Main Courses" },
-  { id: "desserts", name: "Desserts" },
-  { id: "drinks", name: "Drinks" },
-  { id: "sides", name: "Side Dishes" },
-  { id: "specials", name: "Specials" },
-];
 
-// Sample extra groups
-const initialExtraGroups: ExtraGroup[] = [
-  {
-    id: "toppings",
-    name: "Pizza Toppings",
-    description: "Additional toppings for pizzas",
-    categoryIds: ["mains"],
-    extras: [
-      { id: "extra-cheese", name: "Extra Cheese", price: 2.0, min: 0, max: 3 },
-      { id: "mushrooms", name: "Mushrooms", price: 1.5, min: 0, max: 2 },
-      { id: "pepperoni", name: "Pepperoni", price: 2.0, min: 0, max: 2 },
-      { id: "olives", name: "Olives", price: 1.0, min: 0, max: 2 },
-      { id: "bacon", name: "Bacon", price: 2.5, min: 0, max: 2 },
-    ],
-  },
-  {
-    id: "sides",
-    name: "Side Options",
-    description: "Additional sides for main courses",
-    categoryIds: ["mains", "starters"],
-    extras: [
-      { id: "fries", name: "French Fries", price: 3.99, min: 0, max: 1 },
-      { id: "salad", name: "Side Salad", price: 4.99, min: 0, max: 1 },
-      {
-        id: "mashed-potatoes",
-        name: "Mashed Potatoes",
-        price: 3.99,
-        min: 0,
-        max: 1,
-      },
-      { id: "garlic-bread", name: "Garlic Bread", price: 3.99, min: 0, max: 1 },
-    ],
-  },
-  {
-    id: "drink-additions",
-    name: "Drink Additions",
-    description: "Add-ons for beverages",
-    categoryIds: ["drinks"],
-    extras: [
-      { id: "ice", name: "Extra Ice", price: 0.0, min: 0, max: 1 },
-      { id: "lemon", name: "Lemon Slice", price: 0.25, min: 0, max: 2 },
-      { id: "mint", name: "Fresh Mint", price: 0.5, min: 0, max: 1 },
-      {
-        id: "whipped-cream",
-        name: "Whipped Cream",
-        price: 1.0,
-        min: 0,
-        max: 1,
-      },
-      {
-        id: "espresso-shot",
-        name: "Espresso Shot",
-        price: 1.5,
-        min: 0,
-        max: 2,
-      },
-    ],
-  },
-  {
-    id: "dessert-toppings",
-    name: "Dessert Toppings",
-    description: "Toppings for desserts",
-    categoryIds: ["desserts"],
-    extras: [
-      {
-        id: "chocolate-sauce",
-        name: "Chocolate Sauce",
-        price: 0.75,
-        min: 0,
-        max: 3,
-        required: false,
-      },
-      {
-        id: "caramel-sauce",
-        name: "Caramel Sauce",
-        price: 0.75,
-        min: 0,
-        max: 3,
-      },
-      {
-        id: "strawberry-sauce",
-        name: "Strawberry Sauce",
-        price: 0.75,
-        min: 0,
-        max: 3,
-      },
-      { id: "nuts", name: "Mixed Nuts", price: 1.25, min: 0, max: 1 },
-      {
-        id: "whipped-cream-dessert",
-        name: "Whipped Cream",
-        price: 0.75,
-        min: 0,
-        max: 1,
-      },
-      {
-        id: "ice-cream",
-        name: "Vanilla Ice Cream",
-        price: 1.99,
-        min: 1,
-        max: 2,
-        required: true,
-      },
-    ],
-  },
-];
+
+
+
 
 export default function ExtrasPage() {
   const [extraGroups, setExtraGroups] = useState<ExtraGroup[]>([]);

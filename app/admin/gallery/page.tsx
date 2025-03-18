@@ -25,9 +25,10 @@ import { toast } from "@/components/ui/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Dropzone } from "@/components/dropzone";
+import { sampleImages } from "@/lib/mock-data";
 
 // Gallery image type
-type GalleryImage = {
+export type GalleryImage = {
   id: string;
   url: string;
   name: string;
@@ -38,59 +39,7 @@ type GalleryImage = {
   usedIn?: string[]; // Product IDs that use this image
 };
 
-// Sample images for initial gallery
-const sampleImages: GalleryImage[] = [
-  {
-    id: "img-1",
-    url: "/placeholder.svg?height=200&width=200",
-    name: "Sample Image 1",
-    uploadedAt: new Date().toISOString(),
-    size: "12 KB",
-    dimensions: "200x200",
-    type: "SVG",
-    usedIn: [],
-  },
-  {
-    id: "img-2",
-    url: "/placeholder.svg?height=300&width=300&text=Pizza",
-    name: "Pizza Image",
-    uploadedAt: new Date().toISOString(),
-    size: "15 KB",
-    dimensions: "300x300",
-    type: "SVG",
-    usedIn: ["3"], // Used in Margherita Pizza
-  },
-  {
-    id: "img-3",
-    url: "/placeholder.svg?height=300&width=300&text=Pasta",
-    name: "Pasta Image",
-    uploadedAt: new Date().toISOString(),
-    size: "14 KB",
-    dimensions: "300x300",
-    type: "SVG",
-    usedIn: ["4"], // Used in Spaghetti Bolognese
-  },
-  {
-    id: "img-4",
-    url: "/placeholder.svg?height=300&width=300&text=Dessert",
-    name: "Dessert Image",
-    uploadedAt: new Date().toISOString(),
-    size: "13 KB",
-    dimensions: "300x300",
-    type: "SVG",
-    usedIn: ["6", "7"], // Used in desserts
-  },
-  {
-    id: "img-5",
-    url: "/placeholder.svg?height=300&width=300&text=Drink",
-    name: "Drink Image",
-    uploadedAt: new Date().toISOString(),
-    size: "12 KB",
-    dimensions: "300x300",
-    type: "SVG",
-    usedIn: ["8", "9"], // Used in drinks
-  },
-];
+
 
 export default function GalleryPage() {
   const [images, setImages] = useState<GalleryImage[]>([]);

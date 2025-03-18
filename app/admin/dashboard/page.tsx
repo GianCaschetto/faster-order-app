@@ -19,10 +19,10 @@ import RestaurantSchedule, {
   defaultSchedule,
 } from "@/components/restaurant-schedule";
 import { branches } from "@/components/restaurant-menu";
-import { defaultStock } from "@/components/stock-management";
 import type { Order } from "@/app/admin/orders/page";
 import AdminCurrencyDisplay from "@/components/admin-currency-display";
 import { Badge } from "@/components/ui/badge";
+import { defaultStock } from "@/lib/mock-data";
 
 // Mock data for the dashboard
 const recentOrders = [

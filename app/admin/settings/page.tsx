@@ -53,7 +53,7 @@ import { toast } from "@/components/ui/use-toast";
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
-  defaultBranches,
+  defaultBranches as importedDefaultBranches,
   getBranches,
   type Branch,
 } from "@/components/restaurant-menu";
@@ -225,13 +225,19 @@ const defaultPaymentSettings = {
   preferredRateSource: "bcv" as const,
 };
 
+const localDefaultBranches = [
+  { id: "1", name: "Centro" },
+  { id: "2", name: "Norte" },
+  { id: "3", name: "Oeste" },
+];
+
 const defaultWhatsAppSettings = {
   enabled: true,
   defaultPhoneNumber: "5551234567",
   messageTemplate:
-    "🍽️ *NUEVO PEDIDO* 🍽️\n\n*Número de Orden:* {order-number}\n*Cliente:* {customer-name}\n*Teléfono:* {customer-phone}\n*Dirección:* {customer-address}\n\n*DETALLES DEL PEDIDO:*\n{order-items}\n\n*Subtotal:* {subt  {customer-address}\n\n*DETALLES DEL PEDIDO:*\n{order-items}\n\n*Subtotal:* {subtotal}\n*Envío:* {delivery-fee}\n*Total:* {total}\n\n*Sucursal:* {branch-name}\n*Hora estimada de entrega:* {estimated-delivery}",
+    "🍽️ *NUEVO PEDIDO* 🍽️\n\n*Número de Orden:* {order-number}\n*Cliente:* {customer-name}\n*Teléfono:* {customer-phone}\n*Dirección:* {customer-address}\n\n*DETALLES DEL PEDIDO:*\n{order-items}\n\n*Subtotal:* {subtotal}\n*Envío:* {delivery-fee}\n*Total:* {total}\n\n*Sucursal:* {branch-name}\n*Hora estimada de entrega:* {estimated-delivery}",
   showWhatsAppButton: true,
-  branchPhoneNumbers: defaultBranches.map((branch) => ({
+  branchPhoneNumbers: localDefaultBranches.map((branch) => ({
     branchId: branch.id,
     phoneNumber: "5551234567",
   })),

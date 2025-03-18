@@ -42,6 +42,7 @@ import {
 import { toast } from "@/components/ui/use-toast";
 import { branches } from "./restaurant-menu";
 import { Badge } from "@/components/ui/badge";
+import { defaultStock } from "@/lib/mock-data";
 
 export type StockItem = {
   id: string;
@@ -50,204 +51,6 @@ export type StockItem = {
   branchId: string;
   quantity: number;
 };
-
-// Default stock data
-export const defaultStock: StockItem[] = [
-  // Downtown branch
-  {
-    id: "1-garlic-bread",
-    productId: "garlic-bread",
-    productName: "Garlic Bread",
-    branchId: "1",
-    quantity: 25,
-  },
-  {
-    id: "1-caesar-salad",
-    productId: "caesar-salad",
-    productName: "Caesar Salad",
-    branchId: "1",
-    quantity: 15,
-  },
-  {
-    id: "1-margherita-pizza",
-    productId: "margherita-pizza",
-    productName: "Margherita Pizza",
-    branchId: "1",
-    quantity: 20,
-  },
-  {
-    id: "1-spaghetti-bolognese",
-    productId: "spaghetti-bolognese",
-    productName: "Spaghetti Bolognese",
-    branchId: "1",
-    quantity: 18,
-  },
-  {
-    id: "1-grilled-salmon",
-    productId: "grilled-salmon",
-    productName: "Grilled Salmon",
-    branchId: "1",
-    quantity: 12,
-  },
-  {
-    id: "1-chocolate-cake",
-    productId: "chocolate-cake",
-    productName: "Chocolate Cake",
-    branchId: "1",
-    quantity: 10,
-  },
-  {
-    id: "1-tiramisu",
-    productId: "tiramisu",
-    productName: "Tiramisu",
-    branchId: "1",
-    quantity: 8,
-  },
-  {
-    id: "1-soft-drink",
-    productId: "soft-drink",
-    productName: "Soft Drink",
-    branchId: "1",
-    quantity: 50,
-  },
-  {
-    id: "1-fresh-juice",
-    productId: "fresh-juice",
-    productName: "Fresh Juice",
-    branchId: "1",
-    quantity: 20,
-  },
-
-  // Uptown branch
-  {
-    id: "2-garlic-bread",
-    productId: "garlic-bread",
-    productName: "Garlic Bread",
-    branchId: "2",
-    quantity: 18,
-  },
-  {
-    id: "2-caesar-salad",
-    productId: "caesar-salad",
-    productName: "Caesar Salad",
-    branchId: "2",
-    quantity: 12,
-  },
-  {
-    id: "2-margherita-pizza",
-    productId: "margherita-pizza",
-    productName: "Margherita Pizza",
-    branchId: "2",
-    quantity: 15,
-  },
-  {
-    id: "2-spaghetti-bolognese",
-    productId: "spaghetti-bolognese",
-    productName: "Spaghetti Bolognese",
-    branchId: "2",
-    quantity: 10,
-  },
-  {
-    id: "2-grilled-salmon",
-    productId: "grilled-salmon",
-    productName: "Grilled Salmon",
-    branchId: "2",
-    quantity: 8,
-  },
-  {
-    id: "2-chocolate-cake",
-    productId: "chocolate-cake",
-    productName: "Chocolate Cake",
-    branchId: "2",
-    quantity: 15,
-  },
-  {
-    id: "2-tiramisu",
-    productId: "tiramisu",
-    productName: "Tiramisu",
-    branchId: "2",
-    quantity: 12,
-  },
-  {
-    id: "2-soft-drink",
-    productId: "soft-drink",
-    productName: "Soft Drink",
-    branchId: "2",
-    quantity: 40,
-  },
-  {
-    id: "2-fresh-juice",
-    productId: "fresh-juice",
-    productName: "Fresh Juice",
-    branchId: "2",
-    quantity: 15,
-  },
-
-  // Westside branch
-  {
-    id: "3-garlic-bread",
-    productId: "garlic-bread",
-    productName: "Garlic Bread",
-    branchId: "3",
-    quantity: 22,
-  },
-  {
-    id: "3-caesar-salad",
-    productId: "caesar-salad",
-    productName: "Caesar Salad",
-    branchId: "3",
-    quantity: 10,
-  },
-  {
-    id: "3-margherita-pizza",
-    productId: "margherita-pizza",
-    productName: "Margherita Pizza",
-    branchId: "3",
-    quantity: 18,
-  },
-  {
-    id: "3-spaghetti-bolognese",
-    productId: "spaghetti-bolognese",
-    productName: "Spaghetti Bolognese",
-    branchId: "3",
-    quantity: 15,
-  },
-  {
-    id: "3-grilled-salmon",
-    productId: "grilled-salmon",
-    productName: "Grilled Salmon",
-    branchId: "3",
-    quantity: 10,
-  },
-  {
-    id: "3-chocolate-cake",
-    productId: "chocolate-cake",
-    productName: "Chocolate Cake",
-    branchId: "3",
-    quantity: 12,
-  },
-  {
-    id: "3-tiramisu",
-    productId: "tiramisu",
-    productName: "Tiramisu",
-    branchId: "3",
-    quantity: 10,
-  },
-  {
-    id: "3-soft-drink",
-    productId: "soft-drink",
-    productName: "Soft Drink",
-    branchId: "3",
-    quantity: 45,
-  },
-  {
-    id: "3-fresh-juice",
-    productId: "fresh-juice",
-    productName: "Fresh Juice",
-    branchId: "3",
-    quantity: 18,
-  },
-];
 
 const formSchema = z.object({
   branch: z.string().min(1, { message: "Por favor, seleccione una sucursal" }),
@@ -378,7 +181,7 @@ export default function StockManagement({
   };
 
   const selectedBranchName =
-    branches.find((b) => b.id === form.watch("branch"))?.name || "All Branches";
+    branches.find((b) => b.id === form.watch("branch"))?.name || "Todas las Sucursales";
 
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
