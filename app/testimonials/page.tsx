@@ -36,7 +36,7 @@ export default function TestimonialsPage() {
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
                       <Image
-                        src="/placeholder.svg?height=100&width=100"
+                        src="/testimonials/user-6.png"
                         width={60}
                         height={60}
                         alt="Customer profile"
@@ -72,7 +72,7 @@ export default function TestimonialsPage() {
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
                       <Image
-                        src="/placeholder.svg?height=100&width=100"
+                        src="/testimonials/user-4.png"
                         width={60}
                         height={60}
                         alt="Customer profile"
@@ -108,7 +108,7 @@ export default function TestimonialsPage() {
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
                       <Image
-                        src="/placeholder.svg?height=100&width=100"
+                        src="/testimonials/user-5.png"
                         width={60}
                         height={60}
                         alt="Customer profile"
@@ -143,7 +143,7 @@ export default function TestimonialsPage() {
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
                       <Image
-                        src="/placeholder.svg?height=100&width=100"
+                        src="/testimonials/user-3.png"
                         width={60}
                         height={60}
                         alt="Customer profile"
@@ -179,7 +179,7 @@ export default function TestimonialsPage() {
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
                       <Image
-                        src="/placeholder.svg?height=100&width=100"
+                        src="/testimonials/user-1.png"
                         width={60}
                         height={60}
                         alt="Customer profile"
@@ -215,7 +215,7 @@ export default function TestimonialsPage() {
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
                       <Image
-                        src="/placeholder.svg?height=100&width=100"
+                        src="/testimonials/user-2.png"
                         width={60}
                         height={60}
                         alt="Customer profile"
@@ -259,7 +259,7 @@ export default function TestimonialsPage() {
           className="transition-transform hover:scale-[1.02] order-2 lg:order-1"
               >
           <Image
-            src="/placeholder.svg?height=720&width=1280"
+            src="/capture/captura-2.webp"
             width={1280}
             height={720}
             alt="Customer success story"

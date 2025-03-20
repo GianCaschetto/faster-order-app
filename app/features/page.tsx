@@ -130,7 +130,7 @@ export default function FeaturesPage() {
                 className="transition-transform hover:scale-[1.02]"
               >
                 <Image
-                  src="/placeholder.svg?height=720&width=1280"
+                  src="/capture/captura-10.webp"
                   width={1280}
                   height={720}
                   alt="Order management dashboard"
@@ -242,7 +242,7 @@ export default function FeaturesPage() {
                 className="order-1 lg:order-2 transition-transform hover:scale-[1.02]"
               >
                 <Image
-                  src="/placeholder.svg?height=720&width=1280"
+                  src="/capture/captura-9.webp"
                   width={1280}
                   height={720}
                   alt="Analytics dashboard"

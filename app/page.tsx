@@ -54,7 +54,7 @@ export default function HomePage() {
               >
                 <div className="relative aspect-video overflow-hidden rounded-xl border bg-background shadow-lg transition-transform hover:scale-[1.02]">
                   <Image
-                    src="/logo/fasterorder-logo.png"
+                    src="/capture/captura-7.webp"
                     width={1280}
                     height={720}
                     alt="Product screenshot"
@@ -207,11 +207,11 @@ export default function HomePage() {
               >
                 <div className="relative aspect-video overflow-hidden rounded-xl border bg-background shadow-lg transition-transform hover:scale-[1.02]">
                   <Image
-                    src="/fasterorder-logo.png"
-                    width={1280}
-                    height={720}
-                    alt="Software dashboard"
-                    className="object-cover max-w-full"
+                  src="/capture/captura-8.webp"
+                  width={1280}
+                  height={720}
+                  alt="Software dashboard"
+                  className="object-cover max-w-full"
                   />
                 </div>
               </FadeIn>
@@ -230,7 +230,7 @@ export default function HomePage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div key="interface-1" className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105">
                     <Image
-                      src="/fasterorder-logo.png"
+                      src="/capture/captura-1.webp"
                       width={600}
                       height={600}
                       alt="Software interface 1"
@@ -239,7 +239,7 @@ export default function HomePage() {
                   </div>
                   <div key="interface-2" className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105">
                     <Image
-                      src="/fasterorder-logo.png"
+                      src="/capture/captura-2.webp"
                       width={600}
                       height={600}
                       alt="Software interface 2"
@@ -248,7 +248,7 @@ export default function HomePage() {
                   </div>
                   <div key="interface-3" className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105">
                     <Image
-                      src="/fasterorder-logo.png"
+                      src="/capture/captura-3.webp"
                       width={600}
                       height={600}
                       alt="Software interface 3"
@@ -257,7 +257,7 @@ export default function HomePage() {
                   </div>
                   <div key="interface-4" className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105">
                     <Image
-                      src="/logo/fasterorder-logo.png"
+                      src="/capture/captura-5.webp"
                       width={600}
                       height={600}
                       alt="Software interface 4"

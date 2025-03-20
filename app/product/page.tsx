@@ -28,7 +28,7 @@ export default function ProductPage() {
             <FadeIn delay={300} className="mx-auto mt-12 max-w-5xl">
               <div className="transition-transform hover:scale-[1.02]">
                 <Image
-                  src="/placeholder.svg?height=720&width=1280"
+                  src="/capture/captura-5.webp"
                   width={1280}
                   height={720}
                   alt="FasterOrder dashboard"
@@ -210,7 +210,7 @@ export default function ProductPage() {
                     <div className="grid gap-6 md:grid-cols-3 mt-6">
                       <div className="flex flex-col items-center p-4 border rounded-lg bg-background/50 transition-transform hover:scale-[1.05]">
                         <Image
-                          src="/placeholder.svg?height=80&width=80"
+                          src="/capture/captura-10.webp"
                           width={80}
                           height={80}
                           alt="Payment gateway integration"
@@ -225,7 +225,7 @@ export default function ProductPage() {
                       </div>
                       <div className="flex flex-col items-center p-4 border rounded-lg bg-background/50 transition-transform hover:scale-[1.05]">
                         <Image
-                          src="/placeholder.svg?height=80&width=80"
+                          src="/capture/captura-9.webp"
                           width={80}
                           height={80}
                           alt="Accounting software integration"
@@ -240,7 +240,7 @@ export default function ProductPage() {
                       </div>
                       <div className="flex flex-col items-center p-4 border rounded-lg bg-background/50 transition-transform hover:scale-[1.05]">
                         <Image
-                          src="/placeholder.svg?height=80&width=80"
+                          src="/capture/captura-8.webp"
                           width={80}
                           height={80}
                           alt="E-commerce platforms integration"
@@ -270,7 +270,7 @@ export default function ProductPage() {
           className="w-full transition-transform hover:scale-[1.02]"
               >
           <Image
-            src="/placeholder.svg?height=720&width=1280"
+            src="/capture/captura-11.webp"
             width={1280}
             height={720}
             alt="FasterOrder mobile app"

@@ -303,7 +303,7 @@ export default function PricingPage() {
               >
           <div className="relative w-full aspect-video">
             <Image
-              src="/placeholder.svg?height=720&width=1280"
+              src="/capture/captura-7.webp"
               alt="Customer support team"
               fill
               className="rounded-lg border shadow-lg object-cover"
