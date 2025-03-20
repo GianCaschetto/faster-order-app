@@ -294,69 +294,70 @@ export default function PricingPage() {
         </section>
 
         <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <div className="grid gap-10 lg:grid-cols-2 lg:gap-16 items-center">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
               <FadeIn
-                delay={150}
-                direction="right"
-                className="transition-transform hover:scale-[1.02]"
+          delay={150}
+          direction="right"
+          className="transition-transform hover:scale-[1.02]"
               >
-                <Image
-                  src="/placeholder.svg?height=720&width=1280"
-                  width={1280}
-                  height={720}
-                  alt="Customer support team"
-                  className="rounded-lg border shadow-lg"
-                />
+          <div className="relative w-full aspect-video">
+            <Image
+              src="/placeholder.svg?height=720&width=1280"
+              alt="Customer support team"
+              fill
+              className="rounded-lg border shadow-lg object-cover"
+            />
+          </div>
               </FadeIn>
               <FadeIn delay={300} direction="left" className="space-y-6">
-                <h2 className="text-3xl font-bold">
-                  ¿Necesitas una Solución Personalizada?
-                </h2>
-                <p className="text-muted-foreground">
-                  Entendemos que cada negocio es único. Si nuestros planes
-                  estándar no satisfacen tus necesidades específicas, nuestro
-                  equipo puede trabajar contigo para crear una solución
-                  personalizada adaptada a tus requisitos.
+          <h2 className="text-3xl font-bold">
+            ¿Necesitas una Solución Personalizada?
+          </h2>
+          <p className="text-muted-foreground">
+            Entendemos que cada negocio es único. Si nuestros planes
+            estándar no satisfacen tus necesidades específicas, nuestro
+            equipo puede trabajar contigo para crear una solución
+            personalizada adaptada a tus requisitos.
+          </p>
+          <div className="space-y-4">
+            <div className="flex items-start gap-2">
+              <Check className="h-5 w-5 text-primary mt-0.5" />
+              <div>
+                <h3 className="font-medium">
+            Integraciones Personalizadas
+                </h3>
+                <p className="text-sm text-muted-foreground">
+            Conecta FasterOrder con tus sistemas y flujos de trabajo
+            existentes.
                 </p>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-2">
-                    <Check className="h-5 w-5 text-primary mt-0.5" />
-                    <div>
-                      <h3 className="font-medium">
-                        Integraciones Personalizadas
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        Conecta FasterOrder con tus sistemas y flujos de trabajo
-                        existentes.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check className="h-5 w-5 text-primary mt-0.5" />
-                    <div>
-                      <h3 className="font-medium">Gestor de Cuenta Dedicado</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Obtén soporte personalizado de un gestor de cuenta
-                        dedicado.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check className="h-5 w-5 text-primary mt-0.5" />
-                    <div>
-                      <h3 className="font-medium">Formación Personalizada</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Incorpora a tu equipo con sesiones de formación
-                        personalizadas.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <Button className="mt-4 transition-transform hover:scale-105">
-                  Contacta con nuestro equipo de ventas{" "}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+              </div>
+            </div>
+            <div className="flex items-start gap-2">
+              <Check className="h-5 w-5 text-primary mt-0.5" />
+              <div>
+                <h3 className="font-medium">Gestor de Cuenta Dedicado</h3>
+                <p className="text-sm text-muted-foreground">
+            Obtén soporte personalizado de un gestor de cuenta
+            dedicado.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-2">
+              <Check className="h-5 w-5 text-primary mt-0.5" />
+              <div>
+                <h3 className="font-medium">Formación Personalizada</h3>
+                <p className="text-sm text-muted-foreground">
+            Incorpora a tu equipo con sesiones de formación
+            personalizadas.
+                </p>
+              </div>
+            </div>
+          </div>
+          <Button className="mt-4 transition-transform hover:scale-105">
+            Contacta con nuestro equipo de ventas{" "}
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
               </FadeIn>
             </div>
           </div>
