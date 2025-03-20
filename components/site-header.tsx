@@ -1,5 +1,4 @@
 "use client";
-
 import type React from "react";
 
 import Link from "next/link";
@@ -11,15 +10,16 @@ import { cn } from "@/lib/utils";
 
 import { useEffect, useState } from "react";
 import { ThemeToggle } from "./theme-toggle";
-import { set } from "react-hook-form";
-
 
 interface SiteHeaderProps {
   isMenu?: boolean;
   setIsMobileMenuOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function SiteHeader({isMenu = false, setIsMobileMenuOpen}: SiteHeaderProps) {
+export function SiteHeader({
+  isMenu = false,
+  setIsMobileMenuOpen,
+}: SiteHeaderProps) {
   const router = useRouter();
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -40,7 +40,7 @@ export function SiteHeader({isMenu = false, setIsMobileMenuOpen}: SiteHeaderProp
   useEffect(() => {
     setMobileMenuOpen(false);
     setIsMobileMenuOpen?.(false);
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const routes = [
@@ -107,13 +107,13 @@ export function SiteHeader({isMenu = false, setIsMobileMenuOpen}: SiteHeaderProp
             <ThemeToggle />
             {!isMenu && (
               <Button
-              size="sm"
-              className="transition-transform hover:scale-105"
-              onClick={() => router.push("/menu")}
-            >
-              <span className="hidden sm:inline-block">Probar Demo</span>
-              <span className="sm:hidden">Prueba</span>
-            </Button>
+                size="sm"
+                className="transition-transform hover:scale-105"
+                onClick={() => router.push("/menu")}
+              >
+                <span className="hidden sm:inline-block">Probar Demo</span>
+                <span className="sm:hidden">Prueba</span>
+              </Button>
             )}
           </nav>
         </div>

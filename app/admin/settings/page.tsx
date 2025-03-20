@@ -52,11 +52,7 @@ import {
 import { toast } from "@/components/ui/use-toast";
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import {
-  defaultBranches as importedDefaultBranches,
-  getBranches,
-  type Branch,
-} from "@/components/restaurant-menu";
+import { getBranches, type Branch } from "@/components/restaurant-menu";
 import {
   Dialog,
   DialogContent,

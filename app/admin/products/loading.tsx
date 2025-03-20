@@ -74,7 +74,11 @@ export default function ProductsPage() {
     description: "",
     price: 0,
     categoryId: "",
-    image: "/placeholder.svg?height=200&width=200",
+    image: {
+      src: "/placeholder.svg?height=200&width=200",
+      width: 200,
+      height: 200,
+    },
     extras: [],
   });
 
@@ -82,8 +86,17 @@ export default function ProductsPage() {
   const [extraItem, setExtraItem] = useState({ name: "", price: 0 });
 
   useEffect(() => {
-    // In a real app, you would fetch products from an API
-    setProducts(mockProducts);
+    // Load products - convert LocalProduct[] to Product[]
+    setProducts(
+      mockProducts.map((p) => ({
+        ...p,
+        image: {
+          src: p.image.src,
+          width: p.image.width,
+          height: p.image.height,
+        },
+      }))
+    );
   }, []);
 
   const filteredProducts = products.filter((product) => {
@@ -110,7 +123,11 @@ export default function ProductsPage() {
       description: "",
       price: 0,
       categoryId: "",
-      image: "/placeholder.svg?height=200&width=200",
+      image: {
+        src: "/placeholder.svg?height=200&width=200",
+        width: 200,
+        height: 200,
+      },
       extras: [],
     });
     setIsAddProductOpen(false);
@@ -259,9 +276,16 @@ export default function ProductsPage() {
           <div className="col-span-3 flex gap-2">
             <Input
               id="product-image"
-              value={product?.image || ""}
+              value={product?.image?.src || ""}
               onChange={(e) =>
-                setProduct({ ...product, image: e.target.value })
+                setProduct({
+                  ...product,
+                  image: {
+                    src: e.target.value,
+                    width: product?.image?.width || 200,
+                    height: product?.image?.height || 200,
+                  },
+                })
               }
               placeholder="/placeholder.svg?height=200&width=200"
             />

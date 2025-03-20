@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle, Globe, Laptop, Zap } from "lucide-react";
@@ -9,7 +8,6 @@ import { FadeIn } from "@/components/animations";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import CallToAction from "@/components/call-to-action";
-import TrackLottie from "@/components/track-lottie";
 
 export default function HomePage() {
   const router = useRouter();
@@ -160,7 +158,10 @@ export default function HomePage() {
                       </p>
                     </div>
                   </li>
-                  <li key="analisis-avanzados" className="flex items-start gap-2">
+                  <li
+                    key="analisis-avanzados"
+                    className="flex items-start gap-2"
+                  >
                     <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                     <div>
                       <h3 className="font-medium">Análisis Avanzados</h3>
@@ -170,7 +171,10 @@ export default function HomePage() {
                       </p>
                     </div>
                   </li>
-                  <li key="integracion-perfecta" className="flex items-start gap-2">
+                  <li
+                    key="integracion-perfecta"
+                    className="flex items-start gap-2"
+                  >
                     <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                     <div>
                       <h3 className="font-medium">Integración Perfecta</h3>
@@ -180,7 +184,10 @@ export default function HomePage() {
                       </p>
                     </div>
                   </li>
-                  <li key="informes-automatizados" className="flex items-start gap-2">
+                  <li
+                    key="informes-automatizados"
+                    className="flex items-start gap-2"
+                  >
                     <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                     <div>
                       <h3 className="font-medium">Informes Automatizados</h3>
@@ -207,11 +214,11 @@ export default function HomePage() {
               >
                 <div className="relative aspect-video overflow-hidden rounded-xl border bg-background shadow-lg transition-transform hover:scale-[1.02]">
                   <Image
-                  src="/capture/captura-8.webp"
-                  width={1280}
-                  height={720}
-                  alt="Software dashboard"
-                  className="object-cover max-w-full"
+                    src="/capture/captura-8.webp"
+                    width={1280}
+                    height={720}
+                    alt="Software dashboard"
+                    className="object-cover max-w-full"
                   />
                 </div>
               </FadeIn>
@@ -228,7 +235,10 @@ export default function HomePage() {
                 className="flex items-center justify-center order-last lg:order-first"
               >
                 <div className="grid grid-cols-2 gap-4">
-                  <div key="interface-1" className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105">
+                  <div
+                    key="interface-1"
+                    className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105"
+                  >
                     <Image
                       src="/capture/captura-1.webp"
                       width={600}
@@ -237,7 +247,10 @@ export default function HomePage() {
                       className="object-cover max-w-full"
                     />
                   </div>
-                  <div key="interface-2" className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105">
+                  <div
+                    key="interface-2"
+                    className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105"
+                  >
                     <Image
                       src="/capture/captura-2.webp"
                       width={600}
@@ -246,7 +259,10 @@ export default function HomePage() {
                       className="object-cover max-w-full"
                     />
                   </div>
-                  <div key="interface-3" className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105">
+                  <div
+                    key="interface-3"
+                    className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105"
+                  >
                     <Image
                       src="/capture/captura-3.webp"
                       width={600}
@@ -255,7 +271,10 @@ export default function HomePage() {
                       className="max-w-full"
                     />
                   </div>
-                  <div key="interface-4" className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105">
+                  <div
+                    key="interface-4"
+                    className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105"
+                  >
                     <Image
                       src="/capture/captura-5.webp"
                       width={600}
@@ -286,11 +305,17 @@ export default function HomePage() {
                     <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
                     <span>Interfaz de usuario intuitiva</span>
                   </li>
-                  <li key="flujos-personalizables" className="flex items-center gap-2">
+                  <li
+                    key="flujos-personalizables"
+                    className="flex items-center gap-2"
+                  >
                     <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
                     <span>Flujos de trabajo personalizables</span>
                   </li>
-                  <li key="documentacion-completa" className="flex items-center gap-2">
+                  <li
+                    key="documentacion-completa"
+                    className="flex items-center gap-2"
+                  >
                     <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
                     <span>Documentación completa</span>
                   </li>

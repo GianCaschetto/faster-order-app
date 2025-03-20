@@ -42,7 +42,11 @@ export type Product = {
   name: string;
   description: string;
   price: number;
-  image: string;
+  image: {
+    src: string;
+    width: number;
+    height: number;
+  };
   categoryId: string;
   extras?: Extra[];
   stockId?: string;
@@ -369,7 +373,6 @@ export default function RestaurantMenu() {
     setIsCartOpen(true);
   };
 
-
   return (
     <>
       <SiteHeader isMenu setIsMobileMenuOpen={setIsMobileMenuOpen} />
@@ -483,7 +486,9 @@ export default function RestaurantMenu() {
         />
 
         {/* Add the floating cart button for mobile */}
-        {!isMobileMenuOpen && <FloatingCartButton cartItems={cartItems} openCart={openCart} />}
+        {!isMobileMenuOpen && (
+          <FloatingCartButton cartItems={cartItems} openCart={openCart} />
+        )}
       </div>
       <SiteFooter />
     </>

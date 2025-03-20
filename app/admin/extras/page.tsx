@@ -46,7 +46,11 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "@/components/ui/use-toast";
-import { categories, initialExtraGroups, products as mockProducts } from "@/lib/mock-data";
+import {
+  categories,
+  initialExtraGroups,
+  products as mockProducts,
+} from "@/lib/mock-data";
 import type { Product, Extra } from "@/components/restaurant-menu";
 
 // Extra group types
@@ -57,11 +61,6 @@ export type ExtraGroup = {
   categoryIds: string[]; // Which product categories this group applies to
   extras: Extra[];
 };
-
-
-
-
-
 
 export default function ExtrasPage() {
   const [extraGroups, setExtraGroups] = useState<ExtraGroup[]>([]);
@@ -109,8 +108,17 @@ export default function ExtrasPage() {
       setExtraGroups(initialExtraGroups);
     }
 
-    // Load products
-    setProducts(mockProducts);
+    // Load products - convert LocalProduct[] to Product[]
+    setProducts(
+      mockProducts.map((p) => ({
+        ...p,
+        image: {
+          src: p.image.src,
+          width: p.image.width,
+          height: p.image.height,
+        },
+      }))
+    );
   }, []);
 
   // Save extra groups to localStorage whenever they change

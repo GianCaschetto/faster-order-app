@@ -110,8 +110,13 @@ export default function ProductsPage() {
   const [extraItem, setExtraItem] = useState({ name: "", price: 0 });
 
   useEffect(() => {
-    // In a real app, you would fetch products from an API
-    setProducts(mockProducts);
+    // Load products - convert LocalProduct[] to Product[]
+    setProducts(
+      mockProducts.map((p) => ({
+        ...p,
+        image: p.image.src,
+      }))
+    );
   }, []);
 
   useEffect(() => {
