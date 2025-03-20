@@ -11,8 +11,8 @@ import { SiteFooter } from "@/components/site-footer";
 import CallToAction from "@/components/call-to-action";
 import TrackLottie from "@/components/track-lottie";
 
-  export default function HomePage() {
-    const router = useRouter();
+export default function HomePage() {
+  const router = useRouter();
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -24,7 +24,7 @@ import TrackLottie from "@/components/track-lottie";
               <FadeIn className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                    Soluciones de Software Potentes para tu Negocio. 
+                    Soluciones de Software Potentes para tu Negocio.
                   </h1>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl">
                     Nuestro software innovador optimiza tu flujo de trabajo,
@@ -38,13 +38,13 @@ import TrackLottie from "@/components/track-lottie";
                   >
                     Probar demo <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
-                    <Button
+                  <Button
                     variant="outline"
                     className="transition-colors hover:bg-primary/10"
                     onClick={() => router.push("/product")}
-                    >
+                  >
                     Saber más
-                    </Button>
+                  </Button>
                 </div>
               </FadeIn>
               <FadeIn
@@ -52,14 +52,14 @@ import TrackLottie from "@/components/track-lottie";
                 direction="left"
                 className="flex items-center justify-center"
               >
-                <div className="relative aspect-video  transition-transform hover:scale-[1.02]">
-                 {/* <TrackLottie /> */}
-                 <Image 
-                  src="/fasterorder-logo.png"
-                  width={600}
-                  height={600}
-                  alt="Software interface"
-                 />
+                <div className="relative aspect-video overflow-hidden rounded-xl border bg-background shadow-lg transition-transform hover:scale-[1.02]">
+                  <Image
+                    src="/logo/fasterorder-logo.png"
+                    width={1280}
+                    height={720}
+                    alt="Product screenshot"
+                    className="object-cover"
+                  />
                 </div>
               </FadeIn>
             </div>
@@ -130,88 +130,90 @@ import TrackLottie from "@/components/track-lottie";
           </div>
         </section>
 
-        <section id="product" className="w-full py-12 md:py-24 lg:py-32">
+        <section id="product" className="w-full py-8 md:py-16 lg:py-24">
           <div className="container px-4 md:px-6">
             <FadeIn className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-                  Descubre Nuestro Software
-                </h2>
-                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Conoce más de cerca lo que hace que nuestro software sea la
-                  solución perfecta para las necesidades de tu negocio.
-                </p>
+          <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">
+            Descubre Nuestro Software
+          </h2>
+          <p className="max-w-[900px] text-muted-foreground text-base sm:text-lg md:text-xl">
+            Conoce más de cerca lo que hace que nuestro software sea la
+            solución perfecta para las necesidades de tu negocio.
+          </p>
               </div>
             </FadeIn>
-            <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2">
+            <div className="mx-auto grid max-w-5xl items-center gap-6 py-8 sm:py-12 grid-cols-1 lg:grid-cols-2">
               <FadeIn
-                delay={150}
-                direction="right"
-                className="flex flex-col justify-center space-y-4"
+          delay={150}
+          direction="right"
+          className="flex flex-col justify-center space-y-4 w-full"
               >
-                <ul className="grid gap-3">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                    <div>
-                      <h3 className="font-medium">Panel Intuitivo</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Obtén una visión completa de tu negocio de un vistazo
-                        con nuestro panel personalizable.
-                      </p>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                    <div>
-                      <h3 className="font-medium">Análisis Avanzados</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Toma decisiones basadas en datos con nuestras potentes
-                        herramientas de análisis.
-                      </p>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                    <div>
-                      <h3 className="font-medium">Integración Perfecta</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Conéctate con tus herramientas y servicios favoritos
-                        para un flujo de trabajo unificado.
-                      </p>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                    <div>
-                      <h3 className="font-medium">Informes Automatizados</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Ahorra tiempo con informes automatizados entregados
-                        directamente en tu bandeja de entrada.
-                      </p>
-                    </div>
-                  </li>
-                </ul>
-                <Button
-                  className="w-full sm:w-auto transition-transform hover:scale-105"
-                  onClick={() => router.push("/menu")}
-                >
-                  Probar el software <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+          <ul className="grid gap-3 w-full">
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+              <div>
+                <h3 className="font-medium">Panel Intuitivo</h3>
+                <p className="text-sm text-muted-foreground">
+            Obtén una visión completa de tu negocio de un vistazo
+            con nuestro panel personalizable.
+                </p>
+              </div>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+              <div>
+                <h3 className="font-medium">Análisis Avanzados</h3>
+                <p className="text-sm text-muted-foreground">
+            Toma decisiones basadas en datos con nuestras potentes
+            herramientas de análisis.
+                </p>
+              </div>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+              <div>
+                <h3 className="font-medium">Integración Perfecta</h3>
+                <p className="text-sm text-muted-foreground">
+            Conéctate con tus herramientas y servicios favoritos
+            para un flujo de trabajo unificado.
+                </p>
+              </div>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+              <div>
+                <h3 className="font-medium">Informes Automatizados</h3>
+                <p className="text-sm text-muted-foreground">
+            Ahorra tiempo con informes automatizados entregados
+            directamente en tu bandeja de entrada.
+                </p>
+              </div>
+            </li>
+          </ul>
+          <div className="w-full sm:w-auto">
+            <Button
+              className="w-full transition-transform hover:scale-105"
+              onClick={() => router.push("/menu")}
+            >
+              Probar el software <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
               </FadeIn>
               <FadeIn
-                delay={300}
-                direction="left"
-                className="flex items-center justify-center"
+          delay={300}
+          direction="left"
+          className="flex items-center justify-center"
               >
-                <div className="relative aspect-video overflow-hidden rounded-xl border bg-background shadow-lg transition-transform hover:scale-[1.02]">
-                  <Image
-                    src="/fasterorder-logo.png"
-                    width={1280}
-                    height={720}
-                    alt="Software dashboard"
-                    className="object-cover"
-                  />
-                </div>
+          <div className="relative aspect-video overflow-hidden rounded-xl border bg-background shadow-lg transition-transform hover:scale-[1.02]">
+            <Image
+              src="/fasterorder-logo.png"
+              width={1280}
+              height={720}
+              alt="Software dashboard"
+              className="object-cover max-w-full"
+            />
+          </div>
               </FadeIn>
             </div>
           </div>
@@ -232,7 +234,7 @@ import TrackLottie from "@/components/track-lottie";
                       width={600}
                       height={600}
                       alt="Software interface 1"
-                      className="object-cover"
+                      className="object-cover max-w-full"
                     />
                   </div>
                   <div className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105">
@@ -241,7 +243,7 @@ import TrackLottie from "@/components/track-lottie";
                       width={600}
                       height={600}
                       alt="Software interface 2"
-                      className="object-cover"
+                      className="object-cover max-w-full"
                     />
                   </div>
                   <div className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105">
@@ -250,6 +252,7 @@ import TrackLottie from "@/components/track-lottie";
                       width={600}
                       height={600}
                       alt="Software interface 3"
+                      className="max-w-full"
                     />
                   </div>
                   <div className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105">
@@ -258,7 +261,7 @@ import TrackLottie from "@/components/track-lottie";
                       width={600}
                       height={600}
                       alt="Software interface 4"
-                      className="object-cover"
+                      className="object-cover max-w-full"
                     />
                   </div>
                 </div>
@@ -297,12 +300,12 @@ import TrackLottie from "@/components/track-lottie";
                   </li>
                 </ul>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                    <Button
+                  <Button
                     className="px-4 sm:px-8 transition-transform hover:scale-105"
                     onClick={() => router.push("/menu")}
-                    >
+                  >
                     Probar Demo <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
+                  </Button>
                   <Button
                     variant="outline"
                     className="transition-colors hover:bg-primary/10"
