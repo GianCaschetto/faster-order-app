@@ -1,6 +1,6 @@
 import type { Order } from "@/app/admin/orders/page"
 import type { Customer } from "@/app/admin/customers/page"
-import type { Branch, Product } from "@/components/restaurant-menu"
+import type { Branch, Extra } from "@/components/restaurant-menu"
 import { ExtraGroup } from "@/app/admin/extras/page";
 import { GalleryImage } from "@/app/admin/gallery/page";
 import { StockItem } from "@/components/stock-management";
@@ -278,13 +278,17 @@ export const mockCustomers: Customer[] = [
 ]
 
 // Export products for analytics
-export const products: Product[] = [
+export const products: LocalProduct[] = [
   {
     id: "1",
     name: "Pan de Ajo",
     description: "Pan recién horneado con mantequilla de ajo",
     price: 5.99,
-    image: "/pictures/pan-de-ajo.webp",
+    image: {
+      src: "/pictures/pan-de-ajo.webp",
+      width: 600,
+      height: 400
+    },
     categoryId: "starters",
     stockId: "pan-ajo",
     extras: [
@@ -297,7 +301,11 @@ export const products: Product[] = [
     name: "Ensalada César",
     description: "Lechuga romana fresca con aderezo César",
     price: 8.99,
-    image: "/pictures/ensalada-cesar.webp",
+    image: {
+      src: "/pictures/ensalada-cesar.webp",
+      width: 600,
+      height: 400
+    },
     categoryId: "starters",
     stockId: "ensalada-cesar",
     extras: [
@@ -311,7 +319,11 @@ export const products: Product[] = [
     name: "Pizza Margarita",
     description: "Pizza clásica con salsa de tomate y mozzarella",
     price: 12.99,
-    image: "/pictures/pizza-margarita.webp",
+    image: {
+      src: "/pictures/pizza-margarita.webp",
+      width: 600,
+      height: 400
+    },
     categoryId: "mains",
     stockId: "margherita-pizza",
     extras: [
@@ -326,7 +338,11 @@ export const products: Product[] = [
     name: "Spaghetti Boloñesa",
     description: "Spaghetti con salsa de carne rica",
     price: 14.99,
-    image: "/pictures/spaghetti-boloñesa.webp",
+    image: {
+      src: "/pictures/spaghetti-boloñesa.webp",
+      width: 600,
+      height: 400
+    },
     categoryId: "mains",
     stockId: "spaghetti-bolognese",
     extras: [
@@ -340,7 +356,11 @@ export const products: Product[] = [
     name: "Salmón a la Parrilla",
     description: "Salmón fresco con mantequilla de limón",
     price: 18.99,
-    image: "/pictures/salmon-parrilla.webp",
+    image: {
+      src: "/pictures/salmon-parrilla.webp",
+      width: 600,
+      height: 400
+    },
     categoryId: "mains",
     stockId: "grilled-salmon",
     extras: [
@@ -354,7 +374,11 @@ export const products: Product[] = [
     name: "Pastel de Chocolate",
     description: "Pastel de chocolate con ganache",
     price: 6.99,
-    image: "/pictures/pastel-de-chocolate.webp",
+    image: {
+      src: "/pictures/pastel-de-chocolate.webp",
+      width: 600,
+      height: 400
+    },
     categoryId: "desserts",
     stockId: "pastel-chocolate",
     extras: [
@@ -368,7 +392,11 @@ export const products: Product[] = [
     name: "Tiramisu",
     description: "Postre italiano clásico con café y mascarpone",
     price: 7.99,
-    image: "/pictures/tiramisu.webp",
+    image: {
+      src: "/pictures/tiramisu.webp",
+      width: 600,
+      height: 400
+    },
     categoryId: "desserts",
     stockId: "tiramisu",
     extras: [
@@ -381,7 +409,11 @@ export const products: Product[] = [
     name: "Refresco",
     description: "Coca-Cola, Limonada o Naranja",
     price: 2.99,
-    image: "/pictures/refresco.webp",
+    image: {
+      src: "/pictures/refresco.webp",
+      width: 600,
+      height: 400
+    },
     categoryId: "drinks",
     stockId: "refresco",
     extras: [
@@ -394,7 +426,11 @@ export const products: Product[] = [
     name: "Jugo Fresco",
     description: "Jugo de naranja o manzana recién exprimido",
     price: 4.99,
-    image: "/pictures/jugo-fresco.webp",
+    image: {
+      src: "/pictures/jugo-fresco.webp",
+      width: 600,
+      height: 400
+    },
     categoryId: "drinks",
     stockId: "jugo-fresco",
     extras: [
@@ -407,7 +443,11 @@ export const products: Product[] = [
     name: "Hamburguesa de carne",
     description: "Hamburguesa de carne con queso y lechuga",
     price: 7.99,
-    image: "/pictures/burguer.webp",
+    image: {
+      src: "/pictures/burguer.webp",
+      width: 600,
+      height: 400
+    },
     categoryId: "mains",
     stockId: "brguer",
     extras: [
@@ -427,8 +467,6 @@ export const categories = [
   { id: "sides", name: "Guarniciones" },
   { id: "specials", name: "Especiales" },
 ]
-
-
 
 // Mock schedule data
 export const defaultSchedule = [
@@ -795,3 +833,19 @@ export const defaultStock: StockItem[] = [
     quantity: 18,
   },
 ];
+
+type LocalProduct = {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: {
+    src: string;
+    width: number;
+    height: number;
+  };
+  categoryId: string;
+  extras?: Extra[];
+  stockId?: string;
+  extraGroupIds?: string[];
+};

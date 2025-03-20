@@ -134,86 +134,86 @@ export default function HomePage() {
           <div className="container px-4 md:px-6">
             <FadeIn className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-          <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">
-            Descubre Nuestro Software
-          </h2>
-          <p className="max-w-[900px] text-muted-foreground text-base sm:text-lg md:text-xl">
-            Conoce más de cerca lo que hace que nuestro software sea la
-            solución perfecta para las necesidades de tu negocio.
-          </p>
+                <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">
+                  Descubre Nuestro Software
+                </h2>
+                <p className="max-w-[900px] text-muted-foreground text-base sm:text-lg md:text-xl">
+                  Conoce más de cerca lo que hace que nuestro software sea la
+                  solución perfecta para las necesidades de tu negocio.
+                </p>
               </div>
             </FadeIn>
             <div className="mx-auto grid max-w-5xl items-center gap-6 py-8 sm:py-12 grid-cols-1 lg:grid-cols-2">
               <FadeIn
-          delay={150}
-          direction="right"
-          className="flex flex-col justify-center space-y-4 w-full"
+                delay={150}
+                direction="right"
+                className="flex flex-col justify-center space-y-4 w-full"
               >
-          <ul className="grid gap-3 w-full">
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-              <div>
-                <h3 className="font-medium">Panel Intuitivo</h3>
-                <p className="text-sm text-muted-foreground">
-            Obtén una visión completa de tu negocio de un vistazo
-            con nuestro panel personalizable.
-                </p>
-              </div>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-              <div>
-                <h3 className="font-medium">Análisis Avanzados</h3>
-                <p className="text-sm text-muted-foreground">
-            Toma decisiones basadas en datos con nuestras potentes
-            herramientas de análisis.
-                </p>
-              </div>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-              <div>
-                <h3 className="font-medium">Integración Perfecta</h3>
-                <p className="text-sm text-muted-foreground">
-            Conéctate con tus herramientas y servicios favoritos
-            para un flujo de trabajo unificado.
-                </p>
-              </div>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-              <div>
-                <h3 className="font-medium">Informes Automatizados</h3>
-                <p className="text-sm text-muted-foreground">
-            Ahorra tiempo con informes automatizados entregados
-            directamente en tu bandeja de entrada.
-                </p>
-              </div>
-            </li>
-          </ul>
-          <div className="w-full sm:w-auto">
-            <Button
-              className="w-full transition-transform hover:scale-105"
-              onClick={() => router.push("/menu")}
-            >
-              Probar el software <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
+                <ul className="grid gap-3 w-full">
+                  <li key="panel-intuitivo" className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h3 className="font-medium">Panel Intuitivo</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Obtén una visión completa de tu negocio de un vistazo
+                        con nuestro panel personalizable.
+                      </p>
+                    </div>
+                  </li>
+                  <li key="analisis-avanzados" className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h3 className="font-medium">Análisis Avanzados</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Toma decisiones basadas en datos con nuestras potentes
+                        herramientas de análisis.
+                      </p>
+                    </div>
+                  </li>
+                  <li key="integracion-perfecta" className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h3 className="font-medium">Integración Perfecta</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Conéctate con tus herramientas y servicios favoritos
+                        para un flujo de trabajo unificado.
+                      </p>
+                    </div>
+                  </li>
+                  <li key="informes-automatizados" className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h3 className="font-medium">Informes Automatizados</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Ahorra tiempo con informes automatizados entregados
+                        directamente en tu bandeja de entrada.
+                      </p>
+                    </div>
+                  </li>
+                </ul>
+                <div className="w-full sm:w-auto">
+                  <Button
+                    className="w-full transition-transform hover:scale-105"
+                    onClick={() => router.push("/menu")}
+                  >
+                    Probar el software <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
               </FadeIn>
               <FadeIn
-          delay={300}
-          direction="left"
-          className="flex items-center justify-center"
+                delay={300}
+                direction="left"
+                className="flex items-center justify-center"
               >
-          <div className="relative aspect-video overflow-hidden rounded-xl border bg-background shadow-lg transition-transform hover:scale-[1.02]">
-            <Image
-              src="/fasterorder-logo.png"
-              width={1280}
-              height={720}
-              alt="Software dashboard"
-              className="object-cover max-w-full"
-            />
-          </div>
+                <div className="relative aspect-video overflow-hidden rounded-xl border bg-background shadow-lg transition-transform hover:scale-[1.02]">
+                  <Image
+                    src="/fasterorder-logo.png"
+                    width={1280}
+                    height={720}
+                    alt="Software dashboard"
+                    className="object-cover max-w-full"
+                  />
+                </div>
               </FadeIn>
             </div>
           </div>
@@ -228,7 +228,7 @@ export default function HomePage() {
                 className="flex items-center justify-center order-last lg:order-first"
               >
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105">
+                  <div key="interface-1" className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105">
                     <Image
                       src="/fasterorder-logo.png"
                       width={600}
@@ -237,7 +237,7 @@ export default function HomePage() {
                       className="object-cover max-w-full"
                     />
                   </div>
-                  <div className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105">
+                  <div key="interface-2" className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105">
                     <Image
                       src="/fasterorder-logo.png"
                       width={600}
@@ -246,7 +246,7 @@ export default function HomePage() {
                       className="object-cover max-w-full"
                     />
                   </div>
-                  <div className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105">
+                  <div key="interface-3" className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105">
                     <Image
                       src="/fasterorder-logo.png"
                       width={600}
@@ -255,7 +255,7 @@ export default function HomePage() {
                       className="max-w-full"
                     />
                   </div>
-                  <div className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105">
+                  <div key="interface-4" className="relative aspect-square overflow-hidden rounded-lg transition-transform hover:scale-105">
                     <Image
                       src="/logo/fasterorder-logo.png"
                       width={600}
@@ -282,19 +282,19 @@ export default function HomePage() {
                   </p>
                 </div>
                 <ul className="grid gap-2">
-                  <li className="flex items-center gap-2">
+                  <li key="ui-intuitiva" className="flex items-center gap-2">
                     <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
                     <span>Interfaz de usuario intuitiva</span>
                   </li>
-                  <li className="flex items-center gap-2">
+                  <li key="flujos-personalizables" className="flex items-center gap-2">
                     <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
                     <span>Flujos de trabajo personalizables</span>
                   </li>
-                  <li className="flex items-center gap-2">
+                  <li key="documentacion-completa" className="flex items-center gap-2">
                     <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
                     <span>Documentación completa</span>
                   </li>
-                  <li className="flex items-center gap-2">
+                  <li key="soporte-cliente" className="flex items-center gap-2">
                     <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
                     <span>Soporte al cliente 24/7</span>
                   </li>
