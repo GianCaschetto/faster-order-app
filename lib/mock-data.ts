@@ -297,7 +297,7 @@ export const products: Product[] = [
     name: "Ensalada César",
     description: "Lechuga romana fresca con aderezo César",
     price: 8.99,
-    image: "/placeholder.svg",
+    image: "/pictures/ensalada-cesar.webp",
     categoryId: "starters",
     stockId: "ensalada-cesar",
     extras: [
@@ -311,7 +311,7 @@ export const products: Product[] = [
     name: "Pizza Margarita",
     description: "Pizza clásica con salsa de tomate y mozzarella",
     price: 12.99,
-    image: "/placeholder.svg?height=100&width=100",
+    image: "/pictures/pizza-margarita.webp",
     categoryId: "mains",
     stockId: "margherita-pizza",
     extras: [
@@ -326,7 +326,7 @@ export const products: Product[] = [
     name: "Spaghetti Boloñesa",
     description: "Spaghetti con salsa de carne rica",
     price: 14.99,
-    image: "/placeholder.svg?height=100&width=100",
+    image: "/pictures/spaghetti-boloñesa.webp",
     categoryId: "mains",
     stockId: "spaghetti-bolognese",
     extras: [
@@ -340,7 +340,7 @@ export const products: Product[] = [
     name: "Salmón a la Parrilla",
     description: "Salmón fresco con mantequilla de limón",
     price: 18.99,
-    image: "/placeholder.svg?height=100&width=100",
+    image: "/pictures/salmon-parrilla.webp",
     categoryId: "mains",
     stockId: "grilled-salmon",
     extras: [
@@ -354,7 +354,7 @@ export const products: Product[] = [
     name: "Pastel de Chocolate",
     description: "Pastel de chocolate con ganache",
     price: 6.99,
-    image: "/placeholder.svg?height=100&width=100",
+    image: "/pictures/pastel-de-chocolate.webp",
     categoryId: "desserts",
     stockId: "pastel-chocolate",
     extras: [
@@ -368,7 +368,7 @@ export const products: Product[] = [
     name: "Tiramisu",
     description: "Postre italiano clásico con café y mascarpone",
     price: 7.99,
-    image: "/placeholder.svg?height=100&width=100",
+    image: "/pictures/tiramisu.webp",
     categoryId: "desserts",
     stockId: "tiramisu",
     extras: [
@@ -381,7 +381,7 @@ export const products: Product[] = [
     name: "Refresco",
     description: "Coca-Cola, Limonada o Naranja",
     price: 2.99,
-    image: "/placeholder.svg?height=100&width=100",
+    image: "/pictures/refresco.webp",
     categoryId: "drinks",
     stockId: "refresco",
     extras: [
@@ -394,7 +394,7 @@ export const products: Product[] = [
     name: "Jugo Fresco",
     description: "Jugo de naranja o manzana recién exprimido",
     price: 4.99,
-    image: "/placeholder.svg?height=100&width=100",
+    image: "/pictures/jugo-fresco.webp",
     categoryId: "drinks",
     stockId: "jugo-fresco",
     extras: [
