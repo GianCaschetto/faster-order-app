@@ -10,15 +10,15 @@ import { cn } from "@/lib/utils";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "FasterOrder - Sistema de Gestión de Pedidos para Restaurantes",
+  title: "FasterOrder",
   description:
     "Revoluciona tu restaurante con FasterOrder. Sistema completo de gestión de pedidos, menú, inventario y analytics. Pedidos ilimitados desde $70/mes.",
   keywords:
-    "gestión de pedidos, restaurante, menú digital, inventario, analytics, pedidos ilimitados, sistema restaurante",
+    "gestión de pedidos, restaurante, menú digital, analytics, pedidos ilimitados, sistema restaurante, venezuela, pago movil, pedidos online, pickup, delivery",
   openGraph: {
     title: "FasterOrder - Sistema de Gestión de Pedidos para Restaurantes",
     description:
-      "Revoluciona tu restaurante con FasterOrder. Sistema completo de gestión de pedidos, menú, inventario y analytics.",
+      "Revoluciona tu restaurante con FasterOrder. Sistema completo de gestión de pedidos, menú, inventario y analytics. Pedidos ilimitados desde $70/mes.",
     type: "website",
   },
 };

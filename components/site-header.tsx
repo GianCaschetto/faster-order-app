@@ -48,7 +48,7 @@ export function SiteHeader({
     { href: "/", label: "Inicio" },
     { href: "/features", label: "Características" },
     { href: "/product", label: "Producto" },
-    { href: "/customers", label: "Clientes" },
+    { href: "/testimonials", label: "Clientes" },
     { href: "/pricing", label: "Precios" },
   ];
 
