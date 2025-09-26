@@ -3,8 +3,6 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   CheckCircle,
-  CreditCard,
-  Smartphone,
   Zap,
   ArrowRight,
   MessageCircle,
@@ -12,13 +10,9 @@ import {
   Users,
   TrendingUp,
   Shield,
-  Globe,
   BarChart3,
   Settings,
-  Smartphone as Phone,
   CreditCard as Payment,
-  Calendar,
-  MapPin,
 } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
