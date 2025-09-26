@@ -3,13 +3,15 @@ import type React from "react";
 
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Truck } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 import { useEffect, useState } from "react";
 import { ThemeToggle } from "./theme-toggle";
+import { DeliveryLottie } from "./delivery-lottie";
+import { FloatingParticles } from "./floating-particles";
 
 interface SiteHeaderProps {
   isMenu?: boolean;
@@ -20,7 +22,6 @@ export function SiteHeader({
   isMenu = false,
   setIsMobileMenuOpen,
 }: SiteHeaderProps) {
-  const router = useRouter();
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -47,13 +48,19 @@ export function SiteHeader({
     { href: "/", label: "Inicio" },
     { href: "/features", label: "Características" },
     { href: "/product", label: "Producto" },
-    { href: "/testimonials", label: "Testimonios" },
+    { href: "/customers", label: "Clientes" },
     { href: "/pricing", label: "Precios" },
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
+    <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 overflow-hidden">
+      {/* Elementos decorativos animados */}
+      <div className="absolute top-0 right-0 w-32 h-32 opacity-5 pointer-events-none">
+        <DeliveryLottie className="w-full h-full" />
+      </div>
+      <FloatingParticles />
+
+      <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0 relative z-10">
         <div className="flex items-center gap-4">
           <Button
             variant="ghost"
@@ -70,16 +77,24 @@ export function SiteHeader({
 
           <Link
             href="/"
-            className="flex items-center space-x-2 transition-transform hover:scale-105"
+            className="flex items-center space-x-3 transition-transform hover:scale-105 group"
           >
-            <Image
-              src="/logo/fasterorder-logo.png"
-              alt="FasterOrder Logo"
-              width={32}
-              height={32}
-              className="dark:brightness-0 dark:invert-[1]"
-            />
-            <span className="inline-block font-bold">FasterOrder</span>
+            <div className="relative w-10 h-10 flex items-center justify-center">
+              <Image
+                src="/logo/fasterorder-logo.png"
+                alt="FasterOrder Logo"
+                width={32}
+                height={32}
+                className="dark:brightness-0 dark:invert-[1] z-10 animate-pulse"
+              />
+              <div className="absolute inset-0 w-10 h-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <DeliveryLottie className="w-full h-full" />
+              </div>
+              <div className="absolute inset-0 w-10 h-10 rounded-full bg-primary/10 scale-0 group-hover:scale-110 transition-transform duration-300"></div>
+            </div>
+            <span className="inline-block font-bold text-lg group-hover:text-primary transition-colors duration-300">
+              FasterOrder
+            </span>
           </Link>
         </div>
 
@@ -90,14 +105,15 @@ export function SiteHeader({
               key={route.href}
               href={route.href}
               className={cn(
-                "flex items-center text-sm font-medium transition-colors hover:text-primary",
+                "flex items-center text-sm font-medium transition-all duration-300 hover:text-primary hover:scale-105 relative group",
                 pathname === route.href
                   ? "text-primary"
                   : "text-muted-foreground",
                 route.label === "Inicio" && "ml-6"
               )}
             >
-              {route.label}
+              <span className="relative z-10">{route.label}</span>
+              <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></div>
             </Link>
           ))}
         </div>
@@ -108,11 +124,17 @@ export function SiteHeader({
             {!isMenu && (
               <Button
                 size="sm"
-                className="transition-transform hover:scale-105"
-                onClick={() => router.push("/menu")}
+                className="transition-all duration-200 hover:scale-105 hover:shadow-lg group relative overflow-hidden"
+                onClick={() =>
+                  window.open("https://demo.fasterorder.store/", "_blank")
+                }
               >
-                <span className="hidden sm:inline-block">Probar Demo</span>
-                <span className="sm:hidden">Prueba</span>
+                <div className="flex items-center gap-2">
+                  <Truck className="w-4 h-4 transition-transform group-hover:scale-110" />
+                  <span className="hidden sm:inline-block">Probar Demo</span>
+                  <span className="sm:hidden">Demo</span>
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </Button>
             )}
           </nav>
@@ -131,20 +153,27 @@ export function SiteHeader({
           <div className="flex items-center justify-between p-4 border-b h-16">
             <Link
               href="/"
-              className="flex items-center space-x-2"
+              className="flex items-center space-x-3 group"
               onClick={() => {
                 setMobileMenuOpen(false);
                 setIsMobileMenuOpen?.(false);
               }}
             >
-              <Image
-                src="/logo/fasterorder-logo.png"
-                alt="FasterOrder Logo"
-                width={28}
-                height={28}
-                className="dark:brightness-0 dark:invert-[1]"
-              />
-              <span className="inline-block font-bold">FasterOrder</span>
+              <div className="relative w-8 h-8 flex items-center justify-center">
+                <Image
+                  src="/logo/fasterorder-logo.png"
+                  alt="FasterOrder Logo"
+                  width={28}
+                  height={28}
+                  className="dark:brightness-0 dark:invert-[1] z-10"
+                />
+                <div className="absolute inset-0 w-8 h-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <DeliveryLottie className="w-full h-full" />
+                </div>
+              </div>
+              <span className="inline-block font-bold text-lg">
+                FasterOrder
+              </span>
             </Link>
             <Button
               variant="ghost"
@@ -195,11 +224,12 @@ export function SiteHeader({
             <Button
               className="w-full justify-center bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-200 hover:scale-[1.02] py-6 text-base"
               onClick={() => {
+                window.open("https://demo.fasterorder.store/", "_blank");
                 setMobileMenuOpen(false);
                 setIsMobileMenuOpen?.(false);
               }}
             >
-              Prueba gratis
+              Probar Demo Gratis
             </Button>
           </div>
         </div>

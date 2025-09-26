@@ -2,6 +2,7 @@ import type React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import "./hero-animations.css";
 import { Toaster } from "@/components/toaster";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
@@ -9,9 +10,17 @@ import { cn } from "@/lib/utils";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "FasterOrder",
+  title: "FasterOrder - Sistema de Gestión de Pedidos para Restaurantes",
   description:
-    "Optimizando pedidos para un servicio más rápido y un mejor negocio.",
+    "Revoluciona tu restaurante con FasterOrder. Sistema completo de gestión de pedidos, menú, inventario y analytics. Pedidos ilimitados desde $70/mes.",
+  keywords:
+    "gestión de pedidos, restaurante, menú digital, inventario, analytics, pedidos ilimitados, sistema restaurante",
+  openGraph: {
+    title: "FasterOrder - Sistema de Gestión de Pedidos para Restaurantes",
+    description:
+      "Revoluciona tu restaurante con FasterOrder. Sistema completo de gestión de pedidos, menú, inventario y analytics.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
