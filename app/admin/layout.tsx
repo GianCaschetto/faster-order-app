@@ -73,7 +73,9 @@ export default function AdminLayout({
           <Button
             variant="outline"
             size="sm"
-            onClick={() => router.push("/menu")}
+            onClick={() =>
+              window.open("https://demo.fasterorder.store", "_blank")
+            }
           >
             <HomeIcon className="mr-2 h-4 w-4" />
             Catálogo

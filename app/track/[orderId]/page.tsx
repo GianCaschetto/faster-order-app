@@ -117,7 +117,7 @@ export default function TrackOrderPage({
         });
 
         setEstimatedTime((prev) =>
-          prev !== null ? Math.max(0, prev - 1 / 60) : null
+          prev !== null ? Math.max(0, prev - 1 / 60) : null,
         );
       }
     }, 1000);
@@ -136,7 +136,7 @@ export default function TrackOrderPage({
       });
 
       setEstimatedTime((prev) =>
-        prev !== null ? Math.max(0, prev - 1 / 60) : null
+        prev !== null ? Math.max(0, prev - 1 / 60) : null,
       );
     }
   }, [order?.status]);
@@ -195,9 +195,9 @@ export default function TrackOrderPage({
       <div className="container mx-auto px-4 py-6 max-w-md">
         <div className="flex items-center mb-6">
           <Button variant="ghost" size="icon" className="mr-2" asChild>
-            <Link href="/menu">
+            <a href="https://demo.fasterorder.store">
               <ArrowLeft className="h-5 w-5" />
-            </Link>
+            </a>
           </Button>
           <Skeleton className="h-8 w-48" />
         </div>
@@ -561,9 +561,9 @@ export default function TrackOrderPage({
       </Card>
 
       <div className="flex gap-4">
-        <Button className="flex-1" asChild>
-          <Link href="/menu">Volver al restaurante</Link>
-        </Button>
+        <a className="flex-1" href="https://demo.fasterorder.store">
+          Volver al restaurante
+        </a>
         <Button variant="outline" className="flex-1" asChild>
           <a href={`tel:${order.customerPhone}`}>
             <Phone className="h-4 w-4 mr-2" />
